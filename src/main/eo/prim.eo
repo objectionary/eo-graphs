@@ -1,7 +1,7 @@
 +package ru.hse.eo_graphs.eo.prim
 +alias sprintf org.eolang.txt.sprintf
 
-[n1 n2 length] > edge
+[n1 n2 length] > graphedge
 
 [node edges] > nodeInEdges
   reduce. > @
@@ -85,7 +85,7 @@
           getEdges
             i.add 3
           *
-            edge
+            graphedge
               toInt.
                 ^.^.args.get i
               toInt.

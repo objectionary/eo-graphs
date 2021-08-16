@@ -1,0 +1,16 @@
++package ru.hse.eo_graphs.eo.dijkstra
++alias ru.hse.eo_graphs.eo.dijkstra.testGraph
++alias ru.hse.eo_graphs.eo.dijkstra.dijkstra
++alias org.eolang.txt.sprintf
+
+[args...] > main
+  (dijkstra testGraph 1) > dijk
+  reduce. > @
+    dijk
+    "hello"
+    []
+      [accum current] > reduce
+        sprintf > @
+          "%s\n%d"
+          accum
+          current
