@@ -1,0 +1,200 @@
++package ru.hse.eo_graphs.eo.prim
++alias sprintf org.eolang.txt.sprintf
+
+[n1 n2 length] > edge
+
+[node edges] > nodeInEdges
+  reduce. > @
+    edges
+    false
+    []
+      [accum current] > reduce
+        or. > @
+          accum
+          or.
+            eq.
+              ^.^.node
+              current.n1
+            eq.
+              ^.^.node
+              current.n2
+
+
+[node nArray] > nodeInArray
+  reduce. > @
+    nArray
+    false
+    []
+      [accum current] > reduce
+        or. > @
+          accum
+          eq.
+            ^.^.node
+            current
+
+
+[edges] > nodes
+  reduce. > @
+    edges
+    *
+    []
+      [accum current] > reduce
+        not. > addN1!
+          nodeInArray
+            current.n1
+            accum
+        not. > addN2!
+          nodeInArray
+            current.n2
+            accum
+        if. > @
+          accum.length.eq 0
+          *
+            current.n1
+            current.n2
+          appendAll.
+            accum
+            if.
+              and.
+                addN1
+                addN2
+              *
+                current.n1
+                current.n2
+              if.
+                and.
+                  addN1
+                  addN2.not
+                *
+                  current.n1
+                if.
+                  and.
+                    addN2
+                    addN1.not
+                  *
+                    current.n2
+                  *
+
+[args...] > appPrim
+  [] > graph!
+    [i] > getEdges
+      if. > @
+        (i.add 2).less
+          ^.^.args.length
+        appendAll.
+          getEdges
+            i.add 3
+          *
+            edge
+              toInt.
+                ^.^.args.get i
+              toInt.
+                ^.^.args.get (i.add 1)
+              toInt.
+                ^.^.args.get (i.add 2)
+
+        *
+    if. > @
+      ^.args.length.less 3
+      *
+      getEdges 0
+
+  nodes > graphNodes!
+    graph
+
+  [step] > extractEdges
+    ^.graph > graph
+    ^.graphNodes > graphNodes
+    nodes > stepNodes!
+      step
+    [] > newEdge!
+      if. > @
+        eq.
+          ^.graphNodes.length
+          ^.stepNodes.length
+        *
+        reduce.
+          ^.graph
+          *
+          []
+            [accum current] > reduce
+              nodeInEdges > n1InStep!
+                current.n1
+                ^.^.^.step
+              nodeInEdges > n2InStep!
+                current.n2
+                ^.^.^.step
+              if. > @
+                and.
+                  or.
+                    and.
+                      n1InStep
+                      n2InStep.not
+                    and.
+                      n1InStep.not
+                      n2InStep
+                  or.
+                    eq.
+                      accum.length
+                      0
+                    less.
+                      length.
+                        current
+                      length.
+                        accum.get 0
+                *
+                  current
+                accum
+
+    if. > @
+      eq.
+        0
+        newEdge.length
+      step
+      extractEdges
+        appendAll.
+          step
+          newEdge
+
+
+  [] > firstEdge
+    ^.graph.get > randomEdge!
+      random.int
+        0
+        ^.graph.length
+    reduce. > @
+      ^.graph
+      randomEdge
+      []
+        [accum current] > reduce
+          if. > @
+            and.
+              or.
+                accum.n1.eq
+                  current.n1
+                accum.n1.eq
+                  current.n2
+              less.
+                current.length
+                accum.length
+            current
+            accum
+
+  extractEdges > res
+    *
+      firstEdge
+
+  reduce. > stringRes
+    res
+    "Graph: "
+    []
+      [accum current] > reduce
+        append. > @
+          accum
+          sprintf
+            "(%d %d - %d) "
+            current.n1
+            current.n2
+            current.length
+
+  stringRes > @
