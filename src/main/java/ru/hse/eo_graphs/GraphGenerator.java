@@ -10,7 +10,7 @@ public class GraphGenerator {
         if(vNum > 1)
             for(int i = 0; i < vNum-1; i++)
                 for(int j = i+1; j < vNum; j++){
-                    System.out.print(
+                    res.append(
                             String.format(
                                     "%d %d %d ",
                                     i, j, ThreadLocalRandom.current().nextInt(1, 100)
@@ -28,7 +28,7 @@ public class GraphGenerator {
                 switch (outType){
                     case OUTPUT_TYPE_EDGES:
                     default:
-                        generateEdges(vNum);
+                        System.out.print(generateEdges(vNum));
                 }
 
             }catch (Exception e){
