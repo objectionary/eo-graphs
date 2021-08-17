@@ -78,7 +78,7 @@ public class PrimMST {
                 for(WeightGraph.Edge edge : lazyPrimMST.getMst())
                     System.out.print(edge);
             }catch (Exception e){
-
+                System.exit(1);
             }
 
     }

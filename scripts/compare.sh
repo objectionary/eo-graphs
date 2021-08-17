@@ -14,7 +14,7 @@ print_test_res() {
   fi
 }
 
-echo "Comparison of the results of different implementations of Prim's algorithm"
+echo "====================================== Prim's algorithm ======================================"
 
 echo "Test 1(star.graph)"
 echo "EO:"
