@@ -1,5 +1,6 @@
 graph1=$(cat src/test/resources/star.graph)
 graph2=$(cat src/test/resources/star2.graph)
+graph3=$(java -cp target/classes -Xss40m  ru.hse.eo_graphs.GraphGenerator 0 10)
 
 eo_prim_cmd="scripts/eo_run.sh prim.appPrim"
 java_prim_cmd="java -cp target/classes -Xss40m  ru.hse.eo_graphs.java.prim.PrimMST"
@@ -31,4 +32,13 @@ echo "Java:"
 print_test_res $($java_prim_cmd $graph2 2> /dev/null)
 echo "C++:"
 print_test_res $($cpp_prim_cmd $graph2 2> /dev/null)
+echo -e "\n"
+
+echo -e "\nTest 3(random graph)"
+echo "EO:"
+print_test_res $($eo_prim_cmd $graph3 2> /dev/null)
+echo "Java:"
+print_test_res $($java_prim_cmd $graph3 2> /dev/null)
+echo "C++:"
+print_test_res $($cpp_prim_cmd $graph3 2> /dev/null)
 echo -e "\n"

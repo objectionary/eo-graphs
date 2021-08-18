@@ -4,21 +4,49 @@ eo_prim_cmd="scripts/eo_run.sh prim.appPrim"
 java_prim_cmd="java -cp target/classes -Xss40m  ru.hse.eo_graphs.java.prim.PrimMST"
 cpp_prim_cmd="target/cpp/prim"
 
-echo "====================================== Prim's algorithm ======================================"
-echo -e "\nC++:"
-/usr/bin/time -f "%E %M" $cpp_prim_cmd $($cmd_input 0 10) > /dev/null
-/usr/bin/time -f "%E %M" $cpp_prim_cmd $($cmd_input 0 30) > /dev/null
-/usr/bin/time -f "%E %M" $cpp_prim_cmd $($cmd_input 0 50) > /dev/null
+print_header(){
+  echo "---------------------------------------"
+  printf  "| %-4s | %-10s | %-15s |\r\n" "vNum" "Time" "Memory(Kbyte)"
+}
 
-echo -e "\nJava:"
-/usr/bin/time -f "%E %M" $java_prim_cmd $($cmd_input 0 10) > /dev/null
-/usr/bin/time -f "%E %M" $java_prim_cmd $($cmd_input 0 30) > /dev/null
-/usr/bin/time -f "%E %M" $java_prim_cmd $($cmd_input 0 50) > /dev/null
+do_test(){
+  IFS=" "
+  res=$( { /usr/bin/time -f "%E %M" $1 $($2 0 $3) > /dev/null; } 2>&1 )
 
-echo -e "\nEO:"
-/usr/bin/time -f "%E %M" $eo_prim_cmd $($cmd_input 0 10) > /dev/null
-/usr/bin/time -f "%E %M" $eo_prim_cmd $($cmd_input 0 30) > /dev/null
-/usr/bin/time -f "%E %M" $eo_prim_cmd $($cmd_input 0 50) > /dev/null
+  read -ra resarr <<< "$res"
+  printf  "| %-4s | %-10s | %15s |\r\n" "$3" "${resarr[0]}" "${resarr[1]}"
+}
+
+
+echo "========== Prim's algorithm ==========="
+
+printf  "| %-35s |\r\n" "C++:"
+print_header
+for vNum in 10 30 50
+do
+  echo "---------------------------------------"
+	do_test "$cpp_prim_cmd" "$cmd_input" $vNum
+done
+echo "---------------------------------------"
+
+
+printf  "| %-35s |\r\n" "Java:"
+print_header
+for vNum in 10 30 50
+do
+  echo "---------------------------------------"
+	do_test "$java_prim_cmd" "$cmd_input" $vNum
+done
+echo "---------------------------------------"
+
+printf  "| %-35s |\r\n" "EO:"
+print_header
+for vNum in 10 30 50
+do
+  echo "---------------------------------------"
+	do_test "$eo_prim_cmd" "$cmd_input" $vNum
+done
+echo "---------------------------------------"
 
 
 
