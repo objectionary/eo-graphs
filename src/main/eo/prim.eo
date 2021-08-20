@@ -81,17 +81,16 @@
       if. > @
         (i.add 2).less
           ^.^.args.length
-        appendAll.
+        append.
           getEdges
             i.add 3
-          *
-            graphedge
-              toInt.
-                ^.^.args.get i
-              toInt.
-                ^.^.args.get (i.add 1)
-              toInt.
-                ^.^.args.get (i.add 2)
+          graphedge
+            toInt.
+              ^.^.args.get i
+            toInt.
+              ^.^.args.get (i.add 1)
+            toInt.
+              ^.^.args.get (i.add 2)
 
         *
     if. > @
