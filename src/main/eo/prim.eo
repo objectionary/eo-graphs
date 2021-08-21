@@ -117,12 +117,12 @@
           *
           []
             [accum current] > reduce
-              nodeInEdges > n1InStep!
+              nodeInArray > n1InStep!
                 current.n1
-                ^.^.^.step
-              nodeInEdges > n2InStep!
+                ^.^.^.stepNodes
+              nodeInArray > n2InStep!
                 current.n2
-                ^.^.^.step
+                ^.^.^.stepNodes
               if. > @
                 and.
                   or.
