@@ -102,27 +102,23 @@
     graph
 
   [step] > extractEdges
-    ^.graph > graph
-    ^.graphNodes > graphNodes
-    nodes > stepNodes!
-      step
     [] > newEdge!
       if. > @
         eq.
-          ^.graphNodes.length
-          ^.stepNodes.length
+          ^.^.graphNodes.length
+          ^.step.length.add 1
         *
         reduce.
-          ^.graph
+          ^.^.graph
           *
           []
             [accum current] > reduce
-              nodeInArray > n1InStep!
+              nodeInEdges > n1InStep!
                 current.n1
-                ^.^.^.stepNodes
-              nodeInArray > n2InStep!
+                ^.^.^.step
+              nodeInEdges > n2InStep!
                 current.n2
-                ^.^.^.stepNodes
+                ^.^.^.step
               if. > @
                 and.
                   or.
