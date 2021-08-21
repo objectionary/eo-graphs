@@ -47,9 +47,18 @@ echo "====================================== Dijkstra's algorithm ==============
 
 eo_dijkstra_cmd="scripts/eo_run.sh dijkstra.main"
 cpp_dijkstra_cmd="target/cpp/dijkstra"
+
 dijkstra_graph1=$(cat src/test/resources/dijkstra.graph)
+dijkstra_graph2=$(java -cp target/classes -Xss40m  ru.hse.eo_graphs.GraphGenerator 1 10)
+
 echo "Test 1(dijkstra.graph)"
 echo "EO:"
 print_test_res $($eo_dijkstra_cmd $dijkstra_graph1 2> /dev/null)
 echo "C++:"
 print_test_res $($cpp_dijkstra_cmd $dijkstra_graph1 2> /dev/null)
+
+echo -e "\nTest 2(random graph)"
+echo "EO:"
+print_test_res $($eo_dijkstra_cmd $dijkstra_graph2 )
+echo "C++:"
+print_test_res $($cpp_dijkstra_cmd $dijkstra_graph2 2> /dev/null)

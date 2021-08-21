@@ -3,27 +3,26 @@
 #include <cstring>
 #include <stdlib.h>
 using namespace std;
-const int V=6;
 
 void dijkstra(int vNum, int* GR, int st)
 {
-    int distance[V], count, index, i, u, m=st, path[V];
-    bool visited[V];
-    for (i=0; i<V; i++){
+    int distance[vNum], count, index, i, u, m=st, path[vNum];
+    bool visited[vNum];
+    for (i=0; i<vNum; i++){
         distance[i]=INT_MAX; visited[i]=false;
         path[i]=-1;
     }
     path[st]=st;
     distance[st]=0;
-    for (count=0; count<V-1; count++){
+    for (count=0; count<vNum-1; count++){
         int min=INT_MAX;
-        for (i=0; i<V; i++)
+        for (i=0; i<vNum; i++)
             if (!visited[i] && distance[i]<=min){
                 min=distance[i]; index=i;
             }
         u=index;
         visited[u]=true;
-        for (i=0; i<V; i++)
+        for (i=0; i<vNum; i++)
             if (!visited[i] && GR[u*vNum+i] && distance[u]!=INT_MAX &&
             distance[u]+GR[u*vNum+i]<distance[i]){
                 distance[i]=distance[u]+GR[u*vNum+i];
@@ -32,7 +31,7 @@ void dijkstra(int vNum, int* GR, int st)
 
     }
     cout << "Paths: ";
-    for (i=0; i<V; i++)
+    for (i=0; i<vNum; i++)
       cout << path[i] << " ";
 }
 
