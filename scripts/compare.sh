@@ -48,7 +48,7 @@ echo "====================================== Dijkstra's algorithm ==============
 eo_dijkstra_cmd="scripts/eo_run.sh dijkstra.main"
 cpp_dijkstra_cmd="target/cpp/dijkstra"
 dijkstra_graph1=$(cat src/test/resources/dijkstra.graph)
-echo "Test 1(star.graph)"
+echo "Test 1(dijkstra.graph)"
 echo "EO:"
 print_test_res $($eo_dijkstra_cmd $dijkstra_graph1 2> /dev/null)
 echo "C++:"
