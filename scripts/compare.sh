@@ -32,7 +32,7 @@ echo "Java:"
 print_test_res $($java_prim_cmd $graph2 2> /dev/null)
 echo "C++:"
 print_test_res $($cpp_prim_cmd $graph2 2> /dev/null)
-echo -e "\n"
+
 
 echo -e "\nTest 3(random graph)"
 echo "EO:"
@@ -41,7 +41,7 @@ echo "Java:"
 print_test_res $($java_prim_cmd $graph3 2> /dev/null)
 echo "C++:"
 print_test_res $($cpp_prim_cmd $graph3 2> /dev/null)
-echo -e "\n"
+
 
 echo "====================================== Dijkstra's algorithm ======================================"
 
