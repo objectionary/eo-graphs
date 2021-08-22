@@ -2,9 +2,8 @@ package ru.hse.eo_graphs.java.kruskal;
 
 import java.util.*;
 import java.lang.*;
-import java.io.*;
 
-class Graph {
+class Kruskal {
 
     class Edge implements Comparable<Edge>
     {
@@ -24,7 +23,7 @@ class Graph {
     int V, E;
     Edge edge[];
 
-    Graph(int v, int e)
+    Kruskal(int v, int e)
     {
         V = v;
         E = e;
@@ -103,7 +102,7 @@ class Graph {
 
         int V = 4;
         int E = 5;
-        Graph graph = new Graph(V, E);
+        Kruskal graph = new Kruskal(V, E);
 
         // add edge 0-1
         graph.edge[0].src = 0;
