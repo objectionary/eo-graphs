@@ -68,7 +68,7 @@ print_header
 for vNum in 10 30 50
 do
   echo "---------------------------------------"
-	do_test "$java_dijkstra_cmd" "$cmd_input" $vNum
+	do_test "$java_dijkstra_cmd" "$cmd_input2" $vNum
 done
 echo "---------------------------------------"
 
