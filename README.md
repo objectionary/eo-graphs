@@ -39,11 +39,25 @@ compile.sh
 compare.sh
 ```
 
-#### Testing of the execution time and memory consumption of programs on graphs of different sizes. Graphs are generated
-randomly by an [utility](https://github.com/HSE-Eolang/eo_graphs/blob/master/src/main/java/ru/hse/eo_graphs/GraphGenerator.java) written in Java.
+#### Testing of the execution time and memory consumption of programs on graphs of different sizes. 
+Graphs are generated randomly by an [utility](https://github.com/HSE-Eolang/eo_graphs/blob/master/src/main/java/ru/hse/eo_graphs/GraphGenerator.java) written in Java.
 
 ```bash
 test.sh
 ```
 
+## Implemented algorithms 
+The following graph algorithms are implemented.
+- [Dijkstra algorithms](https://www.freecodecamp.org/news/dijkstras-shortest-path-algorithm-visual-introduction/).
 
+With Dijkstra's Algorithm, you can find the shortest path between nodes in a graph. Particularly, you can find the shortest path from a node (called the "source node") to all other nodes in the graph, producing a shortest-path tree.
+
+This algorithm is used in GPS devices to find the shortest path between the current location and the destination. It has broad applications in industry, specially in domains that require modeling networks.
+
+- [Prim's algorithm](https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/).
+
+Prim's algorithm is an algorithm for constructing the minimum spanning tree of a connected weighted undirected graph. Prim's algorithm finds the subset of edges that includes every vertex of the graph such that the sum of the weights of the edges can be minimized.
+
+First, a random vertex is selected. The edge of the minimum weight incident to the selected vertex is searched for. This is the first edge of the spanning tree.
+Next, an edge of the graph of the minimum weight is added to the tree in which only one of the vertices belongs to the tree.
+When the number of tree edges is equal to the number of nodes in the graph minus one (the number of nodes in the graph and the tree are equal), the algorithm ends.
