@@ -6,6 +6,7 @@ java_prim_cmd="java -cp target/classes -Xss40m  ru.hse.eo_graphs.java.prim.PrimM
 cpp_prim_cmd="target/cpp/prim"
 
 eo_dijkstra_cmd="scripts/eo_run.sh dijkstra.main"
+java_dijkstra_cmd="java -cp target/classes -Xss40m  ru.hse.eo_graphs.java.dijkstra.Dijkstra"
 cpp_dijkstra_cmd="target/cpp/dijkstra"
 
 print_header(){
@@ -59,6 +60,15 @@ for vNum in 10 30 50
 do
   echo "---------------------------------------"
 	do_test "$cpp_dijkstra_cmd" "$cmd_input2" $vNum
+done
+echo "---------------------------------------"
+
+printf  "| %-35s |\r\n" "Java:"
+print_header
+for vNum in 10 30 50
+do
+  echo "---------------------------------------"
+	do_test "$java_dijkstra_cmd" "$cmd_input" $vNum
 done
 echo "---------------------------------------"
 

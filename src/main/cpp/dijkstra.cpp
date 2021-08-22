@@ -37,13 +37,6 @@ void dijkstra(int vNum, int* GR, int st)
 
 int main(int argc, char *argv[])
 {
-    /*int GR[V][V]={
-    {0, 3, 0, 0, 0, 1},
-    {0, 0, 1, 7, 0, 0},
-    {2, 0, 0, 9, 1, 0},
-    {0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 7, 0, 6},
-    {1, 0, 0, 2, 0, 0}};*/
     if(argc> 1){
         int i;
         int vNum = argc-1;
