@@ -1,19 +1,13 @@
 package ru.hse.eo_graphs.java.kruskal;
 
+import ru.hse.eo_graphs.java.prim.WeightGraph;
+
 import java.util.*;
 import java.lang.*;
 
 class Kruskal {
 
-    class Edge implements Comparable<Edge>
-    {
-        int src, dest, weight;
 
-        public int compareTo(Edge compareEdge)
-        {
-            return this.weight - compareEdge.weight;
-        }
-    };
 
     class subset
     {
@@ -87,49 +81,54 @@ class Kruskal {
             }
         }
 
-        System.out.println("The edges in the constructed MST: ");
-        int minimumCost = 0;
+        System.out.print("MST: ");
         for (i = 0; i < e; ++i) {
-            System.out.println(result[i].src + " -- "
+            System.out.print("(" + result[i].src + " "
                     + result[i].dest
-                    + " == " + result[i].weight);
-            minimumCost += result[i].weight;
+                    + " - " + result[i].weight+") ");
         }
-        System.out.println("Minimum Cost Spanning Tree " + minimumCost);
     }
     public static void main(String[] args)
     {
+        int edgeNum = args.length / 3;
+        if(edgeNum>0)
+            try {
 
-        int V = 4;
-        int E = 5;
-        Kruskal graph = new Kruskal(V, E);
+                List<Edge> edges = new ArrayList<>();
+                HashSet<Integer> vertices = new HashSet<>();
+                for(int i = 0;i<edgeNum;i++){
+                    int a = Integer.parseInt(args[i*3]);
+                    int b = Integer.parseInt(args[i*3+1]);
+                    int w = Integer.parseInt(args[i*3+2]);
+                    Edge edge = new Edge();
+                    edge.src = a;
+                    edge.dest = b;
+                    edge.weight = w;
+                    edges.add(edge);
+                    vertices.add(a);
+                    vertices.add(b);
+                }
+                Kruskal graph = new Kruskal(vertices.size(), edgeNum);
 
-        // add edge 0-1
-        graph.edge[0].src = 0;
-        graph.edge[0].dest = 1;
-        graph.edge[0].weight = 10;
+                for(int i = 0; i<edges.size();i++){
+                    graph.edge[i] = edges.get(i);
+                }
 
-        // add edge 0-2
-        graph.edge[1].src = 0;
-        graph.edge[1].dest = 2;
-        graph.edge[1].weight = 6;
+                // Function call
+                graph.KruskalMST();
+            }catch (Exception e){
+                System.exit(1);
+            }
 
-        // add edge 0-3
-        graph.edge[2].src = 0;
-        graph.edge[2].dest = 3;
-        graph.edge[2].weight = 5;
-
-        // add edge 1-3
-        graph.edge[3].src = 1;
-        graph.edge[3].dest = 3;
-        graph.edge[3].weight = 15;
-
-        // add edge 2-3
-        graph.edge[4].src = 2;
-        graph.edge[4].dest = 3;
-        graph.edge[4].weight = 4;
-
-        // Function call
-        graph.KruskalMST();
     }
 }
+
+class Edge implements Comparable<Edge>
+{
+    int src, dest, weight;
+
+    public int compareTo(Edge compareEdge)
+    {
+        return this.weight - compareEdge.weight;
+    }
+};

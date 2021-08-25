@@ -144,7 +144,7 @@
 
   reduce. > stringRes
     res.get 0
-    "Edges: "
+    "MST: "
     []
       [accum current] > reduce
         append. > @

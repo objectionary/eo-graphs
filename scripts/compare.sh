@@ -67,3 +67,34 @@ echo "Java:"
 print_test_res $($java_dijkstra_cmd $dijkstra_graph2 2> /dev/null)
 echo "C++:"
 print_test_res $($cpp_dijkstra_cmd $dijkstra_graph2 2> /dev/null)
+
+echo "====================================== Kruskal's algorithm ======================================"
+
+eo_kruskal_cmd="scripts/eo_run.sh kruskal.appKruskal"
+java_kruskal_cmd="java -cp target/classes -Xss40m  ru.hse.eo_graphs.java.kruskal.Kruskal"
+cpp_kruskal_cmd="target/cpp/kruskal"
+
+echo "Test 1(star.graph)"
+echo "EO:"
+print_test_res $($eo_kruskal_cmd $graph1 2> /dev/null)
+echo "Java:"
+print_test_res $($java_kruskal_cmd $graph1 2> /dev/null)
+echo "C++:"
+print_test_res $($cpp_kruskal_cmd $graph1 2> /dev/null)
+
+echo -e "\nTest 2(star2.graph)"
+echo "EO:"
+print_test_res $($eo_kruskal_cmd $graph2 2> /dev/null)
+echo "Java:"
+print_test_res $($java_kruskal_cmd $graph2 2> /dev/null)
+echo "C++:"
+print_test_res $($cpp_kruskal_cmd $graph2 2> /dev/null)
+
+
+echo -e "\nTest 3(random graph)"
+echo "EO:"
+print_test_res $($eo_kruskal_cmd $graph3 2> /dev/null)
+echo "Java:"
+print_test_res $($java_kruskal_cmd $graph3 2> /dev/null)
+echo "C++:"
+print_test_res $($cpp_kruskal_cmd $graph3 2> /dev/null)

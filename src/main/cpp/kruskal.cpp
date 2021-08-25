@@ -90,48 +90,41 @@ void KruskalMST(Graph* graph){
 		}
 	}
 
-	cout << "The edges in the constructed "
-			"MST\n";
-	int minimumCost = 0;
+	cout << "MST: ";
 	for (i = 0; i < e; ++i)
 	{
-		cout << result[i].src << " -- " << result[i].dest
-			<< " == " << result[i].weight << endl;
-		minimumCost = minimumCost + result[i].weight;
+		cout << "(" << result[i].src << " " << result[i].dest
+			<< " - " << result[i].weight << ") ";
 	}
-	cout << "Minimum Cost Spanning Tree: " << minimumCost
-		<< endl;
 }
 
-int main(){
-	int V = 4;
-	int E = 5;
-	Graph* graph = createGraph(V, E);
+int main(int argc, char *argv[]){
+    int edgesCount = (argc-1) / 3;
+    if(edgesCount == 0){
+        return 1;
+    }
 
-	// add edge 0-1
-	graph->edge[0].src = 0;
-	graph->edge[0].dest = 1;
-	graph->edge[0].weight = 10;
+    int* EDGES = new int[edgesCount*3];
+    set<int> nodes;
 
-	// add edge 0-2
-	graph->edge[1].src = 0;
-	graph->edge[1].dest = 2;
-	graph->edge[1].weight = 6;
+    for(int i = 0; i < edgesCount; i++){
+      for(int j = 0; j<3; j++){
+          std::istringstream iss( argv[i*3+j+1] );
+          int val;
+          if (iss >> val){
+              if(j<2) nodes.insert(val);
+              EDGES[i*3+j] = val;
+          }
+      }
+    }
 
-	// add edge 0-3
-	graph->edge[2].src = 0;
-	graph->edge[2].dest = 3;
-	graph->edge[2].weight = 5;
+	Graph* graph = createGraph(nodes.size(), edgesCount);
 
-	// add edge 1-3
-	graph->edge[3].src = 1;
-	graph->edge[3].dest = 3;
-	graph->edge[3].weight = 15;
-
-	// add edge 2-3
-	graph->edge[4].src = 2;
-	graph->edge[4].dest = 3;
-	graph->edge[4].weight = 4;
+	for(int t = 0; t < edgesCount; t++){
+        graph->edge[t].src = EDGES[t*3];
+        graph->edge[t].dest = EDGES[t*3+1];
+        graph->edge[t].weight = EDGES[t*3+2];
+    }
 
 	KruskalMST(graph);
 

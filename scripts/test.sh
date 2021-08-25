@@ -9,6 +9,10 @@ eo_dijkstra_cmd="scripts/eo_run.sh dijkstra.main"
 java_dijkstra_cmd="java -cp target/classes -Xss40m  ru.hse.eo_graphs.java.dijkstra.Dijkstra"
 cpp_dijkstra_cmd="target/cpp/dijkstra"
 
+eo_kruskal_cmd="scripts/eo_run.sh kruskal.appKruskal"
+java_kruskal_cmd="java -cp target/classes -Xss40m  ru.hse.eo_graphs.java.kruskal.Kruskal"
+cpp_kruskal_cmd="target/cpp/kruskal"
+
 print_header(){
   echo "---------------------------------------"
   printf  "| %-4s | %-10s | %-15s |\r\n" "vNum" "Time" "Memory(Kbyte)"
@@ -78,6 +82,36 @@ for vNum in 10 30 50
 do
   echo "---------------------------------------"
 	do_test "$eo_dijkstra_cmd" "$cmd_input2" $vNum
+done
+echo -e "---------------------------------------\n"
+
+echo "========= Kruskal's algorithm ========="
+
+printf  "| %-35s |\r\n" "C++:"
+print_header
+for vNum in 10 30 50
+do
+  echo "---------------------------------------"
+	do_test "$cpp_kruskal_cmd" "$cmd_input" $vNum
+done
+echo "---------------------------------------"
+
+
+printf  "| %-35s |\r\n" "Java:"
+print_header
+for vNum in 10 30 50
+do
+  echo "---------------------------------------"
+	do_test "$java_kruskal_cmd" "$cmd_input" $vNum
+done
+echo "---------------------------------------"
+
+printf  "| %-35s |\r\n" "EO:"
+print_header
+for vNum in 10 30 50
+do
+  echo "---------------------------------------"
+	do_test "$eo_kruskal_cmd" "$cmd_input" $vNum
 done
 echo -e "---------------------------------------\n"
 
