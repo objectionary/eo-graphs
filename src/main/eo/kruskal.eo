@@ -1,0 +1,158 @@
++package ru.hse.eo_graphs.eo.kruskal
++alias sprintf org.eolang.txt.sprintf
++alias ru.hse.eo_graphs.eo.prim.graphedge
++alias ru.hse.eo_graphs.eo.prim.nodes
+
+[node] > edgeValidator
+  [edge] > validator
+    or. > @
+      eq.
+        edge.n1
+        ^.node
+      eq.
+        edge.n2
+        ^.node
+
+[args...] > appKruskal
+  [] > edges!
+    [i] > getEdges
+      getEdges > otherEdges!
+        i.add 3
+      graphedge > newEdge!
+        toInt.
+          ^.^.args.get i
+        toInt.
+          ^.^.args.get (i.add 1)
+        toInt.
+          ^.^.args.get (i.add 2)
+      find. > insertIndex!
+        otherEdges
+        0
+        []
+          [el] > validator
+            greater. > @
+              el.length
+              ^.^.newEdge.length
+      if. > @
+        (i.add 2).less
+          ^.^.args.length
+        insert.
+          otherEdges
+          newEdge
+          if.
+            less.
+              insertIndex
+              0
+            otherEdges.length
+            insertIndex
+        *
+
+
+    if. > @
+      ^.args.length.less 3
+      *
+      getEdges 0
+
+  nodes > graphNodes!
+    edges
+
+
+  reduce. > res
+    edges
+    *
+    proccessEdges
+
+  [] > proccessEdges
+    [acc edge] > reduce
+      [node] > findNodeComponent
+        [] > componentValidator
+          [edgeArr] > validator
+            geq. > @
+              find.
+                edgeArr
+                0
+                edgeValidator
+                  ^.^.node
+              0
+        find. > @
+          ^.acc
+          0
+          componentValidator
+
+      findNodeComponent > n1Component!
+        edge.n1
+      findNodeComponent > n2Component!
+        edge.n2
+      if. > @
+        eq.
+          acc.length
+          0
+        *
+          *
+            edge
+        if.
+          eq.
+            (acc.get 0).length
+            ^.^.graphNodes.length.sub 1
+          acc
+          if.
+            and.
+              less.
+                n1Component
+                0
+              less.
+                n2Component
+                0
+            acc.append
+              *
+                edge
+            if.
+              eq.
+                n1Component
+                n2Component
+              acc
+              if.
+                less.
+                  n1Component
+                  0
+                replace.
+                  acc
+                  n2Component
+                  append.
+                    acc.get n2Component
+                    edge
+                if.
+                  less.
+                    n2Component
+                    0
+                  replace.
+                    acc
+                    n1Component
+                    append.
+                      acc.get n1Component
+                      edge
+                  remove.
+                    replace.
+                      acc
+                      n1Component
+                      append.
+                        appendAll.
+                          acc.get n1Component
+                          acc.get n2Component
+                        edge
+                    n2Component
+
+  reduce. > stringRes
+    res.get 0
+    "Edges: "
+    []
+      [accum current] > reduce
+        append. > @
+          accum
+          sprintf
+            "(%d %d - %d) "
+            current.n1
+            current.n2
+            current.length
+  stringRes > @
+
