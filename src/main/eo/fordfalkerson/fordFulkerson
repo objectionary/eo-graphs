@@ -32,6 +32,11 @@
 
     path.get (path.length.sub 1) > currentVertex
 
+    replace. > visitedWithCurrent
+      visited
+      currentVertex.ivertex
+      true
+
     if. > @
       eq.
         currentVertex.ivertex
@@ -51,7 +56,7 @@
           resultStructure
             false
             path
-            visited
+            visitedWithCurrent
           []
             [subResult currentEdge] > reduce
               currentEdge.ivertex > nextVertex
@@ -60,12 +65,9 @@
                 subResult.found
                 subResult
                 ^.^.^.dfs
-                  replace.
-                    subResult.visited
-                    nextVertex
-                    true
+                  ^.^.visitedWithCurrent
                   append.
-                    subResult.path
+                    ^.^.path
                     currentEdge
 
 [path] > findMinCapacity
@@ -171,8 +173,9 @@
                 replacedAdjacency.edges
                 replacedEdgeIndex
 
+#rec graph 0.0 > @
 [graph source sink] > fordFulkerson
-  rec graph 0 > @
+  (findPath graph source sink).found > @
 
   [currGraph flow] > rec
     findPath > path
@@ -185,6 +188,6 @@
     if. > @
       path.found
       rec
-        ^.^.relax currGraph (path.path) min
+        relax currGraph (path.path) min
         flow.add min
       flow
