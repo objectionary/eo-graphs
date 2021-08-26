@@ -4,4 +4,4 @@
 +alias org.eolang.txt.sprintf
 
 [args...] > mainFulkerson
-  (fordFulkerson testGraph 0 7) > @
+  (fordFulkerson testGraphFulkerson 0 7) > @
