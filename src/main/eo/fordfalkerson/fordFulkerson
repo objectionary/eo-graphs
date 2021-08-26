@@ -1,6 +1,10 @@
 +package graphs
 +alias sprintf org.eolang.txt.sprintf
 +alias org.eolang.util.ieee754.infinity
++alias graphs.vertex
++alias graphs.edge
++alias graphs.adjacency
++alias graphs.adjacencyList
 
 # Looks for a path from source to sink. 
 # If .found, then the path is in .path.
@@ -8,9 +12,9 @@
   dfs > @
     initialVisited
     *
-      ^.edge
+      edge
         source
-        ^.infinity
+        infinity
 
   map. > initialVisited
     graph.adjacencies
@@ -24,20 +28,20 @@
           false
 
   [visited path] > dfs
-    [find path visited] > resultStructure
+    [found path visited] > resultStructure
 
     path.get (path.length.sub 1) > currentVertex
 
     if. > @
       eq.
-        currentVertex
+        currentVertex.ivertex
         ^.sink
       resultStructure
         true
         path
         visited
       if.
-        visited.get currentVertex
+        visited.get (currentVertex.ivertex)
         resultStructure
           false
           path
@@ -53,7 +57,7 @@
               currentEdge.ivertex > nextVertex
 
               if. > @
-                subResult.find
+                subResult.found
                 subResult
                 ^.^.^.dfs
                   replace.
@@ -171,15 +175,15 @@
   rec graph 0 > @
 
   [currGraph flow] > rec
-    ^.^.findPath > path
+    findPath > path
       currGraph
       ^.source
       ^.sink
 
-    ^.^.findMinCapacity (path.path) > min
+    findMinCapacity (path.path) > min
 
     if. > @
-      path.find
+      path.found
       rec
         ^.^.relax currGraph (path.path) min
         flow.add min

@@ -1,16 +1,7 @@
 +package graphs
-+alias graphs.testGraph1
++alias graphs.testGraphFulkerson
 +alias graphs.fordFulkerson
 +alias org.eolang.txt.sprintf
 
-[args...] > main
-  (fordFulkerson testGraph1 0 7) > ford
-  reduce. > @
-    ford
-    "done it"
-    []
-      [accum current] > reduce
-        sprintf > @
-          "%s\n%d"
-          accum
-          current
+[args...] > mainFulkerson
+  (fordFulkerson testGraph 0 7) > @

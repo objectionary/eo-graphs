@@ -4,7 +4,7 @@
 +alias graphs.adjacency
 +alias graphs.adjacencyList
 
-adjacencyList > testGraph1
+adjacencyList > testGraphFulkerson
   adjacency
     vertex
       0
