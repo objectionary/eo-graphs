@@ -180,7 +180,7 @@
 
   reduce. > stringRes
     res
-    "Graph: "
+    "MST: "
     []
       [accum current] > reduce
         append. > @

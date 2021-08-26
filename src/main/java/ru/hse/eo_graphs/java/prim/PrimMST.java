@@ -60,21 +60,21 @@ public class PrimMST {
         if(edgeNum>0)
             try {
                 List<WeightGraph.Edge> edges = new ArrayList<>();
-                HashSet<Integer> vertexes = new HashSet<>();
+                HashSet<Integer> vertices = new HashSet<>();
                 for(int i = 0;i<edgeNum;i++){
                     int a = Integer.parseInt(args[i*3]);
                     int b = Integer.parseInt(args[i*3+1]);
                     int w = Integer.parseInt(args[i*3+2]);
                     edges.add(new WeightGraph.Edge(a, b, w));
-                    vertexes.add(a);
-                    vertexes.add(b);
+                    vertices.add(a);
+                    vertices.add(b);
                 }
 
-                WeightGraph graph = new WeightGraph(vertexes.size());
+                WeightGraph graph = new WeightGraph(vertices.size());
                 graph.addEdges(edges);
 
                 PrimMST lazyPrimMST = new PrimMST(graph);
-                System.out.print("Graph: ");
+                System.out.print("MST: ");
                 for(WeightGraph.Edge edge : lazyPrimMST.getMst())
                     System.out.print(edge);
             }catch (Exception e){

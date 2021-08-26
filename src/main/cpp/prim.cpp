@@ -11,7 +11,7 @@ int main (int argc, char *argv[]) {
   int edgesCount = (argc-1) / 3;
   if(edgesCount == 0){
       return 1;
-    }
+  }
 
   int* EDGES = new int[edgesCount*3];
   set<int> nodes;
@@ -55,7 +55,7 @@ int main (int argc, char *argv[]) {
   int x;            //  row number
   int y;            //  col number
 
-  cout << "Graph: ";
+  cout << "MST: ";
   while (no_edge < nodes.size() - 1) {
 
   //For every vertex in the set S, find the all adjacent vertices
