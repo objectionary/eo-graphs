@@ -20,12 +20,7 @@
     graph.adjacencies
     []
       [currentAdjacency] > map
-        if. > @
-          eq.
-            currentAdjacency.vertex.i
-            ^.^.source
-          true
-          false
+        false > @
 
   [visited path] > dfs
     [found path visited] > resultStructure
@@ -52,7 +47,7 @@
           path
           visited
         reduce.
-          (^.graph.adjacencies.get currentVertex).edges
+          (^.graph.adjacencies.get (currentVertex.ivertex)).edges
           resultStructure
             false
             path
@@ -173,9 +168,8 @@
                 replacedAdjacency.edges
                 replacedEdgeIndex
 
-#rec graph 0.0 > @
 [graph source sink] > fordFulkerson
-  (findPath graph source sink).found > @
+  rec graph 0.0 > @
 
   [currGraph flow] > rec
     findPath > path
