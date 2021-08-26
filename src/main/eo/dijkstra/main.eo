@@ -1,7 +1,7 @@
 +package ru.hse.eo_graphs.eo.dijkstra
 +alias ru.hse.eo_graphs.eo.dijkstra.testGraph
 +alias ru.hse.eo_graphs.eo.dijkstra.dijkstra
-+alias ru.hse.eo_graphs.eo.dijkstra.edge
++alias ru.hse.eo_graphs.eo.edge
 +alias org.eolang.txt.sprintf
 
 [inAdjacencyArray] > resAdjacency

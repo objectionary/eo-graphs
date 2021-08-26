@@ -1,0 +1,7 @@
++package ru.hse.eo_graphs.eo.fordfulkerson
++alias ru.hse.eo_graphs.eo.fordfulkerson.testGraphFulkerson
++alias ru.hse.eo_graphs.eo.fordfulkerson.fordFulkerson
++alias org.eolang.txt.sprintf
+
+[args...] > mainFulkerson
+  (fordFulkerson testGraphFulkerson 0 7) > @

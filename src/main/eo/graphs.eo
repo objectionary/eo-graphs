@@ -1,25 +1,25 @@
-+package ru.hse.eo_graphs.eo.dijkstra
++package ru.hse.eo_graphs.eo
 
-# Vertex (or node) of a graph.
+# Vertex (or node) of a graph. 
 # It has:
-#        -- an index (i) for computer-aided reference
+#        -- an index (i) for computer-aided reference 
 #        -- and a name for humans
 [i name] > vertex
 
-# Directed edge of a graph.
+# Directed edge of a graph. 
 # It has:
 #        -- an index of the destination vertex
 #        -- and a weight of the edge itself
 [ivertex weight] > edge
 
 # Description of adjacency:
-#     == of the node "vertex"
+#     == of the node "vertex" 
 #     == to the nodes adjacent to it "vadjacent"
 #
-# Such disctiptions are placed inside an adjacency list,
+# Such disctiptions are placed inside an adjacency list, 
 # which is a special data structure that represents a graph
-[vertex edges...] > adjacency
+[vertex edges] > adjacency
 
-# Adjacency list is a special data structure representing graphs.
+# Adjacency list is a special data structure representing graphs. 
 # Contains adjacency descriptions in it.
-[adjacencies...] > adjacencyList
+[adjacencies] > adjacencyList

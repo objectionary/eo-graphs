@@ -1,10 +1,10 @@
-+package graphs
++package ru.hse.eo_graphs.eo.fordfulkerson
 +alias sprintf org.eolang.txt.sprintf
 +alias org.eolang.util.ieee754.infinity
-+alias graphs.vertex
-+alias graphs.edge
-+alias graphs.adjacency
-+alias graphs.adjacencyList
++alias ru.hse.eo_graphs.eo.vertex
++alias ru.hse.eo_graphs.eo.edge
++alias ru.hse.eo_graphs.eo.adjacency
++alias ru.hse.eo_graphs.eo.adjacencyList
 
 # Looks for a path from source to sink. 
 # If .found, then the path is in .path.
@@ -23,7 +23,7 @@
         false > @
 
   [visited path] > dfs
-    [found path visited] > resultStructure
+    [found resultPath visited] > resultStructure
 
     path.get (path.length.sub 1) > currentVertex
 
@@ -66,12 +66,14 @@
                     currentEdge
 
 [path] > findMinCapacity
-  min. > @
+  (path.get min).weight > @
+
+  min. > min
     path
     []
       [elemA indexA elemB indexB] > comparator
-        ^.^.currentD.get elemA > dA
-        ^.^.currentD.get elemB > dB
+        elemA.weight > dA
+        elemB.weight > dB
         if. > @
           less.
             dA
@@ -111,12 +113,13 @@
       []
         [subResult currentEdge] > reduce
           ^.^.resultStructure > @
-            ^.^.^.updateEdge
-              subResult.resultGraph
-              subResult.currentVertex
-              currentEdge.ivertex
-              ^.^.min
-              ^.^.straight
+            result.
+              ^.^.^.updateEdge
+                subResult.resultGraph
+                subResult.currentVertex
+                currentEdge.ivertex
+                ^.^.min
+                ^.^.straight
             currentEdge.ivertex
 
   [graph from to min straight] > updateEdge
@@ -124,8 +127,9 @@
 
     find. > replacedEdgeIndex
       replacedAdjacency.edges
+      0
       []
-        [current] > find
+        [current] > validator
           eq. > @
             current.ivertex
             ^.^.to
@@ -144,17 +148,17 @@
           replacedEdge.weight
           min
 
-    ^.^.adjacencyList > @
+    adjacencyList > result
       replace.
         graph.adjacencies
         from
-        ^.^.adjacency
+        adjacency
           replacedAdjacency.vertex
           if.
             replacedEdgeIndex.eq -1
             append.
               replacedAdjacency.edges
-              ^.^.edge
+              edge
                 to
                 updatedCapacity
             if.
@@ -162,8 +166,9 @@
               replace.
                 replacedAdjacency.edges
                 replacedEdgeIndex
-                ^.^.edge
+                edge
                   replacedEdge.ivertex
+                  updatedCapacity
               remove.
                 replacedAdjacency.edges
                 replacedEdgeIndex
@@ -177,11 +182,11 @@
       ^.source
       ^.sink
 
-    findMinCapacity (path.path) > min
+    findMinCapacity (path.resultPath) > min
 
     if. > @
       path.found
       rec
-        relax currGraph (path.path) min
+        relax currGraph (path.resultPath) min
         flow.add min
       flow

@@ -1,7 +1,0 @@
-+package graphs
-+alias graphs.testGraphFulkerson
-+alias graphs.fordFulkerson
-+alias org.eolang.txt.sprintf
-
-[args...] > main
-  (fordFulkerson testGraphFulkerson 0 7) > @
