@@ -7,16 +7,29 @@
     <artifactId>eo_graphs</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <org.eolang.version>1.0.1</org.eolang.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <eolang.hse.runtime.version>1.0.5</eolang.hse.runtime.version>
+        <eolang.hse.transpiler.version>1.0.6</eolang.hse.transpiler.version>
     </properties>
     <build>
         <plugins>
             <plugin>
-                <groupId>io.github.hse-eolang</groupId>
+                <groupId>org.eolang</groupId>
                 <artifactId>eo-maven-plugin</artifactId>
-                <version>${org.eolang.version}</version>
+                <version>0.3.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.hse-eolang</groupId>
+                        <artifactId>transpiler</artifactId>
+                        <version>${eolang.hse.transpiler.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <sourcesDir>${project.basedir}/src/eo</sourcesDir>
+                    <targetDir>${project.basedir}/target</targetDir>
+                    <compiler>io.github.hse_eolang.transpiler.Transpiler</compiler>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -44,8 +57,8 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>io.github.hse-eolang</groupId>
-                                    <artifactId>eo-runtime</artifactId>
-                                    <version>${org.eolang.version}</version>
+                                    <artifactId>runtime</artifactId>
+                                    <version>${eolang.hse.runtime.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}</outputDirectory>
@@ -61,9 +74,8 @@
     <dependencies>
         <dependency>
             <groupId>io.github.hse-eolang</groupId>
-            <artifactId>eo-runtime</artifactId>
-            <version>${org.eolang.version}</version>
+            <artifactId>runtime</artifactId>
+            <version>${eolang.hse.runtime.version}</version>
         </dependency>
     </dependencies>
-
 </project>
