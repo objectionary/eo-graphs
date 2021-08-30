@@ -1,4 +1,7 @@
 #include <iostream>
+#include <climits>
+#include <cstring>
+#include <stdlib.h>
 using namespace std;
 
 const int MAX_E = (int) 1e6;
@@ -37,22 +40,44 @@ int findFlow(int u, int flow) {
     return 0; 
 }
 
-int main() {
-    fill(firstEdge, firstEdge + MAX_V, -1);    
-    cin >> numOfVertex >> numOfEdge;            
-    cin >> sourceVertex >> destinationVertex;  
-    for (int i = 0, u, v, cap; i < numOfEdge; i++) {
-        cin >> u >> v >> cap;
-        addEdge(u, v, cap);
+int main(int argc, char *argv[]) {
+    if(argc> 1){
+        fill(firstEdge, firstEdge + MAX_V, -1);
+
+        numOfVertex = argc-1;
+        numOfEdge = 0;
+        sourceVertex = 0;
+        destinationVertex = numOfVertex - 1;
+
+        for(int i=1;i<argc;i++){
+          char *token = strtok(argv[i], ":");
+          if(token != NULL){
+            int u,v,w;
+            u = atoi(token);
+            bool isW = false;
+            token = strtok(NULL, ":");
+            while (token != NULL){
+              if(isW){
+                w = atoi(token);
+                addEdge(u, v, w);
+                numOfEdge++;
+              }else{
+                v = atoi(token);
+              }
+                isW = !isW;
+                token = strtok(NULL, ":");
+            }
+          }
+        }
+
+        int maxFlow = 0;
+        int iterationResult = 0;
+        while ((iterationResult = findFlow(sourceVertex, INF)) > 0) {
+            fill(visited, visited + MAX_V, false);
+            maxFlow += iterationResult;
+        }
+
+        cout << maxFlow;
     }
-  
-    int maxFlow = 0;
-    int iterationResult = 0;
-    while ((iterationResult = findFlow(sourceVertex, INF)) > 0) {
-        fill(visited, visited + MAX_V, false);
-        maxFlow += iterationResult;
-    }
-  
-    cout << maxFlow << endl;
     return 0;
 }

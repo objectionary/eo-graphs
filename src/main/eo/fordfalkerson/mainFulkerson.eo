@@ -1,7 +1,20 @@
 +package ru.hse.eo_graphs.eo.fordfulkerson
 +alias ru.hse.eo_graphs.eo.fordfulkerson.testGraphFulkerson
 +alias ru.hse.eo_graphs.eo.fordfulkerson.fordFulkerson
++alias ru.hse.eo_graphs.eo.dijkstra.resAdjacency
 +alias org.eolang.txt.sprintf
 
 [args...] > mainFulkerson
-  (fordFulkerson testGraphFulkerson 0 7) > @
+  [] > graph
+    reduce. > adjacencies!
+      ^.args
+      *
+      []
+        [adjacencies inAdjacency] > reduce
+          inAdjacency.split > inAdjacencyArray
+            ":"
+          append. > @
+            adjacencies
+            resAdjacency inAdjacencyArray
+
+  (fordFulkerson graph 0 (graph.adjacencies.length.sub 1)) > @

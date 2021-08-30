@@ -1,18 +1,17 @@
-// Java program for implementation of Ford Fulkerson
+package ru.hse.eo_graphs.java.fordfalkersonalg;// Java program for implementation of Ford Fulkerson
 // algorithm
-import java.io.*;
 import java.lang.*;
-import java.util.*;
+import java.util.Arrays;
 import java.util.LinkedList;
  
-class MaxFlow {
-    static final int V = 6; // Number of vertices in graph
+class FordFalkerson {
  
     /* Returns true if there is a path from source 's' to
       sink 't' in residual graph. Also fills parent[] to
       store the path */
     boolean bfs(int rGraph[][], int s, int t, int parent[])
     {
+        final int V = rGraph.length;
         // Create a visited array and mark all vertices as
         // not visited
         boolean visited[] = new boolean[V];
@@ -59,6 +58,8 @@ class MaxFlow {
     int fordFulkerson(int graph[][], int s, int t)
     {
         int u, v;
+
+        final int V = graph.length;
  
         // Create a residual graph and fill the residual
         // graph with given capacities in the original graph
@@ -112,14 +113,31 @@ class MaxFlow {
     public static void main(String[] args)
         throws java.lang.Exception
     {
-        int graph[][] = new int[][] {
-            { 0, 16, 13, 0, 0, 0 }, { 0, 0, 10, 12, 0, 0 },
-            { 0, 4, 0, 0, 14, 0 },  { 0, 0, 9, 0, 0, 20 },
-            { 0, 0, 0, 7, 0, 4 },   { 0, 0, 0, 0, 0, 0 }
-        };
-        MaxFlow m = new MaxFlow();
- 
-        System.out.println("The maximum possible flow is "
-                           + m.fordFulkerson(graph, 0, 5));
+        if(args.length>0) {
+            int i;
+            int vNum = args.length;
+            int[][] GR = new int[vNum][vNum];
+
+            for (int[] row: GR)
+                Arrays.fill(row, 0);
+            for(i=0;i<args.length;i++){
+                String[] vArray = args[i].split(":");
+                int u,v = 0,w;
+                u = Integer.parseInt(vArray[0]);
+                if(vArray.length>1){
+                    for (int j = 1;j<vArray.length;j++){
+                        if(j % 2 == 0){
+                            w = Integer.parseInt(vArray[j]);
+                            GR[u][v]=w;
+                        }else{
+                            v = Integer.parseInt(vArray[j]);
+                        }
+                    }
+                }
+            }
+            FordFalkerson m = new FordFalkerson();
+
+            System.out.print(m.fordFulkerson(GR, 0, vNum-1));
+        }
     }
 }
