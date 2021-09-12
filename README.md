@@ -1,8 +1,13 @@
+[![Latests Results](https://github.com/HSE-Eolang/eo_graphs/actions/workflows/run-tests.yml/badge.svg)](https://github.com/HSE-Eolang/eo_graphs/actions/workflows/run-tests.yml) 
 ## What this repository is for?
 
-This repository proposes comparison between algorithmic graph realizations in C++,Java and EO.
+Is it possible to implement hard enough algorithms with the EO programming language (by the way, if you are not familiar with EO, please visit our main [repo](https://github.com/cqfn/eo))? Would EO manage big enough input data? May EO code be functional, useful yet idiomatic? We tried to address these questions in this work. To do it, we implemented several graph algorithms (Dijkstra, Prim, Kruskal, Ford-Fulkerson) in EO, Java, and C++. We compared their outputs and performance metrics on the same input data. Why did we choose graph algorithms? Well, graph algorithms are hard enough for such a small and young language. And still these algorithms may show how real-life algorithms might look like in EO. Interested in the results? Please, read the instructions below.
 
-## How to use
+## How can I view the results quckly? 
+If you would like to view the results only, you may click on the "Latest Results" badge at the top of this README. This badge refers to our latest CI build where you can view the results in the tabs "Compare Results" and "Test Performance".
+
+## How to run it on my machine?
+We supplied the repository with convenient shell scripts that will do almost all the job. However, unfortunately you may still need to install some software to build the repository. 
 
 ### Tools to be installed
 
@@ -19,10 +24,11 @@ Third, you need to install Maven on your machine in order to build and work with
 installation packages [here](https://maven.apache.org/download.cgi)).
 
 ### Downloading sources
-Then, fork this repository with git:
+Fork this repository with git:
 ```bash
 git clone git@github.com:HSE-Eolang/eo_graphs.git
 ```
+Or, just download it from [here](https://github.com/HSE-Eolang/eo_graphs/archive/refs/heads/master.zip), if you don't have git installed.
 
 ### Run scripts 
 All scripts are running from the root folder of repository.
