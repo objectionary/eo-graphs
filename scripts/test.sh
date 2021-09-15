@@ -141,7 +141,7 @@ echo "---------------------------------------"
 
 printf  "| %-35s |\r\n" "EO:"
 print_header
-for vNum in 10 30 50
+for vNum in 3 5 10
 do
   echo "---------------------------------------"
 	do_test "$eo_ff_cmd" "$cmd_input2" $vNum
