@@ -1,3 +1,4 @@
+#!/bin/bash
 cmd_input="java -cp target/classes -Xss40m  ru.hse.eo_graphs.GraphGenerator 0"
 cmd_input2="java -cp target/classes -Xss40m  ru.hse.eo_graphs.GraphGenerator 1"
 

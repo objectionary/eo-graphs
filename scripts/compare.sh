@@ -1,3 +1,4 @@
+#!/bin/bash
 graph1=$(cat src/test/resources/star.graph)
 graph2=$(cat src/test/resources/star2.graph)
 graph3=$(java -cp target/classes -Xss40m  ru.hse.eo_graphs.GraphGenerator 0 10)
