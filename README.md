@@ -7,21 +7,7 @@ Is it possible to implement hard enough algorithms with the EO programming langu
 If you would like to view the results only, you may click on the "Latest Results" badge at the top of this README. This badge refers to our latest CI build where you can view the results in the tabs "Compare Results" and "Test Performance".
 
 ## How to run it on my machine?
-We supplied the repository with convenient shell scripts that will do almost all the job. However, unfortunately you may still need to install some software to build the repository. 
-
-### Tools to be installed
-
-#### Java
-First, you need to install Java Development Kit (JDK) on your machine in order to build and work with eo_graphs. Version 11 of JDK would be a good option (you can find 
-installation packages [here](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)). 
-
-#### C++
-Second, you need to install GCC on your machine in order to build and work with eo_graphs. Version 11.1 is optimal(you can find 
-installation packages [here](https://gcc.gnu.org/gcc-11/)).
-
-#### Maven
-Third, you need to install Maven on your machine in order to build and work with eo_graphs. Version 3.8.2 is needed(you can find 
-installation packages [here](https://maven.apache.org/download.cgi)).
+In case if you would like to run the code on your machine, you have two options: using Docker that will do all the work for you, or installing and running the code manually. The second option is not that hard, because we supplied the repository with convenient shell scripts that will do almost all the job. However, unfortunately, you may still need to install some software to build the repository. 
 
 ### Downloading sources
 Fork this repository with git:
@@ -30,22 +16,53 @@ git clone git@github.com:HSE-Eolang/eo_graphs.git
 ```
 Or, just download it from [here](https://github.com/HSE-Eolang/eo_graphs/archive/refs/heads/master.zip), if you don't have git installed.
 
-### Run scripts 
-All scripts are running from the root folder of repository.
+### Install and Run via Docker
+To run the code via Docker, you need to install Docker to your machine first. Then the following two commands will do all the work for you:
+```
+cd eo_graphs/
+docker build -t "eo-graphs" .
+```
+Here, we build the Docker Image to run the code on and tag the image with the "eo-graphs" label for convenience.
+After the process is finished, run the following command:
+```
+docker run eo-graphs
+```
+That's it! Now, you may see the results of comparison of algorithms. 
+### Manual Install
+#### Tools to be installed
 
-#### Сompilation of Java, EO and C ++ source codes
+##### Java
+First, you need to install Java Development Kit (JDK) on your machine in order to build and work with eo_graphs. Version 11 of JDK would be a good option (you can find 
+installation packages [here](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)). 
+
+##### C++
+Second, you need to install GCC on your machine in order to build and work with eo_graphs. Version 11.1 is optimal(you can find 
+installation packages [here](https://gcc.gnu.org/gcc-11/)).
+
+##### Maven
+Third, you need to install Maven on your machine in order to build and work with eo_graphs. Version 3.8.2 is needed(you can find 
+installation packages [here](https://maven.apache.org/download.cgi)).
+
+#### Run scripts 
+All scripts are running from the root folder of repository (i.e., `eo_graphs/`). So, it will be convenient for you to change the current working directory after cloning the repository:
+```
+cd eo_graphs
+```
+All the commands below use relative paths inside this directory.
+
+##### Сompilation of Java, EO and C ++ source codes
 
 ```bash
 ./scripts/compile.sh
 ```
 
-#### Comparing the results of executing programs in different languages, to make sure that the result is identical.
+##### Comparing the results of executing programs in different languages, to make sure that the result is identical.
 
 ```bash
 ./scripts/compare.sh
 ```
 
-#### Testing of the execution time and memory consumption of programs on graphs of different sizes. 
+##### Testing of the execution time and memory consumption of programs on graphs of different sizes. 
 Graphs are generated randomly by an [utility](https://github.com/HSE-Eolang/eo_graphs/blob/master/src/main/java/ru/hse/eo_graphs/GraphGenerator.java) written in Java.
 
 ```bash
