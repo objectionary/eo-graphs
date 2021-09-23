@@ -4,9 +4,7 @@ Is it possible to implement hard enough algorithms with the [EO](https://github.
 
 If you would like to view the results only, [click here](https://github.com/HSE-Eolang/eo_graphs/actions/workflows/run-tests.yml) and then to the tabs "Compare Results" and "Test Performance".
 
-In case if you would like to run the code on your machine, you have two options: using Docker that will do all the work for you, or installing and running the code manually. The second option is not that hard, because we supplied the repository with convenient shell scripts that will do almost all the job. However, unfortunately, you may still need to install some software to build the repository. 
-
-To run the code via Docker, you need to install Docker to your machine first. Then the following two commands will do all the work for you:
+To run the code via [Docker](https://www.docker.com/):
 
 ```bash
 $ docker build -t graphs .
@@ -15,7 +13,7 @@ $ docker run graphs
 
 That's it! Now, you may see the results of comparison of algorithms. 
 
-To go without Docker you will need Java, C++, and Maven installed, and then:
+To go without Docker you will need Java 11+, C++, and [Maven](https://maven.apache.org/) installed, and then:
 
 ```
 $ ./scripts/compile.sh
