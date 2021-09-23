@@ -25,7 +25,7 @@ By the way, the graphs are generated randomly by the [utility](https://github.co
 
 ## Algorithms 
 
-The following graph algorithms are implemented.
+The following graph algorithms are implemented:
 
 [Dijkstra algorithms](https://www.freecodecamp.org/news/dijkstras-shortest-path-algorithm-visual-introduction/)
 <br/>
