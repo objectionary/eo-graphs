@@ -1,13 +1,14 @@
-+package sandbox
 +alias org.eolang.io.stdout
 +alias org.eolang.txt.sprintf
 +alias org.eolang.txt.sscanf
++alias org.eolang.collections.list
 
 [n1 n2 length] > graphedge
 
 [node edges] > nodeInEdges
   reduce. > @
-    edges
+    list
+      edges
     FALSE
     [accum current]
       or. > @
@@ -22,7 +23,8 @@
 
 [node nArray] > nodeInArray
   reduce. > @
-    nArray
+    list
+      nArray
     FALSE
     [accum current]
       or. > @
@@ -33,7 +35,8 @@
 
 [edges] > nodes
   reduce. > @
-    edges
+    list
+      edges
     *
     [accum current]
       not. > addN1!
