@@ -17,14 +17,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Install GCC
-      run: sudo apt-get install gcc
-
-    - name: Build
-      run: ./scripts/compile.sh
-    
-    - name: Compare Results
-      run: ./scripts/compare.sh
-    
-    - name: Test Performance
-      run: ./scripts/test.sh
+    - name: Make and run
+    - run: make 
+    - run: make run

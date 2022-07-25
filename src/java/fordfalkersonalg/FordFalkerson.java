@@ -1,4 +1,3 @@
-package ru.hse.eo_graphs.java.fordfalkersonalg;// Java program for implementation of Ford Fulkerson
 // algorithm
 import java.lang.*;
 import java.util.Arrays;
