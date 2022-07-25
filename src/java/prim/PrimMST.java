@@ -1,4 +1,4 @@
-package ru.hse.eo_graphs.java.prim;
+package prim;
 
 import java.util.*;
 

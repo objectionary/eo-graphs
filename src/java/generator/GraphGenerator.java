@@ -1,4 +1,3 @@
-package ru.hse.eo_graphs;
 
 import java.util.concurrent.ThreadLocalRandom;
 

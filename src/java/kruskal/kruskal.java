@@ -1,6 +1,4 @@
-package ru.hse.eo_graphs.java.kruskal;
-
-import ru.hse.eo_graphs.java.prim.WeightGraph;
+import prim.WeightGraph;
 
 import java.util.*;
 import java.lang.*;
