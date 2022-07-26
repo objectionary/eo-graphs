@@ -13,7 +13,7 @@ $ make
 $ make run
 ```
 
-By the way, the graphs are generated randomly by the [utility](https://github.com/HSE-Eolang/eo_graphs/blob/master/src/main/java/ru/hse/eo_graphs/GraphGenerator.java) written in Java.
+By the way, the graphs are generated randomly by the [utility](https://github.com/potatmen/eo-graphs/blob/master/src/java/generator/GraphGenerator.java) written in Java.
 
 ## Algorithms 
 
