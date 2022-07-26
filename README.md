@@ -6,22 +6,14 @@ Is it possible to implement hard enough algorithms with [EO](https://github.com/
 
 To see the latest results, [click here](https://github.com/HSE-Eolang/eo_graphs/actions/workflows/run-tests.yml) and then to the tabs "Compare Results" and "Test Performance".
 
-To run the code via [Docker](https://www.docker.com/):
-
-```bash
-$ docker build -t graphs .
-$ docker run graphs
-```
-
-To go without Docker you will need Java 11+, C++, and [Maven](https://maven.apache.org/) installed, and then:
+You will need Java 11+, C++, and [Maven](https://maven.apache.org/) installed, and then:
 
 ```
-$ ./scripts/compile.sh
-$ ./scripts/compare.sh
-$ ./scripts/test.sh
+$ make
+$ make run
 ```
 
-By the way, the graphs are generated randomly by the [utility](https://github.com/HSE-Eolang/eo_graphs/blob/master/src/main/java/ru/hse/eo_graphs/GraphGenerator.java) written in Java.
+By the way, the graphs are generated randomly by the [utility](https://github.com/potatmen/eo-graphs/blob/master/src/java/generator/GraphGenerator.java) written in Java.
 
 ## Algorithms 
 
