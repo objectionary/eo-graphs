@@ -1,6 +1,6 @@
 <img src="https://www.yegor256.com/images/books/elegant-objects/cactus.svg" height="100px" />
 
-[![Latests Results](https://github.com/HSE-Eolang/eo_graphs/actions/workflows/run-tests.yml/badge.svg)](https://github.com/HSE-Eolang/eo_graphs/actions/workflows/run-tests.yml) 
+[![Latests Results](https://github.com/potatmen/eo-graphs/actions/workflows/run-tests.ym/badge.svg)](https://github.com/potatmen/eo-graphs/actions/workflows/run-tests.yml) 
 
 Is it possible to implement hard enough algorithms with [EO](https://github.com/cqfn/eo)? Would EO manage big enough input data? May EO code be functional and useful, yet idiomatic? We tried to address these questions in this work. To do it, we implemented several classic graph algorithms in three programming languages: Java, C++, and EO. We compared their outputs and performance metrics on the same input data. Why did we choose graph algorithms? Well, graph algorithms are hard enough for such a small and young language. And still these algorithms may show how real-life algorithms might look like in EO.
 
