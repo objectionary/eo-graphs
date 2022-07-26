@@ -1,11 +1,9 @@
 .ONESHELL:
 shell = bash
-G = $$(cat tests/star.graph)
-RUNJ = java -cp targets/java/
 TARGPATH = ../../targets
 
 C = printcpp() { \
-	echo "C++:"; \
+	echo "C++ gives this output:"; \
 	if [ $$? -eq 0 ]; then \
     	echo "$$@"; \
   	else \
@@ -14,7 +12,7 @@ C = printcpp() { \
 }
 
 J = printjava() { \
-	echo "Java:"; \
+	echo "Java gives this output:"; \
 	if [ $$? -eq 0 ]; then \
     	echo "$$@"; \
   	else \
@@ -23,7 +21,7 @@ J = printjava() { \
 }
 
 E = printeo() { \
-	echo "EO:"; \
+	echo "EO gives this output:"; \
 	if [ $$? -eq 0 ]; then \
     	echo "$$@"; \
   	else \
@@ -36,53 +34,53 @@ E = printeo() { \
 compile:
 	@rm -f -r targets/
 	@mkdir targets/
-	@mkdir targets/cpp
-	@mkdir targets/java
-	@cd src/cpp/
-	for FILE in *; do \
-		g++ $$FILE -o $(TARGPATH)/cpp/$${FILE%.cpp}; \
-	done \
-    
+	@cd src/cpp
+	@make
 	@cd ../java
-	for FILE in **/*.java; do \
-		javac -d $(TARGPATH)/java $$FILE; \
-	done
+	@make
+	@cd ../../
+	@eoc dataize app --verbose
 run:
+	@clear
 	@java -cp targets/java/ GraphGenerator 0 10 > tests/edges/star3.graph
 	@java -cp targets/java/ GraphGenerator 1 10 > tests/list/dijkstra2.graph
 	@cd tests/edges
-	@echo "====================================== Kruskal's algorithm ======================================";
+	@echo "Now we are going to run Kruskal's algorithm \n";
 	@for FILE in *; do \
 	    var=$$(cat $$FILE)
-		echo "Test ($$FILE)"; \
+		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java Kruskal $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/kruskal $$var); \
 		echo "\n";
 	done
 
-	@echo "====================================== Prim's algorithm ======================================";
+	@echo "Now we are going to run Prim's algorithm \n";
 	@for FILE in *; do \
 	    var=$$(cat $$FILE)
-		echo "Test ($$FILE)"; \
+		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
+	  	
+	@cd ../../
+		$(E); printeo $$(eoc --alone dataize app $$var)
+	@cd tests/edges/
 		echo "\n";
 	done
     
 	@cd ../list
-	@echo "====================================== Dijkstra's  algorithm ======================================";
+	@echo "Now we are going to run Dijkstra's algorithm \n";
 	@for FILE in *; do \
 	    var=$$(cat $$FILE)
-		echo "Test ($$FILE)"; \
+		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java Dijkstra $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/dijkstra $$var); \
 		echo "\n";
 	done
 
-	@echo "====================================== Ford-Fulkerson  algorithm ======================================";
+	@echo "Now we are going to run Ford-Falkerson algorithm \n";
 	@for FILE in *; do \
 	    var=$$(cat $$FILE)
-		echo "Test ($$FILE)"; \
+		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java FordFalkerson $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/fordfalkersonalg $$var); \
 		echo "\n";
@@ -92,3 +90,4 @@ clean:
 	rm -f -r targets/
 	rm -f tests/edges/star3.graph
 	rm -f tests/list/dijkstra2.graph
+	rm -f -r .eoc
