@@ -38,7 +38,7 @@ compile:
 	@make
 	@cd ../java
 	@make
-	@cd ../../
+	@cd ../eo/
 	@eoc dataize app --verbose
 run:
 	@clear
@@ -61,9 +61,9 @@ run:
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
 	  	
-	@cd ../../
+	@cd ../../src/eo
 		$(E); printeo $$(eoc --alone dataize app $$var)
-	@cd tests/edges/
+	@cd ../../tests/edges/
 		echo "\n";
 	done
     
@@ -90,4 +90,4 @@ clean:
 	rm -f -r targets/
 	rm -f tests/edges/star3.graph
 	rm -f tests/list/dijkstra2.graph
-	rm -f -r .eoc
+	rm -f -r src/eo/.eoc
