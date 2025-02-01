@@ -38,8 +38,10 @@ compile:
 	@make
 	@cd ../java
 	@make
-	@cd ../eo/
-	@eoc dataize app --verbose
+	@cd ../eo/prim
+	@eoc dataize primApp --verbose
+	@cd ../kruskal
+	@eoc dataize kruskalApp --verbose
 run:
 	@clear
 	@java -cp targets/java/ GraphGenerator 0 10 > tests/edges/star3.graph
@@ -51,6 +53,10 @@ run:
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java Kruskal $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/kruskal $$var); \
+	
+	@cd ../../src/eo/kruskal
+		$(E); printeo $$(eoc --alone dataize kruskalApp $$var)
+	@cd ../../../tests/edges/
 		echo "\n";
 	done
 
@@ -61,9 +67,9 @@ run:
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
 	  	
-	@cd ../../src/eo
-		$(E); printeo $$(eoc --alone dataize app $$var)
-	@cd ../../tests/edges/
+	@cd ../../src/eo/prim
+		$(E); printeo $$(eoc --alone dataize primApp $$var)
+	@cd ../../../tests/edges/
 		echo "\n";
 	done
     
