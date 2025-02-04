@@ -95,7 +95,7 @@ run:
 
 clean:
 	rm -f -r targets/
-	# rm -f tests/edges/star3.graph
-	# rm -f tests/list/dijkstra2.graph
+	rm -f tests/edges/star3.graph
+	rm -f tests/list/dijkstra2.graph
 	rm -f -r src/eo/kruskal/.eoc
 	rm -f -r src/eo/prim/.eoc
