@@ -61,10 +61,10 @@ run:
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
 
-	# @cd ../../src/eo
+	@cd ../../src/eo
 	# 	$(E); printeo $$(eoc --alone dataize app $$var)
-	# @cd ../../tests/edges/
-	# 	echo "\n";
+	@cd ../../tests/edges/
+		echo "\n";
 	done
 
 	@cd ../list
