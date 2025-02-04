@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - run: npm install -g eolang@0.28.0
+    - run: npm install -g eolang
     - run: make
     - run: make run
