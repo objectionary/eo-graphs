@@ -60,13 +60,13 @@ run:
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
-	  	
+
 	@cd ../../src/eo
 		$(E); printeo $$(eoc --alone dataize app $$var)
 	@cd ../../tests/edges/
 		echo "\n";
 	done
-    
+
 	@cd ../list
 	@echo "Now we are going to run Dijkstra's algorithm \n";
 	@for FILE in *; do \
