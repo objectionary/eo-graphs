@@ -1,0 +1,125 @@
++alias org.eolang.io.stdout
++alias org.eolang.txt.sprintf
++alias org.eolang.txt.sscanf
++alias org.eolang.structs.set
++alias org.eolang.structs.list
+
+# Graph edge implementaion.
+[from to weight] > edge
+  # Compairs current edge with given other.
+  [other] > eq
+    and. > @
+      and.
+        other.from.eq from
+        other.to.eq to
+      other.weight.eq weight
+
+# Graph implementation.
+[args] > graph
+  # Graph reading imlementation.
+  [i] > readGraph
+    if. > @
+      i.lt ^.args.length
+      with.
+        ^.readGraph (i.plus 3)
+        edge
+          (sscanf "%d" (^.args.at (plus. 0.as-number i))).at 0
+          (sscanf "%d" (^.args.at (plus. 1.as-number i))).at 0
+          (sscanf "%d" (^.args.at (plus. 2.as-number i))).at 0
+      list *
+  # Graph printing implementation.
+  [edges] > printGraph
+    while > @
+      i.lt edges.length > [i] >>
+      [i] >>
+        stdout > @
+          sprintf
+            "%d %d %d\n"
+            * (^.edges.at i).from (^.edges.at i).to (^.edges.at i).weight
+  readGraph 0 > @
+
+# Check if set has a given node.
+[set-of-verteces vertex] > containsVertex
+  set-of-verteces.has vertex > @
+
+# Creates a set of nodes of the graph from input.
+[args] > genNodes
+  [i] > interpreter
+    if. > @
+      i.lt ^.args.length
+      if.
+        ((((i.plus 1).div 3).floor.times 3).eq (i.plus 1)).not
+        with.
+          ^.interpreter (i.plus 1)
+          ^.args.at i
+        ^.interpreter (i.plus 1)
+      set *
+  interpreter 0 > @
+
+# Main prim algorithm part.
+[edges] > algo
+  # Finds first edge in Prim's algo (i.e. edge with the least weight).
+  [minimum-index index] > findFirstEdge
+    if. > @
+      index.gte edges.length
+      minimum-index
+      if.
+        (^.edges.at index).weight.lt (^.edges.at minimum-index).weight
+        ^.findFirstEdge index (index.plus 1)
+        ^.findFirstEdge minimum-index (index.plus 1)
+  # Finds edges which the MST consists of.
+  [used-edges used-nodes edges-rest] > findEdges
+    # Finds the next edge, which weight is the least from the rest and exactly one node is used.
+    [minimum-index index] > findNextEdge
+      if. > @
+        index.gte ^.edges-rest.length
+        minimum-index
+        seq
+          *
+            used-nodes.has (^.edges-rest.at index).from > isFromUsed!
+            used-nodes.has (^.edges-rest.at index).to > isToUsed!
+            if.
+              and.
+                or.
+                  isFromUsed.as-bool.and isToUsed.as-bool.not
+                  isFromUsed.as-bool.not.and isToUsed.as-bool
+                or.
+                  minimum-index.eq -1
+                  lt.
+                    (^.edges-rest.at index).weight
+                    (^.edges-rest.at minimum-index).weight
+              ^.findNextEdge index (index.plus 1)
+              ^.findNextEdge minimum-index (index.plus 1)
+    findNextEdge -1 0 > next-edge
+    if. > @
+      next-edge.eq -1
+      used-edges
+      if.
+        (used-nodes.has (edges-rest.at next-edge).from).not
+        ^.findEdges (used-edges.with (edges-rest.at next-edge)) (used-nodes.with (edges-rest.at next-edge).from) (edges-rest.withouti next-edge)
+        ^.findEdges (used-edges.with (edges-rest.at next-edge)) (used-nodes.with (edges-rest.at next-edge).to) (edges-rest.withouti next-edge)
+  edges.at (findFirstEdge 0 0) > first-edge
+  set (* first-edge.from first-edge.to) > used-first-nodes
+  findEdges (list (* first-edge)) used-first-nodes edges > @
+
+# Prints out the result nodes, "result" - list of result edges.
+[result] > printResult
+  [result] > printEdges
+    while > @
+      i.lt result.length > [i] >>
+      [i] >>
+        stdout > @
+          sprintf
+            "(%d %d - %d) "
+            * (^.result.at i).from (^.result.at i).to (^.result.at i).weight
+  seq > @
+    *
+      stdout
+        "MST: "
+      printEdges result
+
+# Prim algorithm application.
+[args] > primApp
+  graph args > edges
+  algo edges > result
+  printResult result > @

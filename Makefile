@@ -39,7 +39,7 @@ compile:
 	@cd ../java
 	@make
 	@cd ../eo/
-	@eoc dataize app --verbose
+	# @eoc dataize app --verbose
 run:
 	@clear
 	@java -cp targets/java/ GraphGenerator 0 10 > tests/edges/star3.graph
@@ -62,7 +62,7 @@ run:
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
 
 	@cd ../../src/eo
-		$(E); printeo $$(eoc --alone dataize app $$var)
+	# 	$(E); printeo $$(eoc --alone dataize app $$var)
 	@cd ../../tests/edges/
 		echo "\n";
 	done

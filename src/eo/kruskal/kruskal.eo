@@ -1,0 +1,131 @@
++alias org.eolang.io.stdout
++alias org.eolang.txt.sprintf
++alias org.eolang.txt.sscanf
++alias org.eolang.structs.set
++alias org.eolang.structs.list
+
+# Graph edge implementaion.
+[from to weight] > edge
+  # Compairs current edge with given other.
+  [other] > eq
+    and. > @
+      and.
+        other.from.eq from
+        other.to.eq to
+      other.weight.eq weight
+
+# Graph implementation.
+[args] > graph
+  # Graph reading imlementation.
+  [i] > readGraph
+    if. > @
+      i.lt ^.args.length
+      with.
+        ^.readGraph (i.plus 3)
+        edge
+          (sscanf "%d" (^.args.at (plus. 0.as-number i))).at 0
+          (sscanf "%d" (^.args.at (plus. 1.as-number i))).at 0
+          (sscanf "%d" (^.args.at (plus. 2.as-number i))).at 0
+      list *
+  # Graph printing implementation.
+  [edges] > printGraph
+    while > @
+      i.lt edges.length > [i] >>
+      [i] >>
+        stdout > @
+          sprintf
+            "%d %d %d\n"
+            * (^.edges.at i).from (^.edges.at i).to (^.edges.at i).weight
+  readGraph 0 > @
+
+# Creates a set of nodes of the graph from input.
+[args] > genNodes
+  [i] > interpreter
+    if. > @
+      i.lt ^.args.length
+      if.
+        ((((i.plus 1).div 3).floor.times 3).eq (i.plus 1)).not
+        with.
+          ^.interpreter (i.plus 1)
+          ^.args.at i
+        ^.interpreter (i.plus 1)
+      set *
+  interpreter 0 > @
+
+# Creates list with size of 'sz' filled with 'val'.
+[sz val] > createList
+  [i] > creator
+    if. > @
+      i.lt ^.sz
+      with.
+        ^.creator (i.plus 1)
+        ^.val
+      list *
+  creator 0 > @
+
+# Updates node-number's parent with new-parent-number in given dsu-list.
+[node-number new-parent-number dsu-list] > dsuUpdate
+  (dsu-list.withouti node-number).withi node-number new-parent-number > @
+
+# Returns number of parent node of node-number; returns node-number, if no parent found.
+[node-number dsu-list] > dsuGetParent
+  [i] > getter
+    ^.dsu-list.at i > parent
+    if. > @
+      (parent.eq -1).not
+      ^.getter parent
+      i
+  getter node-number > @
+
+# Main Kruskal's algorithm part.
+[edges nodes-number] > algo
+  [dsu used-edges] > findEdges
+    # Finds the next edge, which weight is the least from the rest and which
+    # don't form a cycle with those which are already used.
+    [minimum-index index] > findNextEdge
+      if. > @
+        index.gte ^.^.edges.length
+        minimum-index
+        seq
+          *
+            dsuGetParent (^.^.edges.at index).from ^.dsu > parentFrom
+            dsuGetParent (^.^.edges.at index).to ^.dsu > parentTo
+            if.
+              and.
+                (parentFrom.eq parentTo).not
+                or.
+                  minimum-index.eq -1
+                  lt.
+                    (^.^.edges.at index).weight
+                    (^.^.edges.at minimum-index).weight
+              ^.findNextEdge index (index.plus 1)
+              ^.findNextEdge minimum-index (index.plus 1)
+    findNextEdge -1 0 > next-edge
+    if. > @
+      next-edge.eq -1
+      used-edges
+      ^.findEdges (dsuUpdate (^.edges.at next-edge).from (^.edges.at next-edge).to dsu) (used-edges.with next-edge)
+  findEdges (createList nodes-number -1) (list *) > @
+
+# Prints out the result nodes, "result" - list of result edges' indexes in "edges".
+[edges result] > printResult
+  [result] > printEdges
+    while > @
+      i.lt result.length > [i] >>
+      [i] >>
+        stdout > @
+          sprintf
+            "(%d %d - %d) "
+            * (^.^.edges.at (^.result.at i)).from (^.^.edges.at (^.result.at i)).to (^.^.edges.at (^.result.at i)).weight
+  seq > @
+    *
+      stdout
+        "MST: "
+      printEdges result
+
+# Prim algorithm application.
+[args] > kruskalApp
+  graph args > edges
+  genNodes args > nodes
+  algo edges nodes.size > result
+  printResult edges result > @
