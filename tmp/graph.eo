@@ -1,4 +1,7 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2024-2025 Yegor Bugayenko
++spdx SPDX-License-Identifier: MIT
 +package ru.hse.eo_graphs.eo
+
 
 # Vertex (or node) of a graph.
 # It has:
