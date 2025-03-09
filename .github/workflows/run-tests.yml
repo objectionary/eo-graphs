@@ -5,15 +5,15 @@
 name: Run All
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 jobs:
   build:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
-    - run: npm install -g eolang
-    - run: make
-    - run: make run
+      - uses: actions/checkout@v4
+      - run: npm install -g eolang@0.28.0
+      - run: make
+      - run: make run
