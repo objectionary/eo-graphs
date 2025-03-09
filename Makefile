@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Copyright (c) 2024-2025 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
+
+
 .ONESHELL:
 shell = bash
 TARGPATH = ../../targets
@@ -42,34 +46,38 @@ compile:
 	# @eoc dataize app --verbose
 run:
 	@clear
-	@java -cp targets/java/ GraphGenerator 0 10 > tests/edges/star3.graph
-	@java -cp targets/java/ GraphGenerator 1 10 > tests/list/dijkstra2.graph
+	# @java -cp targets/java/ GraphGenerator 0 10 > tests/edges/star3.graph
+	# @java -cp targets/java/ GraphGenerator 1 10 > tests/list/dijkstra2.graph
 	@cd tests/edges
 	@echo "Now we are going to run Kruskal's algorithm \n";
-	@for FILE in *; do \
+	@for FILE in *.graph; do \
 	    var=$$(cat $$FILE)
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java Kruskal $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/kruskal $$var); \
+		
+	@cd ../../src/eo/kruskal
+		$(E); printeo @$$(eoc --easy dataize kruskalApp $$var)
+	@cd ../../../tests/edges/
 		echo "\n";
 	done
 
 	@echo "Now we are going to run Prim's algorithm \n";
-	@for FILE in *; do \
+	@for FILE in *.graph; do \
 	    var=$$(cat $$FILE)
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
 
-	@cd ../../src/eo
-	# 	$(E); printeo $$(eoc --alone dataize app $$var)
-	@cd ../../tests/edges/
+	@cd ../../src/eo/prim
+		$(E); printeo @$$(eoc --easy dataize primApp $$var)
+	@cd ../../../tests/edges/
 		echo "\n";
 	done
 
 	@cd ../list
 	@echo "Now we are going to run Dijkstra's algorithm \n";
-	@for FILE in *; do \
+	@for FILE in *.graph; do \
 	    var=$$(cat $$FILE)
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java Dijkstra $$var); \
@@ -78,7 +86,7 @@ run:
 	done
 
 	@echo "Now we are going to run Ford-Falkerson algorithm \n";
-	@for FILE in *; do \
+	@for FILE in *.graph; do \
 	    var=$$(cat $$FILE)
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java FordFalkerson $$var); \
@@ -88,6 +96,8 @@ run:
 
 clean:
 	rm -f -r targets/
-	rm -f tests/edges/star3.graph
+	# rm -f tests/edges/star3.graph
 	rm -f tests/list/dijkstra2.graph
 	rm -f -r src/eo/.eoc
+	rm -f -r src/eo/kruskal/.eoc
+	rm -f -r src/eo/prim/.eoc
