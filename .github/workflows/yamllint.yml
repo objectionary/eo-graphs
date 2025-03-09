@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
-name: xcop
-on:
+name: yamllint
+'on':
   push:
     branches:
       - master
@@ -11,9 +11,9 @@ on:
     branches:
       - master
 jobs:
-  xcop:
+  yamllint:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: g4s8/xcop-action@master
+      - uses: ibiqlik/action-yamllint@v3

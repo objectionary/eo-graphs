@@ -1,165 +1,165 @@
-+alias org.eolang.io.stdout	
-+alias org.eolang.txt.sprintf	
-+alias org.eolang.txt.sscanf	
-+alias org.eolang.collections.list	
++alias org.eolang.io.stdout
++alias org.eolang.txt.sprintf
++alias org.eolang.txt.sscanf
++alias org.eolang.collections.list
 
-[n1 n2 length] > graphedge	
+[n1 n2 length] > graphedge
 
-[id r arr] > rec	
-  if. > @	
-    gt.	
-      id	
-      r	
-    *	
-    concat.	
-      *	
-        arr.at id	
-      ^.rec	
-        (id.plus 1)	
-        r	
-        arr	
+[id r arr] > rec
+  if. > @
+    gt.
+      id
+      r
+    *
+    concat.
+      *
+        arr.at id
+      ^.rec
+        (id.plus 1)
+        r
+        arr
 
-[pos1 pos2 arr] > swap	
-  rec 0 (pos1.minus 1) arr > l	
-  with. > mid	
-    with.	
-      l	
-      arr.at pos2	
-    arr.at pos1	
-  concat. > @	
-    mid	
-    rec (pos2.plus 1) (arr.length.minus 1) arr	
+[pos1 pos2 arr] > swap
+  rec 0 (pos1.minus 1) arr > l
+  with. > mid
+    with.
+      l
+      arr.at pos2
+    arr.at pos1
+  concat. > @
+    mid
+    rec (pos2.plus 1) (arr.length.minus 1) arr
 
-[id arr] > move	
-  if. > @	
-    or.	
-      lt.	
-        id	
-        1	
-      lte.	
-        (arr.at (id.minus 1)).length	
-        (arr.at id).length	
-    arr	
-    ^.move	
-      id.minus 1	
-      swap	
-        id.minus 1	
-        id	
-        arr	
-[id arr] > sort	
-  if. > @	
-    gte.	
-      id	
-      arr.length	
-    arr	
-    ^.sort	
-      id.plus 1	
-      move	
-        id	
-        arr	
+[id arr] > move
+  if. > @
+    or.
+      lt.
+        id
+        1
+      lte.
+        (arr.at (id.minus 1)).length
+        (arr.at id).length
+    arr
+    ^.move
+      id.minus 1
+      swap
+        id.minus 1
+        id
+        arr
+[id arr] > sort
+  if. > @
+    gte.
+      id
+      arr.length
+    arr
+    ^.sort
+      id.plus 1
+      move
+        id
+        arr
 
-[a b] > max	
-  if. > @	
-    lt.	
-      a	
-      b	
-    b	
-    a	
+[a b] > max
+  if. > @
+    lt.
+      a
+      b
+    b
+    a
 
-[s1 s2] > join	
-  s1.as-bytes > x1	
-  s2.as-bytes > x2	
-  x1.concat x2 > x3	
-  x3.as-string > @	
+[s1 s2] > join
+  s1.as-bytes > x1
+  s2.as-bytes > x2
+  x1.concat x2 > x3
+  x3.as-string > @
 
-[args...] > app	
-  [] > graph!	
-    [i] > getEdges	
-      if. > @	
-        (i.plus 2).lt	
-          ^.^.args.length	
-        with.	
-          ^.getEdges	
-            i.plus 3	
-          graphedge	
-            (sscanf "%d" (^.^.args.at i)).at 0	
-            (sscanf "%d" (^.^.args.at (i.plus 1))).at 0	
-            (sscanf "%d" (^.^.args.at (i.plus 2))).at 0	
-        *	
-    if. > @	
-      ^.args.length.lt 3	
-      *	
-      getEdges 0	
-  graph > res	
-  sort 1 res > edges	
-  reduce. > ma	
-    list	
-      edges	
-    0	
-    [accum x]	
-      max (max (x.n1.plus 1) (x.n2.plus 1)) accum > @	
+[args...] > app
+  [] > graph!
+    [i] > getEdges
+      if. > @
+        (i.plus 2).lt
+          ^.^.args.length
+        with.
+          ^.getEdges
+            i.plus 3
+          graphedge
+            (sscanf "%d" (^.^.args.at i)).at 0
+            (sscanf "%d" (^.^.args.at (i.plus 1))).at 0
+            (sscanf "%d" (^.^.args.at (i.plus 2))).at 0
+        *
+    if. > @
+      ^.args.length.lt 3
+      *
+      getEdges 0
+  graph > res
+  sort 1 res > edges
+  reduce. > ma
+    list
+      edges
+    0
+    [accum x]
+      max (max (x.n1.plus 1) (x.n2.plus 1)) accum > @
 
-  [id arr] > fill	
-    if. > @	
-      lt.	
-        id	
-        ^.ma	
-      ^.fill	
-        id.plus 1	
-        with.	
-          arr	
-          id	
-      arr	
-  fill 0 * > par!	
-  [id res parArr] > findEdges	
-    if. > @	
-      lt.	
-        id	
-        ^.edges.length	
-      if.	
-        eq.	
-          parArr.at (^.edges.at id).n1	
-          parArr.at (^.edges.at id).n2	
-        ^.findEdges	
-          (id.plus 1)	
-          res	
-          parArr	
-        ^.findEdges	
-          (id.plus 1)	
-          with.	
-            res	
-            (^.edges.at id)	
-          reduce.	
-            list	
-              parArr	
-            *	
-            [accum x]	
-              if. > @	
-                eq.	
-                  x	
-                  (^.^.edges.at id).n1	
-                with.	
-                  accum	
-                  (^.^.edges.at id).n2	
-                with.	
-                  accum	
-                  x	
-      res	
-  findEdges 0 * par > ans	
-  [i] > output	
-    if. > @	
-      i.eq	
-        ^.ans.length	
-      ""	
-      join	
-        sprintf	
-          "(%d %d - %d) "	
-          (^.ans.at i).n1	
-          (^.ans.at i).n2	
-          (^.ans.at i).length	
-        ^.output (i.plus 1)	
-  join "MST: " (output 0) > ret	
-  stdout > @	
-    sprintf	
-      "%s \n"	
+  [id arr] > fill
+    if. > @
+      lt.
+        id
+        ^.ma
+      ^.fill
+        id.plus 1
+        with.
+          arr
+          id
+      arr
+  fill 0 * > par!
+  [id res parArr] > findEdges
+    if. > @
+      lt.
+        id
+        ^.edges.length
+      if.
+        eq.
+          parArr.at (^.edges.at id).n1
+          parArr.at (^.edges.at id).n2
+        ^.findEdges
+          (id.plus 1)
+          res
+          parArr
+        ^.findEdges
+          (id.plus 1)
+          with.
+            res
+            (^.edges.at id)
+          reduce.
+            list
+              parArr
+            *
+            [accum x]
+              if. > @
+                eq.
+                  x
+                  (^.^.edges.at id).n1
+                with.
+                  accum
+                  (^.^.edges.at id).n2
+                with.
+                  accum
+                  x
+      res
+  findEdges 0 * par > ans
+  [i] > output
+    if. > @
+      i.eq
+        ^.ans.length
+      ""
+      join
+        sprintf
+          "(%d %d - %d) "
+          (^.ans.at i).n1
+          (^.ans.at i).n2
+          (^.ans.at i).length
+        ^.output (i.plus 1)
+  join "MST: " (output 0) > ret
+  stdout > @
+    sprintf
+      "%s \n"
       ret

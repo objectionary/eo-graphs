@@ -15,7 +15,7 @@ $ make run
 
 By the way, the graphs are generated randomly by the [utility](https://github.com/potatmen/eo-graphs/blob/master/src/java/generator/GraphGenerator.java) written in Java.
 
-## Algorithms 
+## Algorithms
 
 The following graph algorithms are implemented:
 
