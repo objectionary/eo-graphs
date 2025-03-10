@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+# SPDX-License-Identifier: MIT
+
 +package ru.hse.eo_graphs.eo.fordfulkerson
 +alias ru.hse.eo_graphs.eo.vertex
 +alias ru.hse.eo_graphs.eo.edge

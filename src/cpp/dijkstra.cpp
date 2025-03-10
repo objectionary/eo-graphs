@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+// SPDX-License-Identifier: MIT
+
 #include <iostream>
 #include <climits>
 #include <cstring>

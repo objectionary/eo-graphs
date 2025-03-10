@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+# SPDX-License-Identifier: MIT
+
 +package ru.hse.eo_graphs.eo.dijkstra
 +alias ru.hse.eo_graphs.eo.dijkstra.testGraph
 +alias ru.hse.eo_graphs.eo.dijkstra.dijkstra

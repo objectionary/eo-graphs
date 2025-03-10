@@ -1,3 +1,7 @@
+/**
+ * SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+ * SPDX-License-Identifier: MIT
+ */
 package prim;
 
 import java.util.Iterator;

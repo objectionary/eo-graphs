@@ -1,4 +1,7 @@
-// algorithm
+/**
+ * SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+ * SPDX-License-Identifier: MIT
+ */
 import java.lang.*;
 import java.util.Arrays;
 import java.util.LinkedList;

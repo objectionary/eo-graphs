@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+# SPDX-License-Identifier: MIT
+
 .ONESHELL:
 shell = bash
 TARGPATH = ../../targets
