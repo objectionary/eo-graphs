@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 +spdx SPDX-FileCopyrightText: Copyright (c) 2024-2025 Yegor Bugayenko
 +spdx SPDX-License-Identifier: MIT
+=======
+# SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+# SPDX-License-Identifier: MIT
+
+>>>>>>> 3042530 (reuse)
 +package ru.hse.eo_graphs.eo.dijkstra
 +alias ru.hse.eo_graphs.eo.vertex
 +alias edge ru.hse.eo_graphs.eo.edge
