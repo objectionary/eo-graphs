@@ -1,19 +1,21 @@
-# SPDX-FileCopyrightText: Copyright (c) 2024-2025 Yegor Bugayenko
+# SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
-name: Run All
-on:
+name: build
+'on':
   push:
-    branches: [master]
+    branches:
+      - master
   pull_request:
-    branches: [master]
+    branches:
+      - master
 jobs:
   build:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - run: npm install -g eolang@0.28.0
+      - run: npm install -g eolang
       - run: make
       - run: make run

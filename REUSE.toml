@@ -1,10 +1,14 @@
-# SPDX-FileCopyrightText: Copyright (c) 2025 Yegor Bugayenko
+# SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
 # SPDX-License-Identifier: MIT
 
 version = 1
 [[annotations]]
 path = [
+    "**.json",
+    "**.md",
+    "**.txt",
     "**/*.csv",
+    "**/*.graph",
     "**/*.jpg",
     "**/*.json",
     "**/*.md",
@@ -13,14 +17,12 @@ path = [
     "**/*.svg",
     "**/*.txt",
     "**/*.vm",
+    "**/.DS_Store",
     "**/.gitignore",
     "**/CNAME",
+    ".DS_Store",
     ".gitattributes",
     ".gitignore",
-    ".gitleaksignore",
-    ".pdd",
-    ".xcop",
-    "Gemfile.lock",
     "README.md",
     "renovate.json",
 ]

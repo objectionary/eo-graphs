@@ -1,8 +1,7 @@
-/*
-SPDX-FileCopyrightText: Copyright (c) 2024-2025 Yegor Bugayenko
-SPDX-License-Identifier: MIT
-*/
-
+/**
+ * SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+ * SPDX-License-Identifier: MIT
+ */
 import prim.WeightGraph;
 
 import java.util.*;
