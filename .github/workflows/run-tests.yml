@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
-    - run: npm install -g eolang
-    - run: make
-    - run: make run
+      - uses: actions/checkout@v4
+      - run: npm install -g eolang
+      - run: make
+      - run: make run
