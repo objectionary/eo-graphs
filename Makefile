@@ -93,6 +93,45 @@ run:
 		echo "\n";
 	done
 
+prim:
+	@echo "Now we are going to run Prim's algorithm \n";
+	@cd tests/edges/
+	@for FILE in *.graph; do \
+	    var=$$(cat $$FILE)
+		echo "Test ($$FILE) is running"; \
+
+	@cd ../../src/eo/prim
+		$(E); printeo @$$(eoc --easy dataize primApp $$var)
+	@cd ../../../tests/edges/
+		echo "\n";
+	done
+
+kruskal:
+	@echo "Now we are going to run Kruskal's algorithm \n";
+	@cd tests/edges/
+	@for FILE in *.graph; do \
+	    var=$$(cat $$FILE)
+		echo "Test ($$FILE) is running"; \
+
+	@cd ../../src/eo/kruskal
+		$(E); printeo @$$(eoc --easy dataize kruskalApp $$var)
+	@cd ../../../tests/edges/
+		echo "\n";
+	done
+
+dijkstra:
+	@echo "Now we are going to run Dijkstra's algorithm \n";
+	@cd tests/list/
+	@for FILE in *.graph; do \
+	    var=$$(cat $$FILE)
+		echo "Test ($$FILE) is running"; \
+
+	@cd ../../src/eo/dijkstra
+		$(E); printeo @$$(eoc --easy dataize dijkstraApp $$var)
+	@cd ../../../tests/edges/
+		echo "\n";
+	done
+
 clean:
 	rm -f -r targets/
 	# rm -f tests/edges/star3.graph
