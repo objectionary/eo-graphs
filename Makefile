@@ -139,3 +139,4 @@ clean:
 	rm -f -r src/eo/.eoc
 	rm -f -r src/eo/kruskal/.eoc
 	rm -f -r src/eo/prim/.eoc
+	rm -f -r src/eo/dijkstra/.eoc
