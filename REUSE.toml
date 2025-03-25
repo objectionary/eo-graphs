@@ -29,3 +29,11 @@ path = [
 precedence = "override"
 SPDX-FileCopyrightText = "Copyright (c) 2025 Yegor Bugayenko"
 SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = [
+    "**/*.graph"
+]
+precedence = "override"
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "MIT"
