@@ -8,4 +8,5 @@
 .settings
 .vscode/
 node_modules/
-target/
+targets/
+*.eoc/
