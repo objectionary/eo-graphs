@@ -41,12 +41,8 @@ compile:
 	@make
 	@cd ../java
 	@make
-	@cd ../eo/
-	@eoc dataize app --verbose
 run:
 	@clear
-	@java -cp targets/java/ GraphGenerator 0 10 > tests/edges/star3.graph
-	@java -cp targets/java/ GraphGenerator 1 10 > tests/list/dijkstra2.graph
 	@cd tests/edges
 	@echo "Now we are going to run Kruskal's algorithm \n";
 	@for FILE in *; do \
@@ -64,9 +60,9 @@ run:
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
 
-	@cd ../../src/eo
-		$(E); printeo $$(eoc --alone dataize app $$var)
-	@cd ../../tests/edges/
+	@cd ../../src/eo/prim
+		$(E); printeo $$(eoc --easy dataize primApp $$var)
+	@cd ../../../tests/edges/
 		echo "\n";
 	done
 
@@ -91,6 +87,4 @@ run:
 
 clean:
 	rm -f -r targets/
-	rm -f tests/edges/star3.graph
-	rm -f tests/list/dijkstra2.graph
-	rm -f -r src/eo/.eoc
+	rm -f -r src/eo/prim/.eoc
