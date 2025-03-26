@@ -42,11 +42,8 @@ compile:
 	@cd ../java
 	@make
 	@cd ../eo/
-	# @eoc dataize app --verbose
 run:
 	@clear
-	# @java -cp targets/java/ GraphGenerator 0 10 > tests/edges/star3.graph
-	# @java -cp targets/java/ GraphGenerator 1 10 > tests/list/dijkstra2.graph
 	@cd tests/edges
 	@echo "Now we are going to run Kruskal's algorithm \n";
 	@for FILE in *.graph; do \
@@ -54,10 +51,6 @@ run:
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java Kruskal $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/kruskal $$var); \
-		
-	@cd ../../src/eo/kruskal
-		$(E); printeo @$$(eoc --easy dataize kruskalApp $$var)
-	@cd ../../../tests/edges/
 		echo "\n";
 	done
 
@@ -66,8 +59,7 @@ run:
 	    var=$$(cat $$FILE)
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
-		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var); \
-
+		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var);
 	@cd ../../src/eo/prim
 		$(E); printeo @$$(eoc --easy dataize primApp $$var)
 	@cd ../../../tests/edges/
@@ -83,7 +75,6 @@ run:
 		$(C); printcpp $$($(TARGPATH)/cpp/dijkstra $$var); \
 		echo "\n";
 	done
-
 	@echo "Now we are going to run Ford-Falkerson algorithm \n";
 	@for FILE in *.graph; do \
 	    var=$$(cat $$FILE)
@@ -98,8 +89,7 @@ prim:
 	@cd tests/edges/
 	@for FILE in *.graph; do \
 	    var=$$(cat $$FILE)
-		echo "Test ($$FILE) is running"; \
-
+		echo "Test ($$FILE) is running";
 	@cd ../../src/eo/prim
 		$(E); printeo @$$(eoc --easy dataize primApp $$var)
 	@cd ../../../tests/edges/
@@ -111,8 +101,7 @@ kruskal:
 	@cd tests/edges/
 	@for FILE in *.graph; do \
 	    var=$$(cat $$FILE)
-		echo "Test ($$FILE) is running"; \
-
+		echo "Test ($$FILE) is running";
 	@cd ../../src/eo/kruskal
 		$(E); printeo @$$(eoc --easy dataize kruskalApp $$var)
 	@cd ../../../tests/edges/
@@ -124,8 +113,7 @@ dijkstra:
 	@cd tests/list/
 	@for FILE in *.graph; do \
 	    var=$$(cat $$FILE)
-		echo "Test ($$FILE) is running"; \
-
+		echo "Test ($$FILE) is running";
 	@cd ../../src/eo/dijkstra
 		$(E); printeo @$$(eoc --easy dataize dijkstraApp $$var)
 	@cd ../../../tests/edges/
@@ -134,7 +122,6 @@ dijkstra:
 
 clean:
 	rm -f -r targets/
-	# rm -f tests/edges/star3.graph
 	rm -f tests/list/dijkstra2.graph
 	rm -f -r src/eo/.eoc
 	rm -f -r src/eo/kruskal/.eoc
