@@ -92,14 +92,14 @@
                     ($.^.edges-rest.at minimum-index).weight
               $.^.findNextEdge index (index.plus 1)
               $.^.findNextEdge minimum-index (index.plus 1)
-    $.findNextEdge -1 0 > next-edge
+    $.findNextEdge -1 0 > next-edge!
     if. > @
-      next-edge.eq -1
+      next-edge.as-number.eq -1
       used-edges
       if.
-        (used-nodes.has (edges-rest.at next-edge).from).not
-        $.^.findEdges (used-edges.with (edges-rest.at next-edge)) (used-nodes.with (edges-rest.at next-edge).from) (edges-rest.withouti next-edge)
-        $.^.findEdges (used-edges.with (edges-rest.at next-edge)) (used-nodes.with (edges-rest.at next-edge).to) (edges-rest.withouti next-edge)
+        (used-nodes.has (edges-rest.at next-edge.as-number).from).not
+        $.^.findEdges (used-edges.with (edges-rest.at next-edge.as-number)) (used-nodes.with (edges-rest.at next-edge.as-number).from) (edges-rest.withouti next-edge.as-number)
+        $.^.findEdges (used-edges.with (edges-rest.at next-edge.as-number)) (used-nodes.with (edges-rest.at next-edge.as-number).to) (edges-rest.withouti next-edge.as-number)
   edges.at ($.findFirstEdge 0 0) > first-edge
   set (* first-edge.from first-edge.to) > used-first-nodes
   $.findEdges (list (* first-edge)) used-first-nodes edges > @
