@@ -3,6 +3,7 @@
 
 +package ru.hse.eo_graphs.eo
 
+
 # Vertex (or node) of a graph.
 # It has:
 #        -- an index (i) for computer-aided reference
