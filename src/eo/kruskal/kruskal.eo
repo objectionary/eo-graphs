@@ -127,7 +127,7 @@
         "MST: "
       printEdges result
 
-# Prim algorithm application.
+# Kruskal algorithm application.
 [args] > kruskalApp
   graph args > edges
   algo edges (genNodes args).size > result
