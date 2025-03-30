@@ -6,80 +6,11 @@
 +alias org.eolang.structs.set
 +alias org.eolang.structs.list
 
-# Graph edge implementaion.
-[from to weight] > edge
-  # Compairs current edge with given other.
-  [other] > eq
-    and. > @
-      and.
-        other.from.eq from
-        other.to.eq to
-      other.weight.eq weight
-
-# Graph implementation.
-[args] > graph
-  # Graph reading imlementation.
-  [i] > readGraph
-    if. > @
-      i.lt ^.args.length
-      with.
-        ^.readGraph (i.plus 3)
-        edge
-          (sscanf "%d" (^.args.at (plus. 0.as-number i))).at 0
-          (sscanf "%d" (^.args.at (plus. 1.as-number i))).at 0
-          (sscanf "%d" (^.args.at (plus. 2.as-number i))).at 0
-      list *
-  # Graph printing implementation.
-  [edges] > printGraph
-    while > @
-      i.lt edges.length > [i] >>
-      [i] >>
-        stdout > @
-          sprintf
-            "%d %d %d\n"
-            * (^.edges.at i).from (^.edges.at i).to (^.edges.at i).weight
-  readGraph 0 > @
-
-# Creates a set of nodes of the graph from input.
-[args] > genNodes
-  [i] > interpreter
-    if. > @
-      i.lt ^.args.length
-      if.
-        ((((i.plus 1).div 3).floor.times 3).eq (i.plus 1)).not
-        with.
-          ^.interpreter (i.plus 1)
-          ^.args.at i
-        ^.interpreter (i.plus 1)
-      set *
-  interpreter 0 > @
-
-# Creates list with size of 'sz' filled with 'val'.
-[sz val] > createList
-  [i] > creator
-    if. > @
-      i.lt ^.sz
-      with.
-        ^.creator (i.plus 1)
-        ^.val
-      list *
-  creator 0 > @
-
-# Updates node-number's parent with new-parent-number in given dsu-list.
-[node-number new-parent-number dsu-list] > dsuUpdate
-  dsuGetParent node-number dsu-list > parent1!
-  dsuGetParent new-parent-number dsu-list > parent2!
-  (dsu-list.withouti parent1.as-number).withi parent1.as-number parent2.as-number > @
-
-# Returns number of parent node of node-number; returns node-number, if no parent found.
-[node-number dsu-list] > dsuGetParent
-  [i] > getter
-    ^.dsu-list.at i > parent!
-    if. > @
-      (parent.as-number.eq -1).not
-      ^.getter parent.as-number
-      i
-  getter node-number > @
+# Kruskal algorithm application.
+[args] > kruskalApp
+  graph args > edges
+  algo edges (genNodes args).size > result
+  printResult edges result > @
 
 # Main Kruskal's algorithm part.
 [edges nodes-number] > algo
@@ -111,6 +42,30 @@
       ^.findEdges (dsuUpdate (^.edges.at next-edge).from (^.edges.at next-edge).to dsu) (used-edges.with next-edge)
   findEdges (createList nodes-number -1) (list *) > @
 
+# Graph implementation.
+[args] > graph
+  # Graph reading imlementation.
+  [i] > readGraph
+    if. > @
+      i.lt ^.args.length
+      with.
+        ^.readGraph (i.plus 3)
+        edge
+          (sscanf "%d" (^.args.at (plus. 0.as-number i))).at 0
+          (sscanf "%d" (^.args.at (plus. 1.as-number i))).at 0
+          (sscanf "%d" (^.args.at (plus. 2.as-number i))).at 0
+      list *
+  # Graph printing implementation.
+  [edges] > printGraph
+    while > @
+      i.lt edges.length > [i] >>
+      [i] >>
+        stdout > @
+          sprintf
+            "%d %d %d\n"
+            * (^.edges.at i).from (^.edges.at i).to (^.edges.at i).weight
+  readGraph 0 > @
+
 # Prints out the result nodes, "result" - list of result edges' indexes in "edges".
 [edges result] > printResult
   [result] > printEdges
@@ -127,8 +82,53 @@
         "MST: "
       printEdges result
 
-# Kruskal algorithm application.
-[args] > kruskalApp
-  graph args > edges
-  algo edges (genNodes args).size > result
-  printResult edges result > @
+# Updates node-number's parent with new-parent-number in given dsu-list.
+[node-number new-parent-number dsu-list] > dsuUpdate
+  dsuGetParent node-number dsu-list > parent1!
+  dsuGetParent new-parent-number dsu-list > parent2!
+  (dsu-list.withouti parent1.as-number).withi parent1.as-number parent2.as-number > @
+
+# Returns number of parent node of node-number; returns node-number, if no parent found.
+[node-number dsu-list] > dsuGetParent
+  [i] > getter
+    ^.dsu-list.at i > parent!
+    if. > @
+      (parent.as-number.eq -1).not
+      ^.getter parent.as-number
+      i
+  getter node-number > @
+
+# Graph edge implementaion.
+[from to weight] > edge
+  # Compairs current edge with given other.
+  [other] > eq
+    and. > @
+      and.
+        other.from.eq from
+        other.to.eq to
+      other.weight.eq weight
+
+# Creates a set of nodes of the graph from input.
+[args] > genNodes
+  [i] > interpreter
+    if. > @
+      i.lt ^.args.length
+      if.
+        ((((i.plus 1).div 3).floor.times 3).eq (i.plus 1)).not
+        with.
+          ^.interpreter (i.plus 1)
+          ^.args.at i
+        ^.interpreter (i.plus 1)
+      set *
+  interpreter 0 > @
+
+# Creates list with size of 'sz' filled with 'val'.
+[sz val] > createList
+  [i] > creator
+    if. > @
+      i.lt ^.sz
+      with.
+        ^.creator (i.plus 1)
+        ^.val
+      list *
+  creator 0 > @
