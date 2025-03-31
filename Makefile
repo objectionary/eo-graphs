@@ -41,6 +41,11 @@ compile:
 	@make
 	@cd ../java
 	@make
+	@cd ../eo
+	@cd prim/
+	@eoc --easy link primApp
+	@cd ../kruskal/
+	@eoc --easy link kruskalApp
 run:
 	@clear
 	@cd tests/edges
@@ -49,7 +54,10 @@ run:
 	    var=$$(cat $$FILE)
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java Kruskal $$var); \
-		$(C); printcpp $$($(TARGPATH)/cpp/kruskal $$var); \
+		$(C); printcpp $$($(TARGPATH)/cpp/kruskal $$var);
+	@cd ../../src/eo/kruskal
+		$(E); printeo $$(eoc --easy --alone dataize kruskalApp $$var);
+	@cd ../../../tests/edges/
 		echo "\n";
 	done
 	@echo "Now we are going to run Prim's algorithm \n";
@@ -59,6 +67,7 @@ run:
 		$(J); printjava $$(java -cp $(TARGPATH)/java prim/PrimMST $$var); \
 		$(C); printcpp $$($(TARGPATH)/cpp/prim $$var);
 	@cd ../../src/eo/prim
+		$(E); printeo $$(eoc --easy --alone dataize primApp $$var);
 	@cd ../../../tests/edges/
 		echo "\n";
 	done
@@ -68,7 +77,9 @@ run:
 	    var=$$(cat $$FILE)
 		echo "Test ($$FILE) is running"; \
 		$(J); printjava $$(java -cp $(TARGPATH)/java Dijkstra $$var); \
-		$(C); printcpp $$($(TARGPATH)/cpp/dijkstra $$var); \
+		$(C); printcpp $$($(TARGPATH)/cpp/dijkstra $$var);
+	@cd ../../src/eo/dijkstra
+	@cd ../../../tests/list/
 		echo "\n";
 	done
 	@echo "Now we are going to run Ford-Falkerson algorithm \n";
@@ -83,3 +94,6 @@ run:
 clean:
 	rm -f -r targets/
 	rm -f -r src/eo/prim/.eoc
+	rm -f -r src/eo/kruskal/.eoc
+	rm -f -r src/eo/dijkstra/.eoc
+	rm -f -r src/eo/.eoc
