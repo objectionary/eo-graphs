@@ -1,0 +1,185 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias org.eolang.io.stdout
++alias org.eolang.txt.sprintf
++alias org.eolang.txt.sscanf
++alias org.eolang.structs.map
++alias org.eolang.structs.list
+
+# Dijkstra algorithm application.
+[args] > dijkstraApp
+  graph args > g
+  algo g 0 > result
+  printResult result > @
+
+# Main Dijkstra algorithm part.
+# 'g' - a map that contains graph in ajacency list format:
+# 'g.at vertex-index' allows to get a list of 'edge's from
+# this vertex.
+# 'start' - vertex from which algorithm starts.
+[g start] > algo
+  # Finds minimal-weight paths from 'start' to all other vertexes.
+  [available stats] > findPaths
+    # Updates distances and paths with chosen vertex.
+    [node adjacent-nodes distances path] > updateDistance
+      [i dists paths] > updater
+        if. > @
+          i.lt $.^.adjacent-nodes.length
+          if.
+            lt.
+              (dists.at $.^.node).plus ($.^.adjacent-nodes.at i).weight
+              dists.at ($.^.adjacent-nodes.at i).to
+            ^.updater
+              i.plus 1
+              withi.
+                dists.withouti ($.^.adjacent-nodes.at i).to
+                ($.^.adjacent-nodes.at i).to
+                (dists.at $.^.node).plus ($.^.adjacent-nodes.at i).weight
+              withi.
+                paths.withouti ($.^.adjacent-nodes.at i).to
+                ($.^.adjacent-nodes.at i).to
+                $.^.node
+            $.^.updater
+              i.plus 1
+              dists
+              paths
+          list (* dists paths)
+      updater 0 distances path > @
+    # Finds next vertex with minimal distance from 'start'.
+    [minimum-index index] > findNextNode
+      if. > @
+        index.gte $.^.available.length
+        minimum-index
+        if.
+          or.
+            minimum-index.eq -1
+            lt.
+              $.^.distances.at ($.^.available.at index)
+              $.^.distances.at ($.^.available.at minimum-index)
+          $.^.findNextNode index (index.plus 1)
+          $.^.findNextNode minimum-index (index.plus 1)
+    stats.at 0 > distances
+    stats.at 1 > path
+    findNextNode -1 0 > next-node!
+    if. > @
+      next-node.as-number.eq -1
+      path
+      $.^.findPaths
+        available.withouti next-node.as-number
+        updateDistance
+          available.at next-node.as-number
+          ($.^.g.found (available.at next-node.as-number)).get
+          distances
+          path
+  findPaths > @
+    createSequence 0 g.size 1
+    *
+      ((createList g.size positive-infinity).withouti start).withi start 0
+      ((createList g.size -1).withouti start).withi start start
+
+# Graph implementation.
+[args] > graph
+  # Reads graph from adjacency list format.
+  [] > readGraph
+    # Parses graph single line in adjacency list.
+    [i limit] > lineParser
+      [index] > recParser
+        if. > @
+          index.lt ^.limit
+          with.
+            ^.recParser (index.plus 1)
+            edge
+              (sscanf "%d:%d" (^.^.^.args.at index)).at 0
+              (sscanf "%d:%d" (^.^.^.args.at index)).at 1
+          list *
+      recParser i > @
+    [i index-to-read number-of-vertex] > recReader
+      if. > @
+        i.lt number-of-vertex
+        seq
+          *
+            (sscanf "%d" (^.^.args.at index-to-read)).at 0 > number-of-edges
+            (sscanf "%d" (^.^.args.at (index-to-read.plus 1))).at 0 > vertex-number
+            with.
+              ^.recReader (i.plus 1) (index-to-read.plus (number-of-edges.plus 2)) number-of-vertex
+              vertex-number
+              lineParser (index-to-read.plus 2) ((number-of-edges.plus index-to-read).plus 2)
+        map *
+    (sscanf "%d" (^.args.at 0)).at 0 > number-of-vertex
+    recReader 0 1 number-of-vertex > @
+
+  # Prints graph in adjacency list format.
+  [graph] > printGraph
+    # Prints line in graph's adjacency list.
+    [line] > printLine
+      [i] > recPrint
+        if. > @
+          i.lt ^.line.length
+          seq
+            *
+              ^.recPrint (i.plus 1)
+              stdout
+                sprintf
+                  " %d-%d"
+                  * (^.line.at i).to (^.line.at i).weight
+          0
+      if. > @
+        not.
+          line.length.eq 0
+        recPrint 0
+        0
+    graph.keys > keys
+    while > @
+      i.lt keys.length > [i] >>
+      [i] >>
+        seq > @
+          *
+            stdout
+              sprintf
+                "\n%d"
+                * (^.keys.at i)
+            printLine (^.graph.found (^.keys.at i)).get
+  readGraph > @
+
+# Prints out the result: on the i's position parent of i's vertex
+# is printed.
+[path] > printResult
+  seq > @
+    *
+      stdout
+        "Paths: "
+      while
+        i.lt path.length > [i] >>
+        [i] >>
+          stdout > @
+            sprintf
+              "%d "
+              * ($.^.path.at i)
+
+# Graph edge in adjacency list implementation.
+# 'to' - the vertex to which the edge leads,
+# 'weight' - weight of the edge.
+[to weight] > edge
+
+# Creates list with size of 'sz' filled with 'val'.
+[sz val] > createList
+  [i] > creator
+    if. > @
+      i.lt $.^.sz
+      with.
+        $.^.creator (i.plus 1)
+        $.^.val
+      list *
+  creator 0 > @
+
+# Creates sequence of numbers that begins with 'start' and ends with 'finish',
+# with step 'step'. 'start' is included, 'finish' not. Returns a list.
+[start finish step] > createSequence
+  [i] > creator
+    if. > @
+      i.lt ^.finish
+      with.
+        ^.creator (i.plus ^.step)
+        i
+      list *
+  creator start > @
