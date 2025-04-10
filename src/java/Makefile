@@ -8,3 +8,6 @@ compile: $(CLASS_FILES)
 
 %.class: %.java
 	javac -d targets/ $<
+
+clean:
+	rm -rf targets/

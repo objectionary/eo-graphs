@@ -97,4 +97,6 @@ clean:
 	$(MAKE) -C src/eo/kruskal clean
 	$(MAKE) -C src/eo/prim clean
 	$(MAKE) -C src/eo/dijkstra clean
-	rm -rf targets/
+	$(MAKE) -C src/eo/fordfulkerson clean
+	$(MAKE) -C src/java clean
+	$(MAKE) -C src/cpp clean

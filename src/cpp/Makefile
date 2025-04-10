@@ -9,3 +9,6 @@ compile: $(BINARIES)
 targets/%.o: %.cpp
 	mkdir -p targets/
 	g++ $< -o $@
+
+clean:
+	rm -rf targets/
