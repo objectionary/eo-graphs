@@ -46,52 +46,45 @@ eo:
 	$(MAKE) -C src/eo/prim
 	$(MAKE) -C src/eo/dijkstra
 	$(MAKE) -C src/eo/fordfulkerson
+	mkdir target target/run
 
-run: compile
+run: target/run/kruskal.txt target/run/prim.txt target/run/dijkstra.txt target/run/fordfulkerson.txt
+
+target/run/kruskal.txt:
 	@echo "======================================== \n";
 	@echo "Now we are going to run Kruskal's algorithm \n";
 	@for FILE in tests/edges/*; do \
-	  var=$$(cat $$FILE)
-		echo "Test ($$FILE) is running"; \
-		$(J); printjava $$(java -cp $(TARGPATH_JAVA) Kruskal $$var); \
-		$(C); printcpp $$($(TARGPATH_CPP)/kruskal.o $$var);
-		$(E); printeo $$(eoc --target src/eo/kruskal/.eoc --easy --alone dataize kruskalApp $$var);
-	@echo "\n";
+		var=$$(cat $$FILE)
+		eoc --target src/eo/kruskal/.eoc --easy --alone dataize kruskalApp $$var
+		echo $$? > $@
 	done
-	@echo "End of Kruskal's algorithm run\n";
+
+target/run/prim.txt:
 	@echo "======================================== \n";
 	@echo "Now we are going to run Prim's algorithm \n";
 	@for FILE in tests/edges/*; do \
-	  var=$$(cat $$FILE)
-		echo "Test ($$FILE) is running"; \
-		$(J); printjava $$(java -cp $(TARGPATH_JAVA) prim/PrimMST $$var); \
-		$(C); printcpp $$($(TARGPATH_CPP)/prim.o $$var);
-		$(E); printeo $$(eoc --target src/eo/prim/.eoc --easy --alone dataize primApp $$var);
-	@echo "\n";
+	 	var=$$(cat $$FILE)
+		eoc --target src/eo/prim/.eoc --easy --alone dataize primApp $$var
+		echo $$? > $@
 	done
-	@echo "End of Prim's algorithm run\n";
+
+target/run/dijkstra.txt:
 	@echo "======================================== \n";
 	@echo "Now we are going to run Dijkstra's algorithm \n";
 	@for FILE in tests/list/*; do \
-	  var=$$(cat $$FILE)
-		echo "Test ($$FILE) is running"; \
-		$(J); printjava $$(java -cp $(TARGPATH_JAVA) Dijkstra $$var); \
-		$(C); printcpp $$($(TARGPATH_CPP)/dijkstra.o $$var);
-		$(E); printeo $$(eoc --target src/eo/dijkstra/.eoc --easy --alone dataize dijkstraApp $$var);
-		echo "\n";
+	 	var=$$(cat $$FILE)
+		eoc --target src/eo/dijkstra/.eoc --easy --alone dataize dijkstraApp $$var
+		echo $$? > $@
 	done
-	@echo "End of Dijkstra's algorithm run\n";
+
+target/run/fordfulkerson.txt:
 	@echo "======================================== \n";
 	@echo "Now we are going to run FordFulkerson's algorithm \n";
 	@for FILE in tests/list/*; do \
-	  var=$$(cat $$FILE)
-		echo "Test ($$FILE) is running"; \
-		$(J); printjava $$(java -cp $(TARGPATH_JAVA) FordFalkerson $$var); \
-		$(C); printcpp $$($(TARGPATH_CPP)/fordfalkersonalg.o $$var);
-		echo "\n";
+	 	var=$$(cat $$FILE)
+		@eoc --target src/eo/fordfulkerson/.eoc --easy --alone dataize fordfulkersonApp $$var
+		@echo $$? > $@
 	done
-	@echo "End of FordFulkerson's algorithm run\n";
-	@echo "======================================== \n";
 
 clean:
 	$(MAKE) -C src/eo/kruskal clean
@@ -100,3 +93,4 @@ clean:
 	$(MAKE) -C src/eo/fordfulkerson clean
 	$(MAKE) -C src/java clean
 	$(MAKE) -C src/cpp clean
+	rm -rf target
