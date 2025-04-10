@@ -1,14 +1,14 @@
 # SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
 # SPDX-License-Identifier: MIT
 
-.ONESHELL:
-shell = bash
-TARGPATH = ../../targets
+CPP_FILES := $(wildcard *.cpp)
+BINARIES := $(addprefix targets/, $(CPP_FILES:.cpp=.o))
 
-run:
-	@mkdir $(TARGPATH)/cpp
-	for FILE in *; do \
-		if [ $$FILE != "Makefile" ]; then \
-			g++ $$FILE -o $(TARGPATH)/cpp/$${FILE%.cpp}; \
-		fi \
-	done
+compile: $(BINARIES)
+
+targets/%.o: %.cpp
+	mkdir -p targets/
+	g++ $< -o $@
+
+clean:
+	rm -rf targets/
