@@ -48,43 +48,24 @@ eo:
 	$(MAKE) -C src/eo/fordfulkerson
 	mkdir target target/run
 
+.PHONY: run $(wildcard target/run/*.txt)
 run: target/run/kruskal.txt target/run/prim.txt target/run/dijkstra.txt target/run/fordfulkerson.txt
 
-target/run/kruskal.txt:
-	@echo "======================================== \n";
-	@echo "Now we are going to run Kruskal's algorithm \n";
-	@for FILE in tests/edges/*; do \
-		var=$$(cat $$FILE)
-		eoc --target src/eo/kruskal/.eoc --easy --alone dataize kruskalApp $$var
-		echo $$? > $@
-	done
+target/run/%.txt: ALGO_NAME = $(subst kruskal,Kruskal's,$(subst prim,Prim's,$(subst dijkstra,Dijkstra's,$(subst fordfulkerson,FordFulkerson's,$*))))
+target/run/%.txt: EOC_TARGET = src/eo/$*/.eoc
+target/run/%.txt: TEST_DIR = $(if $(filter kruskal prim,$*),edges,list)
 
-target/run/prim.txt:
-	@echo "======================================== \n";
-	@echo "Now we are going to run Prim's algorithm \n";
-	@for FILE in tests/edges/*; do \
-	 	var=$$(cat $$FILE)
-		eoc --target src/eo/prim/.eoc --easy --alone dataize primApp $$var
-		echo $$? > $@
+target/run/%.txt:
+	@mkdir -p target/
+	@mkdir -p target/run
+	@echo "========================================\n"
+	@echo "Now we are going to run $(ALGO_NAME) algorithm\n"
+	@for FILE in tests/$(TEST_DIR)/*; do \
+		var=$$(cat $$FILE); \
+		eoc --target $(EOC_TARGET) --easy --alone dataize $*App $$var; \
+		echo $$? > $@; \
 	done
-
-target/run/dijkstra.txt:
-	@echo "======================================== \n";
-	@echo "Now we are going to run Dijkstra's algorithm \n";
-	@for FILE in tests/list/*; do \
-	 	var=$$(cat $$FILE)
-		eoc --target src/eo/dijkstra/.eoc --easy --alone dataize dijkstraApp $$var
-		echo $$? > $@
-	done
-
-target/run/fordfulkerson.txt:
-	@echo "======================================== \n";
-	@echo "Now we are going to run FordFulkerson's algorithm \n";
-	@for FILE in tests/list/*; do \
-	 	var=$$(cat $$FILE)
-		@eoc --target src/eo/fordfulkerson/.eoc --easy --alone dataize fordfulkersonApp $$var
-		@echo $$? > $@
-	done
+	@rm -rf target/
 
 clean:
 	$(MAKE) -C src/eo/kruskal clean
