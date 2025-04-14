@@ -1,12 +1,13 @@
 # SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
 # SPDX-License-Identifier: MIT
 
-.ONESHELL:
-shell = bash
-TARGPATH = ../../targets
+JAVA_FILES := $(wildcard **/*.java)
+CLASS_FILES := $(JAVA_FILES:.java=.class)
 
-run:
-	@mkdir $(TARGPATH)/java
-	for FILE in **/*.java; do \
-		javac -d $(TARGPATH)/java $$FILE; \
-	done
+compile: $(CLASS_FILES)
+
+%.class: %.java
+	javac -d targets/ $<
+
+clean:
+	rm -rf targets/
