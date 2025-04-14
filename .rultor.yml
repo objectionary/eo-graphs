@@ -5,7 +5,8 @@
 docker:
   image: yegor256/java
 install: |
-  make
+  sudo /usr/bin/install-nodejs.sh
+  sudo npm install -g eolang
 merge:
   script: |
     make
