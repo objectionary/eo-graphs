@@ -1,7 +1,13 @@
 // SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
 // SPDX-License-Identifier: MIT
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <set>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <string.h>
+#include <sstream>
 using namespace std;
 
 class Edge {
