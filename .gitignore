@@ -1,13 +1,13 @@
-*.iml
-.DS_Store
 .classpath
+.DS_Store
 .idea/
 .mvn/wrapper/maven-wrapper.jar
 .project
 .recommenders
 .settings
 .vscode/
+*.eoc/
+*.iml
 node_modules/
 target/
 targets/
-*.eoc/
