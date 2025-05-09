@@ -38,35 +38,26 @@ void dijkstra(int vNum, int* GR, int st)
       cout << path[i] << " ";
 }
 
-int main(int argc, char *argv[])
-{
-    if(argc> 1){
-        int i;
-        int vNum = argc-1;
-        int* GR = new int [vNum*vNum];
-        memset(GR, 0, sizeof(GR));
-
-        for(i=1;i<argc;i++){
-           char *token = strtok(argv[i], ":");
-           if(token != NULL){
-             int u,v,w;
-             u = atoi(token);
-             bool isW = false;
-             token = strtok(NULL, ":");
-             while (token != NULL){
-               if(isW){
-                 w = atoi(token);
-                 GR[u*vNum+v]=w;
-               }else{
-                 v = atoi(token);
-               }
-               isW = !isW;
-               token = strtok(NULL, ":");
-             }
-           }
-        }
-        dijkstra(vNum,GR,0);
+int main(int argc, char* argv[]) {
+  if (argc > 1) {
+    int i = 2;
+    int vNum = stoi(argv[1]);
+    int* GR = new int[vNum * vNum];
+    memset(GR, 0, sizeof(GR));
+    while (i < argc) {
+      int number_of_edges = stoi(argv[i]);
+      int u = stoi(argv[i + 1]);
+      i += 2;
+      for (int j = 0; j < number_of_edges; ++j) {
+        int v, w;
+        sscanf(argv[i + j], "%d:%d", &v, &w);
+        GR[u * vNum + v] = w;
+      }
+      i += number_of_edges;
     }
+    dijkstra(vNum, GR, 0);
+    delete[] GR;
+  }
 
-    return 0;
+  return 0;
 }
