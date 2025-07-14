@@ -1,4 +1,7 @@
+*.eoc/
+*.iml
 .classpath
+.claude/
 .DS_Store
 .idea/
 .mvn/wrapper/maven-wrapper.jar
@@ -6,8 +9,6 @@
 .recommenders
 .settings
 .vscode/
-*.eoc/
-*.iml
 node_modules/
 target/
 targets/
