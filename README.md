@@ -1,16 +1,22 @@
-<img src="https://www.yegor256.com/images/books/elegant-objects/cactus.svg" height="100px" />
+#
+<img src="https://www.yegor256.com/images/books/elegant-objects/cactus.svg" height="100px"  alt="logo"/>
 
 ![workflow badge](https://github.com/potatmen/eo-graphs/actions/workflows/run-tests.yml/badge.svg)
 
-Is it possible to implement sufficiently complex algorithms with [EO](https://github.com/cqfn/eo)? Can EO handle large input datasets? Can EO code be functional, useful, and idiomatic? We addressed these questions by implementing several classic graph algorithms in three programming languages: Java, C++, and EO. We compared their outputs and performance metrics on the same input data. We chose graph algorithms because they are complex enough to challenge a small and young language, yet they demonstrate how real-world algorithms might look in EO.
+Is it possible to implement sufficiently complex algorithms with [EO](https://github.com/cqfn/eo)?
+Can EO handle large input datasets? Can EO code be functional, useful, and idiomatic?
+We addressed these questions by implementing several classic graph algorithms in three programming languages: Java, C++, and EO.
+We compared their outputs and performance metrics on the same input data. 
+We chose graph algorithms because they are complex enough to challenge a small and young language, yet they demonstrate how real-world algorithms might look in EO.
 
-To see the latest results, [click here](https://github.com/HSE-Eolang/eo_graphs/actions/workflows/run-tests.yml) and then to the tabs "Compare Results" and "Test Performance".
+To see the latest results, [run-tests.yml](https://github.com/HSE-Eolang/eo_graphs/actions/workflows/run-tests.yml)
+and then to the tabs "Compare Results" and "Test Performance".
 
-You will need Java 11+, C++, and [Maven](https://maven.apache.org/) installed, and then:
+You'll need Java 11+, C++ and [Maven](https://maven.apache.org/) installed and:
 
-```
-$ make
-$ make run
+```shell
+make
+make run
 ```
 
 By the way, the graphs are generated randomly by the [utility](https://github.com/potatmen/eo-graphs/blob/master/src/java/generator/GraphGenerator.java) written in Java.
