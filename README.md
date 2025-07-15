@@ -25,7 +25,9 @@ make
 make run
 ```
 
-By the way, the graphs are generated randomly by the [utility](https://github.com/potatmen/eo-graphs/blob/master/src/java/generator/GraphGenerator.java) written in Java.
+By the way, the graphs are generated randomly by the
+[utility](https://github.com/potatmen/eo-graphs/blob/master/src/java/generator/GraphGenerator.java)
+written in Java.
 
 ## Algorithms
 
@@ -66,7 +68,7 @@ a global optimum.
 [Ford-Fulkerson algorithm](https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/)
 
 The Ford-Fulkerson algorithm tackles the max-flow min-cut problem. Given
-a network with vertices and edges that have certain weights, it determines 
+a network with vertices and edges that have certain weights, it determines
 how much "flow" the network can process at a time. Flow can mean anything
 but typically refers to data through a computer network.
 It was discovered in 1956 by Ford and Fulkerson. This algorithm is sometimes
