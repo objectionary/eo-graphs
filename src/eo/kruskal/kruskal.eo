@@ -44,7 +44,7 @@
 
 # Graph implementation.
 [args] > graph
-  # Graph reading imlementation.
+  # Graph reading implementation.
   [i] > readGraph
     if. > @
       i.lt ^.args.length
