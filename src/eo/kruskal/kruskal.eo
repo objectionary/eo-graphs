@@ -100,7 +100,7 @@
 
 # Graph edge implementaion.
 [from to weight] > edge
-  # Compairs current edge with given other.
+  # Compares current edge with given other.
   [other] > eq
     and. > @
       and.
