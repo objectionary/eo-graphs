@@ -55,7 +55,7 @@ class FordFalkerson {
         return false;
     }
 
-    // Returns tne maximum flow from s to t in the given
+    // Returns the maximum flow from s to t in the given
     // graph
     int fordFulkerson(int graph[][], int s, int t)
     {
