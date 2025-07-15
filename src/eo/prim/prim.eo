@@ -41,8 +41,8 @@
   $.readGraph 0 > @
 
 # Check if set has a given node.
-[set-of-vertexes vertex] > containsVertex
-  set-of-vertexes.has vertex > @
+[set-of-vertices vertex] > containsVertex
+  set-of-vertices.has vertex > @
 
 # Creates a set of nodes of the graph from input.
 [args] > genNodes
