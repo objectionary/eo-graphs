@@ -6,7 +6,7 @@
 +alias org.eolang.structs.set
 +alias org.eolang.structs.list
 
-# Graph edge implementaion.
+# Graph edge implementation.
 [from to weight] > edge
   # Compares current edge with given other.
   [other] > eq

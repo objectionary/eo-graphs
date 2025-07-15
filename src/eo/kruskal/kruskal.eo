@@ -98,7 +98,7 @@
       i
   getter node-number > @
 
-# Graph edge implementaion.
+# Graph edge implementation.
 [from to weight] > edge
   # Compares current edge with given other.
   [other] > eq
