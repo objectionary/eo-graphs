@@ -33,6 +33,7 @@ E = printeo() { \
   	fi \
 }
 
+.PHONY: compile
 compile: cpp java eo
 
 cpp:
