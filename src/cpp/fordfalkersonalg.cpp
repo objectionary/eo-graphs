@@ -44,43 +44,34 @@ int findFlow(int u, int flow) {
 }
 
 int main(int argc, char *argv[]) {
-    if(argc> 1){
-        fill(firstEdge, firstEdge + MAX_V, -1);
+  if (argc > 1) {
+    fill(firstEdge, firstEdge + MAX_V, -1);
 
-        numOfVertex = argc-1;
-        numOfEdge = 0;
-        sourceVertex = 0;
-        destinationVertex = numOfVertex - 1;
-
-        for(int i=1;i<argc;i++){
-          char *token = strtok(argv[i], ":");
-          if(token != NULL){
-            int u,v,w;
-            u = atoi(token);
-            bool isW = false;
-            token = strtok(NULL, ":");
-            while (token != NULL){
-              if(isW){
-                w = atoi(token);
-                addEdge(u, v, w);
-                numOfEdge++;
-              }else{
-                v = atoi(token);
-              }
-                isW = !isW;
-                token = strtok(NULL, ":");
-            }
-          }
-        }
-
-        int maxFlow = 0;
-        int iterationResult = 0;
-        while ((iterationResult = findFlow(sourceVertex, INF)) > 0) {
-            fill(visited, visited + MAX_V, false);
-            maxFlow += iterationResult;
-        }
-
-        cout << maxFlow;
+    int i = 1;
+    int vNum = stoi(argv[i]);
+    ++i;
+    numOfVertex = vNum;
+    sourceVertex = 0;
+    destinationVertex = numOfVertex - 1;
+    while (i < argc) {
+      int eNum = stoi(argv[i]);
+      int u = stoi(argv[i + 1]);
+      i += 2;
+      for (int j = 0; j < eNum; ++j) {
+        int v, w;
+        sscanf(argv[i + j], "%d:%d", &v, &w);
+        addEdge(u, v, w);
+      }
+      i += eNum;
     }
-    return 0;
+    int maxFlow = 0;
+    int iterationResult = 0;
+    while ((iterationResult = findFlow(sourceVertex, INF)) > 0) {
+      fill(visited, visited + MAX_V, false);
+      maxFlow += iterationResult;
+    }
+
+    cout << maxFlow << "\n";
+  }
+  return 0;
 }
