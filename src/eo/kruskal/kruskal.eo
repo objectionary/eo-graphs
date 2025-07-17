@@ -44,7 +44,7 @@
 
 # Graph implementation.
 [args] > graph
-  # Graph reading imlementation.
+  # Graph reading implementation.
   [i] > readGraph
     if. > @
       i.lt ^.args.length
@@ -98,9 +98,9 @@
       i
   getter node-number > @
 
-# Graph edge implementaion.
+# Graph edge implementation.
 [from to weight] > edge
-  # Compairs current edge with given other.
+  # Compares current edge with given other.
   [other] > eq
     and. > @
       and.

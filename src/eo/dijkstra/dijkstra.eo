@@ -13,12 +13,12 @@
   printResult result > @
 
 # Main Dijkstra algorithm part.
-# 'g' - a map that contains graph in ajacency list format:
+# 'g' - a map that contains graph in adjacency list format:
 # 'g.at vertex-index' allows to get a list of 'edge's from
 # this vertex.
 # 'start' - vertex from which algorithm starts.
 [g start] > algo
-  # Finds minimal-weight paths from 'start' to all other vertexes.
+  # Finds minimal-weight paths from 'start' to all other vertices.
   [available stats] > findPaths
     # Updates distances and paths with chosen vertex.
     [node adjacent-nodes distances path] > updateDistance

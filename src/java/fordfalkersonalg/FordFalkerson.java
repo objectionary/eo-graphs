@@ -55,7 +55,7 @@ class FordFalkerson {
         return false;
     }
 
-    // Returns tne maximum flow from s to t in the given
+    // Returns the maximum flow from s to t in the given
     // graph
     int fordFulkerson(int graph[][], int s, int t)
     {
@@ -82,7 +82,7 @@ class FordFalkerson {
 
         int max_flow = 0; // There is no flow initially
 
-        // Augment the flow while tere is path from source
+        // Augment the flow while there is path from source
         // to sink
         while (bfs(rGraph, s, t, parent)) {
             // Find minimum residual capacity of the edhes

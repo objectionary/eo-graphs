@@ -6,9 +6,9 @@
 +alias org.eolang.structs.set
 +alias org.eolang.structs.list
 
-# Graph edge implementaion.
+# Graph edge implementation.
 [from to weight] > edge
-  # Compairs current edge with given other.
+  # Compares current edge with given other.
   [other] > eq
     and. > @
       and.
@@ -18,7 +18,7 @@
 
 # Graph implementation.
 [args] > graph
-  # Graph reading imlementation.
+  # Graph reading implementation.
   [i] > readGraph
     if. > @
       i.lt $.^.args.length
@@ -41,8 +41,8 @@
   $.readGraph 0 > @
 
 # Check if set has a given node.
-[set-of-verteces vertex] > containsVertex
-  set-of-verteces.has vertex > @
+[set-of-vertices vertex] > containsVertex
+  set-of-vertices.has vertex > @
 
 # Creates a set of nodes of the graph from input.
 [args] > genNodes
