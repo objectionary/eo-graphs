@@ -1,4 +1,4 @@
-# Graph Algorithms in C++, Java, and EO
+# Four Graph Algorithms in C++, Java, and EO
 
 [![make](https://github.com/objectionary/eo-graphs/actions/workflows/make.yml/badge.svg)](https://github.com/objectionary/eo-graphs/actions/workflows/make.yml)
 
