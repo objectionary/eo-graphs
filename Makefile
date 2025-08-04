@@ -1,8 +1,12 @@
 # SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
 # SPDX-License-Identifier: MIT
 
+.PHONY: all clean ltex vale spell
 .ONESHELL:
-shell = bash
+.SHELLFLAGS := -e -o pipefail -c
+.SECONDARY:
+SHELL := bash
+
 TARGPATH_JAVA = src/java/targets
 TARGPATH_CPP = src/cpp/targets
 

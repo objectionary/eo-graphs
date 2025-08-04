@@ -1,6 +1,12 @@
 # SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
 # SPDX-License-Identifier: MIT
 
+.PHONY: all clean ltex vale spell
+.ONESHELL:
+.SHELLFLAGS := -e -o pipefail -c
+.SECONDARY:
+SHELL := bash
+
 CPP_FILES := $(wildcard *.cpp)
 BINARIES := $(addprefix targets/, $(CPP_FILES:.cpp=.o))
 
