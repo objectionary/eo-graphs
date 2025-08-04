@@ -25,8 +25,6 @@ make run
 By the way, the graphs are generated randomly by the [GraphGenerator]
 written in Java.
 
-## Algorithms
-
 The following graph algorithms are implemented:
 
 [Dijkstra's algorithm] finds the shortest path between nodes in a graph.
