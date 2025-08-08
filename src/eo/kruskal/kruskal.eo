@@ -7,7 +7,7 @@
 +alias org.eolang.structs.list
 
 # Kruskal algorithm application.
-[args] > kruskalApp
+[args] > kruskal
   graph args > edges
   algo edges (genNodes args).size > result
   printResult edges result > @

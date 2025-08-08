@@ -13,7 +13,7 @@ EOC_FILES := .eoc
 compile: $(EOC_FILES)
 
 $(EOC_FILES): $(EO_FILES)
-	eoc --easy link kruskalApp
+	eoc --easy link kruskal
 
 clean:
 	eoc clean
