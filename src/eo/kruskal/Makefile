@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
+# SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 # SPDX-License-Identifier: MIT
 
 .PHONY: all clean ltex vale spell

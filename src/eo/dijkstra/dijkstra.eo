@@ -1,4 +1,4 @@
-+spdx SPDX-FileCopyrightText: Copyright (c) 2020-2025 Objectionary
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
 +alias org.eolang.io.stdout
 +alias org.eolang.txt.sprintf
