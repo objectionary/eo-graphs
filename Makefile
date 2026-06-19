@@ -54,7 +54,7 @@ eo:
 	$(MAKE) -C src/eo/prim
 	$(MAKE) -C src/eo/dijkstra
 	$(MAKE) -C src/eo/fordfulkerson
-	mkdir target target/run
+	mkdir -p target/run
 
 run: target/run/kruskal.txt target/run/prim.txt target/run/dijkstra.txt target/run/fordfulkerson.txt
 
