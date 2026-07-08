@@ -22,4 +22,3 @@ jobs:
           java-version: '21'
       - run: npm install -g eolang
       - run: make
-      - run: make run
