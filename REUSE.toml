@@ -27,5 +27,5 @@ path = [
     "renovate.json",
 ]
 precedence = "override"
-SPDX-FileCopyrightText = "Copyright (c) 2025 Yegor Bugayenko"
+SPDX-FileCopyrightText = "Copyright (c) 2020-2026 Objectionary"
 SPDX-License-Identifier = "MIT"
