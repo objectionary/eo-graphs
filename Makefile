@@ -39,7 +39,7 @@ E = printeo() { \
 
 .PHONY: all compile cpp java eo run clean test
 
-all: compile
+all: compile run
 
 compile: cpp java eo
 
@@ -58,7 +58,7 @@ target/run/%.txt: ALGO_NAME = $(subst kruskal,Kruskal's,$(subst prim,Prim's,$(su
 target/run/%.txt: EOC_TARGET = src/eo/$*/.eoc
 target/run/%.txt: TEST_DIR = $(if $(filter kruskal prim,$*),edges,list)
 
-target/run/%.txt:
+target/run/%.txt: | compile
 	@mkdir -p target/run
 	@echo "========================================\n"
 	@echo "Now we are going to run $(ALGO_NAME) algorithm\n"

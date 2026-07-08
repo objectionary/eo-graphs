@@ -1,4 +1,4 @@
-+spdx SPDX-FileCopyrightText: Copyright (c) 2024-2026 Yegor Bugayenko
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
 
 # Prim algorithm application, reads a graph and prints its spanning tree.
