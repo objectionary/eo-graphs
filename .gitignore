@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
+# SPDX-License-Identifier: MIT
+
 *.eoc/
 *.iml
 .classpath
@@ -12,3 +15,4 @@
 node_modules/
 target/
 targets/
+tmp/
