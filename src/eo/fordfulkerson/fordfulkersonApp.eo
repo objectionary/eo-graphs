@@ -1,0 +1,14 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias io.stdout
++alias tt.sprintf
++alias tt.sscanf
+
+# Ford-Fulkerson application, prints the max flow from vertex 0 to the last one.
+[args] > fordfulkersonApp
+  capacities args > cap
+  (sscanf "%d" (args.at 0)).at 0 > vnum
+  stdout > @
+    sprintf
+      "%d\n"
+      * (algo cap 0 (vnum.minus 1))

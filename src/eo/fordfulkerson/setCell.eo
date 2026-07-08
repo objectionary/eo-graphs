@@ -1,0 +1,7 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias ss.withouti
+
+# Returns a copy of the matrix with the cell at row i, column j set to val.
+[matrix i j val] > setCell
+  (withouti matrix i).withi i ((withouti (matrix.at i) j).withi j val) > @

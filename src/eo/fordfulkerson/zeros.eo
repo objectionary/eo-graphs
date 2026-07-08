@@ -1,0 +1,6 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
+
+# Builds an n by n capacity matrix with every cell equal to zero.
+[n] > zeros
+  createList n (createList n 0) > @

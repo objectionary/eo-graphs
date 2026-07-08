@@ -1,0 +1,51 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2024-2026 Yegor Bugayenko
++spdx SPDX-License-Identifier: MIT
++alias ss.list
++alias ss.set
++alias ss.withouti
+
+# Main Prim algorithm part, grows a minimum spanning tree from one vertex.
+[edges] > algo
+  # Finds the first edge of the tree, the one with the least weight.
+  [minimum-index index] > findFirstEdge
+    if. > @
+      index.gte edges.length
+      minimum-index
+      if.
+        ($.^.edges.at index).weight.lt ($.^.edges.at minimum-index).weight
+        $.^.findFirstEdge index (index.plus 1)
+        $.^.findFirstEdge minimum-index (index.plus 1)
+  # Finds the edges that the minimum spanning tree consists of.
+  [used-edges used-nodes edges-rest] > findEdges
+    # Finds the next least-weight edge with exactly one endpoint used.
+    [minimum-index index] > findNextEdge
+      if. > @
+        index.gte $.^.edges-rest.length
+        minimum-index
+        seq
+          *
+            used-nodes.has ($.^.edges-rest.at index).from > isFromUsed!
+            used-nodes.has ($.^.edges-rest.at index).to > isToUsed!
+            if.
+              and.
+                or.
+                  isFromUsed.as-bool.and isToUsed.as-bool.not
+                  isFromUsed.as-bool.not.and isToUsed.as-bool
+                or.
+                  minimum-index.eq -1
+                  lt.
+                    ($.^.edges-rest.at index).weight
+                    ($.^.edges-rest.at minimum-index).weight
+              $.^.findNextEdge index (index.plus 1)
+              $.^.findNextEdge minimum-index (index.plus 1)
+    $.findNextEdge -1 0 > next-edge!
+    if. > @
+      next-edge.as-number.eq -1
+      used-edges
+      if.
+        (used-nodes.has (edges-rest.at next-edge.as-number).from).not
+        $.^.findEdges (used-edges.with (edges-rest.at next-edge.as-number)) (used-nodes.with (edges-rest.at next-edge.as-number).from) (withouti edges-rest next-edge.as-number)
+        $.^.findEdges (used-edges.with (edges-rest.at next-edge.as-number)) (used-nodes.with (edges-rest.at next-edge.as-number).to) (withouti edges-rest next-edge.as-number)
+  $.findFirstEdge 0 0 > first-edge!
+  set (* (edges.at first-edge.as-number).from (edges.at first-edge.as-number).to) > used-first-nodes
+  $.findEdges (list (* (edges.at first-edge.as-number))) used-first-nodes edges > @

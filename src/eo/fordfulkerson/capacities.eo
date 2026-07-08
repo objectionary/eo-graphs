@@ -1,0 +1,21 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias tt.sscanf
+
+# Builds the capacity matrix from the adjacency-list arguments.
+[args] > capacities
+  (sscanf "%d" (args.at 0)).at 0 > vnum
+  # Reads the vertex blocks recursively, threading the capacity matrix.
+  [i matrix] > readVertex
+    if. > @
+      i.gte ^.args.length
+      matrix
+      ^.readVertex
+        i.plus (((sscanf "%d" (^.args.at i)).at 0).plus 2)
+        readEdges
+          ^.args
+          (sscanf "%d" (^.args.at (i.plus 1))).at 0
+          i.plus 2
+          i.plus (((sscanf "%d" (^.args.at i)).at 0).plus 2)
+          matrix
+  readVertex 1 (zeros vnum) > @

@@ -1,0 +1,9 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
+
+# Returns the smaller of the two given numbers.
+[a b] > min
+  if. > @
+    a.lt b
+    a
+    b

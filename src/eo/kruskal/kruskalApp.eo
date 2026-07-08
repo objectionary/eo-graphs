@@ -1,0 +1,8 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2024-2026 Yegor Bugayenko
++spdx SPDX-License-Identifier: MIT
+
+# Kruskal algorithm application, reads a graph and prints its spanning tree.
+[args] > kruskalApp
+  graph args > edges
+  algo edges (genNodes args).size > result
+  printResult edges result > @

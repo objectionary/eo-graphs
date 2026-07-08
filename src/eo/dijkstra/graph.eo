@@ -1,0 +1,73 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias io.stdout
++alias tt.sprintf
++alias tt.sscanf
++alias ss.map
++alias ss.list
+
+# Graph implementation reading the adjacency list from the arguments.
+[args] > graph
+  # Reads the whole graph in the adjacency list format into a map.
+  [] > readGraph
+    # Parses a single adjacency line into a list of edges.
+    [i limit] > lineParser
+      # Recursively reads edges until the line limit is reached.
+      [index] > recParser
+        if. > @
+          index.lt ^.limit
+          with.
+            ^.recParser (index.plus 1)
+            edge
+              (sscanf "%d:%d" (^.^.^.args.at index)).at 0
+              (sscanf "%d:%d" (^.^.^.args.at index)).at 1
+          list *
+      recParser i > @
+    # Recursively reads every vertex line into the adjacency map.
+    [i index-to-read number-of-vertex] > recReader
+      if. > @
+        i.lt number-of-vertex
+        seq
+          *
+            (sscanf "%d" (^.^.args.at index-to-read)).at 0 > number-of-edges
+            (sscanf "%d" (^.^.args.at (index-to-read.plus 1))).at 0 > vertex-number
+            with.
+              ^.recReader (i.plus 1) (index-to-read.plus (number-of-edges.plus 2)) number-of-vertex
+              vertex-number
+              lineParser (index-to-read.plus 2) ((number-of-edges.plus index-to-read).plus 2)
+        map *
+    (sscanf "%d" (^.args.at 0)).at 0 > number-of-vertex
+    recReader 0 1 number-of-vertex > @
+  # Prints the graph back in the adjacency list format.
+  [graph] > printGraph
+    # Prints a single adjacency line of the graph.
+    [line] > printLine
+      # Recursively prints every edge of the line.
+      [i] > recPrint
+        if. > @
+          i.lt ^.line.length
+          seq
+            *
+              ^.recPrint (i.plus 1)
+              stdout
+                sprintf
+                  " %d-%d"
+                  * (^.line.at i).to (^.line.at i).weight
+          0
+      if. > @
+        not.
+          line.length.eq 0
+        recPrint 0
+        0
+    graph.keys > keys
+    while > @
+      i.lt keys.length > [i] >>
+      [i] >>
+        seq > @
+          *
+            stdout
+              sprintf
+                "\n%d"
+                * (^.keys.at i)
+            printLine (^.graph.found (^.keys.at i)).get
+  readGraph > @

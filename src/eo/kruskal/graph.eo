@@ -1,0 +1,30 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2024-2026 Yegor Bugayenko
++spdx SPDX-License-Identifier: MIT
++alias io.stdout
++alias tt.sprintf
++alias tt.sscanf
++alias ss.list
+
+# Graph implementation, reads edges from the flat list of arguments.
+[args] > graph
+  # Graph reading implementation, recursively consumes three args per edge.
+  [i] > readGraph
+    if. > @
+      i.lt ^.args.length
+      with.
+        ^.readGraph (i.plus 3)
+        edge
+          (sscanf "%d" (^.args.at (plus. 0.as-number i))).at 0
+          (sscanf "%d" (^.args.at (plus. 1.as-number i))).at 0
+          (sscanf "%d" (^.args.at (plus. 2.as-number i))).at 0
+      list *
+  # Graph printing implementation, prints every edge on its own line.
+  [edges] > printGraph
+    while > @
+      i.lt edges.length > [i] >>
+      [i] >>
+        stdout > @
+          sprintf
+            "%d %d %d\n"
+            * (^.edges.at i).from (^.edges.at i).to (^.edges.at i).weight
+  readGraph 0 > @

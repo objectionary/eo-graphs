@@ -1,0 +1,7 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
+
+# Pushes bneck units of flow along u to v, updating both residual edges.
+[matrix u v bneck] > updateResidual
+  setCell matrix u v (((matrix.at u).at v).minus bneck) > forward
+  setCell forward v u (((forward.at v).at u).plus bneck) > @

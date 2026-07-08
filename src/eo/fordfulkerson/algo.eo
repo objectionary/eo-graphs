@@ -1,0 +1,41 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias ss.set
+
+# Ford-Fulkerson max flow from source to sink over a capacity matrix.
+[cap source sink] > algo
+  # Searches one augmenting path, returns (bottleneck, matrix, visited).
+  [u pushed visited matrix] > dfs
+    if. > @
+      u.eq ^.sink
+      * pushed matrix (visited.with u)
+      scan u pushed (visited.with u) matrix 0
+  # Scans neighbours v of u while threading the visited set and matrix.
+  [u pushed visited matrix v] > scan
+    if. > @
+      v.gte matrix.length
+      * 0 matrix visited
+      tryEdge u pushed visited matrix v
+  # Tries the single edge from u to v, skipping visited or saturated ones.
+  [u pushed visited matrix v] > tryEdge
+    if. > @
+      and.
+        (visited.has v).not
+        ((matrix.at u).at v).gt 0
+      recurseEdge u pushed visited matrix v
+      scan u pushed visited matrix (v.plus 1)
+  # Recurses through the edge from u to v and augments on success.
+  [u pushed visited matrix v] > recurseEdge
+    dfs v (min pushed ((matrix.at u).at v)) visited matrix > sub
+    if. > @
+      (sub.at 0).gt 0
+      * (sub.at 0) (updateResidual (sub.at 1) u v (sub.at 0)) (sub.at 2)
+      scan u pushed (sub.at 2) matrix (v.plus 1)
+  # Repeatedly augments the flow until no augmenting path is left.
+  [total matrix] > loop
+    dfs ^.source 1000000000 (set *) matrix > res
+    if. > @
+      (res.at 0).eq 0
+      total
+      ^.loop (total.plus (res.at 0)) (res.at 1)
+  loop 0 cap > @

@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
     int i = 2;
     int vNum = stoi(argv[1]);
     int* GR = new int[vNum * vNum];
-    memset(GR, 0, sizeof(GR));
+    memset(GR, 0, vNum * vNum * sizeof(int));
     while (i < argc) {
       int number_of_edges = stoi(argv[i]);
       int u = stoi(argv[i + 1]);

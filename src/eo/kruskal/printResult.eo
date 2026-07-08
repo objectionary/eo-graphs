@@ -1,0 +1,21 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2024-2026 Yegor Bugayenko
++spdx SPDX-License-Identifier: MIT
++alias io.stdout
++alias tt.sprintf
+
+# Prints the resulting spanning tree edges selected by the algorithm.
+[edges result] > printResult
+  # Prints every result edge as a triple of its two nodes and its weight.
+  [result] > printEdges
+    while > @
+      i.lt ^.result.length > [i] >>
+      [i] >>
+        stdout > @
+          sprintf
+            "(%d %d - %d) "
+            * (^.^.edges.at (^.result.at i)).from (^.^.edges.at (^.result.at i)).to (^.^.edges.at (^.result.at i)).weight
+  seq > @
+    *
+      stdout
+        "MST: "
+      printEdges result

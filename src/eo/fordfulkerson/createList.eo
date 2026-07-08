@@ -1,0 +1,15 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias ss.list
+
+# Creates a list of size sz with every element equal to val.
+[sz val] > createList
+  # Recursively grows the list until it reaches the requested size.
+  [i] > creator
+    if. > @
+      i.lt ^.sz
+      with.
+        ^.creator (i.plus 1)
+        ^.val
+      list *
+  creator 0 > @

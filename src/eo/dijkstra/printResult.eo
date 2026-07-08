@@ -1,0 +1,18 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias io.stdout
++alias tt.sprintf
+
+# Prints the result, at the i-th position the parent of the i-th vertex.
+[path] > printResult
+  seq > @
+    *
+      stdout
+        "Paths: "
+      while
+        i.lt path.length > [i] >>
+        [i] >>
+          stdout > @
+            sprintf
+              "%d "
+              * ($.^.path.at i)

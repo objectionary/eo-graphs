@@ -1,0 +1,66 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias ss.list
++alias ss.withouti
+
+# Main Dijkstra part, finds shortest paths from 'start' to every vertex.
+[g start] > algo
+  # Finds the minimal-weight paths from start to all other vertices.
+  [available stats] > findPaths
+    # Relaxes the distances and paths through the chosen vertex.
+    [node adjacent-nodes distances path] > updateDistance
+      # Recursively relaxes every adjacent edge of the node.
+      [i dists paths] > updater
+        if. > @
+          i.lt $.^.adjacent-nodes.length
+          if.
+            lt.
+              (dists.at $.^.node).plus ($.^.adjacent-nodes.at i).weight
+              dists.at ($.^.adjacent-nodes.at i).to
+            ^.updater
+              i.plus 1
+              withi.
+                withouti dists ($.^.adjacent-nodes.at i).to
+                ($.^.adjacent-nodes.at i).to
+                (dists.at $.^.node).plus ($.^.adjacent-nodes.at i).weight
+              withi.
+                withouti paths ($.^.adjacent-nodes.at i).to
+                ($.^.adjacent-nodes.at i).to
+                $.^.node
+            $.^.updater
+              i.plus 1
+              dists
+              paths
+          list (* dists paths)
+      updater 0 distances path > @
+    # Finds the next unvisited vertex with the minimal distance from start.
+    [minimum-index index] > findNextNode
+      if. > @
+        index.gte $.^.available.length
+        minimum-index
+        if.
+          or.
+            minimum-index.eq -1
+            lt.
+              $.^.distances.at ($.^.available.at index)
+              $.^.distances.at ($.^.available.at minimum-index)
+          $.^.findNextNode index (index.plus 1)
+          $.^.findNextNode minimum-index (index.plus 1)
+    stats.at 0 > distances
+    stats.at 1 > path
+    findNextNode -1 0 > next-node!
+    if. > @
+      next-node.as-number.eq -1
+      path
+      $.^.findPaths
+        withouti available next-node.as-number
+        updateDistance
+          available.at next-node.as-number
+          ($.^.g.found (available.at next-node.as-number)).get
+          distances
+          path
+  findPaths > @
+    createSequence 0 g.size 1
+    *
+      (withouti (createList g.size pinf) start).withi start 0
+      (withouti (createList g.size -1) start).withi start start

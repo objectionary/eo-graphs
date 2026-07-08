@@ -1,0 +1,18 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2024-2026 Yegor Bugayenko
++spdx SPDX-License-Identifier: MIT
++alias ss.set
+
+# Creates a set of all the distinct nodes present in the input arguments.
+[args] > genNodes
+  # Walks the arguments and keeps everything except every third weight token.
+  [i] > interpreter
+    if. > @
+      i.lt ^.args.length
+      if.
+        ((((i.plus 1).div 3).floor.times 3).eq (i.plus 1)).not
+        with.
+          ^.interpreter (i.plus 1)
+          ^.args.at i
+        ^.interpreter (i.plus 1)
+      set *
+  interpreter 0 > @

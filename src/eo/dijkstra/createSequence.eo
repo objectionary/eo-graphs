@@ -1,0 +1,15 @@
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++alias ss.list
+
+# Creates the list of numbers from start to finish (excluded) with the step.
+[start finish step] > createSequence
+  # Recursively appends the next number until the finish is reached.
+  [i] > creator
+    if. > @
+      i.lt ^.finish
+      with.
+        ^.creator (i.plus ^.step)
+        i
+      list *
+  creator start > @
