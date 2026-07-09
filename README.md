@@ -1,6 +1,7 @@
 # Four Graph Algorithms in C++, Java, and EO
 
 [![make](https://github.com/objectionary/eo-graphs/actions/workflows/make.yml/badge.svg)](https://github.com/objectionary/eo-graphs/actions/workflows/make.yml)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/objectionary/eo-graphs/blob/master/LICENSE.txt)
 
 Is it possible to implement sufficiently complex algorithms with [EO](https://github.com/cqfn/eo)?
 Can EO handle large input datasets? Can EO code be functional, useful,
