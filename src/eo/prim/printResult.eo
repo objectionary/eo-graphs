@@ -1,10 +1,18 @@
++alias tt.sprintf
++alias io.stdout
++home https://github.com/objectionary/eo-graphs
++package prim
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias io.stdout
-+alias tt.sprintf
++version 0.0.0
 
 # Prints the resulting spanning tree edges selected by the algorithm.
 [result] > printResult
+  seq > @
+    *
+      stdout
+        "MST: "
+      $.printEdges result
   # Prints every result edge as a triple of its two nodes and its weight.
   [result] > printEdges
     while > @
@@ -14,8 +22,6 @@
           sprintf
             "(%d %d - %d) "
             * ($.^.result.at i).from ($.^.result.at i).to ($.^.result.at i).weight
-  seq > @
-    *
-      stdout
-        "MST: "
-      $.printEdges result
+  # Prints a one-edge result without failing on its formatting.
+  [] +> tests-prints-single-edge
+    prim.printResult (* (prim.edge 0 1 5)) > @

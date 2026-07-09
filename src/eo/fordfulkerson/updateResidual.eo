@@ -1,7 +1,13 @@
++home https://github.com/objectionary/eo-graphs
++package fordfulkerson
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Pushes bneck units of flow along u to v, updating both residual edges.
 [matrix u v bneck] > updateResidual
-  setCell matrix u v (((matrix.at u).at v).minus bneck) > forward
-  setCell forward v u (((forward.at v).at u).plus bneck) > @
+  fordfulkerson.setCell forward v u (((forward.at v).at u).plus bneck) > @
+  fordfulkerson.setCell matrix u v (((matrix.at u).at v).minus bneck) > forward
+  # Lowers the forward edge by the amount of flow it just pushed.
+  [] +> tests-lowers-forward-edge
+    (((fordfulkerson.updateResidual (fordfulkerson.setCell (fordfulkerson.zeros 2) 0 1 5) 0 1 2).at 0).at 1).eq 3 > @

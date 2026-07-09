@@ -1,13 +1,19 @@
++home https://github.com/objectionary/eo-graphs
++package kruskal
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
-# Returns the root parent of node-number, or node-number if it has no parent.
-[node-number dsu-list] > dsuGetParent
+# Returns the root parent of node, or node itself when it has no parent.
+[node dsu] > dsuGetParent
+  getter node > @
   # Recursively follows parent links until the root of the set is reached.
   [i] > getter
-    ^.dsu-list.at i > parent!
     if. > @
       (parent.as-number.eq -1).not
       ^.getter parent.as-number
       i
-  getter node-number > @
+    ^.dsu.at i > parent!
+  # Follows a two-step parent chain down to its root node.
+  [] +> tests-finds-root-parent
+    (kruskal.dsuGetParent 2 (* -1 0 1)).eq 0 > @

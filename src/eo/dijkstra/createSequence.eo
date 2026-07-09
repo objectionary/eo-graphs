@@ -1,9 +1,13 @@
++alias ss.list
++home https://github.com/objectionary/eo-graphs
++package dijkstra
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias ss.list
++version 0.0.0
 
 # Creates the list of numbers from start to finish (excluded) with the step.
 [start finish step] > createSequence
+  creator start > @
   # Recursively appends the next number until the finish is reached.
   [i] > creator
     if. > @
@@ -12,4 +16,6 @@
         ^.creator (i.plus ^.step)
         i
       list *
-  creator start > @
+  # Builds an ascending sequence and checks its first element.
+  [] +> tests-starts-at-first
+    ((dijkstra.createSequence 2 5 1).at 0).eq 2 > @

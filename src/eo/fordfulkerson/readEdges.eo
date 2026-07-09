@@ -1,9 +1,13 @@
++alias tt.sscanf
++home https://github.com/objectionary/eo-graphs
++package fordfulkerson
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias tt.sscanf
++version 0.0.0
 
 # Reads the edges of one vertex into the matrix as capacities of u to v.
 [args u start end matrix] > readEdges
+  rec start matrix > @
   # Recursively parses every "v:w" token of the current vertex line.
   [j m] > rec
     if. > @
@@ -11,9 +15,11 @@
       m
       ^.rec
         j.plus 1
-        setCell
+        fordfulkerson.setCell
           m
           ^.u
           (sscanf "%d:%d" (^.args.at j)).at 0
           (sscanf "%d:%d" (^.args.at j)).at 1
-  rec start matrix > @
+  # Reads one "v:w" token into the addressed row of the matrix.
+  [] +> tests-reads-one-capacity
+    (((fordfulkerson.readEdges (* "0" "1:7") 0 1 2 (fordfulkerson.zeros 2)).at 0).at 1).eq 7 > @

@@ -1,8 +1,12 @@
++home https://github.com/objectionary/eo-graphs
++package dijkstra
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Dijkstra algorithm application, reads a graph and prints shortest paths.
 [args] > dijkstraApp
-  graph args > g
-  algo g 0 > result
-  printResult result > @
+  dijkstra.printResult (dijkstra.algo (dijkstra.graph args) 0) > @
+  # Reads a tiny two-vertex graph and prints its parent array.
+  [] +> tests-prints-tiny-graph
+    dijkstra.dijkstraApp (* "2" "1" "0" "1:5" "0" "1") > @

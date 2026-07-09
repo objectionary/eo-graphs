@@ -1,10 +1,13 @@
++alias tt.sscanf
++home https://github.com/objectionary/eo-graphs
++package fordfulkerson
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias tt.sscanf
++version 0.0.0
 
 # Builds the capacity matrix from the adjacency-list arguments.
 [args] > capacities
-  (sscanf "%d" (args.at 0)).at 0 > vnum
+  readVertex 1 (fordfulkerson.zeros ((sscanf "%d" (args.at 0)).at 0)) > @
   # Reads the vertex blocks recursively, threading the capacity matrix.
   [i matrix] > readVertex
     if. > @
@@ -12,10 +15,12 @@
       matrix
       ^.readVertex
         i.plus (((sscanf "%d" (^.args.at i)).at 0).plus 2)
-        readEdges
+        fordfulkerson.readEdges
           ^.args
           (sscanf "%d" (^.args.at (i.plus 1))).at 0
           i.plus 2
           i.plus (((sscanf "%d" (^.args.at i)).at 0).plus 2)
           matrix
-  readVertex 1 (zeros vnum) > @
+  # Reads one vertex block into the addressed row of the matrix.
+  [] +> tests-reads-one-vertex-block
+    (((fordfulkerson.capacities (* "2" "1" "0" "1:9")).at 0).at 1).eq 9 > @

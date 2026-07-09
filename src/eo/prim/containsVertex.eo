@@ -1,6 +1,13 @@
++alias ss.set
++home https://github.com/objectionary/eo-graphs
++package prim
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Checks whether the given set of vertices already holds the given vertex.
-[set-of-vertices vertex] > containsVertex
-  set-of-vertices.has vertex > @
+[vertices vertex] > containsVertex
+  vertices.has vertex > @
+  # Confirms a vertex present in the set is reported as contained.
+  [] +> tests-finds-present-vertex
+    prim.containsVertex (set (* 1 2)) 2 > @

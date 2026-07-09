@@ -1,7 +1,13 @@
++alias ss.withouti
++home https://github.com/objectionary/eo-graphs
++package fordfulkerson
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias ss.withouti
++version 0.0.0
 
 # Returns a copy of the matrix with the cell at row i, column j set to val.
 [matrix i j val] > setCell
   (withouti matrix i).withi i ((withouti (matrix.at i) j).withi j val) > @
+  # Writes one cell and reads the very same value back afterwards.
+  [] +> tests-writes-single-cell
+    (((fordfulkerson.setCell (fordfulkerson.zeros 2) 0 1 5).at 0).at 1).eq 5 > @

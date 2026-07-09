@@ -1,9 +1,13 @@
++alias ss.set
++home https://github.com/objectionary/eo-graphs
++package kruskal
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias ss.set
++version 0.0.0
 
 # Creates a set of all the distinct nodes present in the input arguments.
 [args] > genNodes
+  interpreter 0 > @
   # Walks the arguments and keeps everything except every third weight token.
   [i] > interpreter
     if. > @
@@ -15,4 +19,6 @@
           ^.args.at i
         ^.interpreter (i.plus 1)
       set *
-  interpreter 0 > @
+  # Collects the two endpoints of one edge and drops its weight token.
+  [] +> tests-collects-distinct-nodes
+    (kruskal.genNodes (* "0" "1" "5")).size.eq 2 > @

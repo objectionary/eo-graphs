@@ -1,9 +1,13 @@
++alias ss.set
++home https://github.com/objectionary/eo-graphs
++package fordfulkerson
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias ss.set
++version 0.0.0
 
 # Ford-Fulkerson max flow from source to sink over a capacity matrix.
 [cap source sink] > algo
+  loop 0 cap > @
   # Searches one augmenting path, returns (bottleneck, matrix, visited).
   [u pushed visited matrix] > dfs
     if. > @
@@ -26,16 +30,18 @@
       scan u pushed visited matrix (v.plus 1)
   # Recurses through the edge from u to v and augments on success.
   [u pushed visited matrix v] > recurseEdge
-    dfs v (min pushed ((matrix.at u).at v)) visited matrix > sub
     if. > @
       (sub.at 0).gt 0
-      * (sub.at 0) (updateResidual (sub.at 1) u v (sub.at 0)) (sub.at 2)
+      * (sub.at 0) (fordfulkerson.updateResidual (sub.at 1) u v (sub.at 0)) (sub.at 2)
       scan u pushed (sub.at 2) matrix (v.plus 1)
+    dfs v (fordfulkerson.min pushed ((matrix.at u).at v)) visited matrix > sub
   # Repeatedly augments the flow until no augmenting path is left.
   [total matrix] > loop
-    dfs ^.source 1000000000 (set *) matrix > res
     if. > @
       (res.at 0).eq 0
       total
       ^.loop (total.plus (res.at 0)) (res.at 1)
-  loop 0 cap > @
+    dfs ^.source 1000000000 (set *) matrix > res
+  # Pushes five units across a single saturated source-to-sink edge.
+  [] +> tests-flows-across-one-edge
+    (fordfulkerson.algo (fordfulkerson.setCell (fordfulkerson.zeros 2) 0 1 5) 0 1).eq 5 > @

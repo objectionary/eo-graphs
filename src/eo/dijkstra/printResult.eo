@@ -1,7 +1,10 @@
++alias tt.sprintf
++alias io.stdout
++home https://github.com/objectionary/eo-graphs
++package dijkstra
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias io.stdout
-+alias tt.sprintf
++version 0.0.0
 
 # Prints the result, at the i-th position the parent of the i-th vertex.
 [path] > printResult
@@ -16,3 +19,6 @@
             sprintf
               "%d "
               * ($.^.path.at i)
+  # Prints a three-vertex parent array without failing.
+  [] +> tests-prints-path
+    dijkstra.printResult (* 0 0 1) > @

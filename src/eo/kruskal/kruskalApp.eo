@@ -1,8 +1,13 @@
++home https://github.com/objectionary/eo-graphs
++package kruskal
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Kruskal algorithm application, reads a graph and prints its spanning tree.
 [args] > kruskalApp
-  graph args > edges
-  algo edges (genNodes args).size > result
-  printResult edges result > @
+  kruskal.printResult edges (kruskal.algo edges (kruskal.genNodes args).size) > @
+  kruskal.graph args > edges
+  # Reads a tiny graph, runs the algorithm and prints its spanning tree.
+  [] +> tests-builds-tree-for-tiny-graph
+    kruskal.kruskalApp (* "0" "1" "5") > @

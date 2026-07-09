@@ -1,19 +1,23 @@
-+spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
-+spdx SPDX-License-Identifier: MIT
-+alias io.stdout
++alias ss.list
 +alias tt.sprintf
 +alias tt.sscanf
-+alias ss.list
++alias io.stdout
++home https://github.com/objectionary/eo-graphs
++package prim
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Graph implementation, reads edges from the flat list of arguments.
 [args] > graph
+  $.readGraph 0 > @
   # Graph reading implementation, recursively consumes three args per edge.
   [i] > readGraph
     if. > @
       i.lt $.^.args.length
       with.
         $.^.readGraph (i.plus 3)
-        edge
+        prim.edge
           (sscanf "%d" ($.^.args.at (plus. 0.as-number i))).at 0
           (sscanf "%d" ($.^.args.at (plus. 1.as-number i))).at 0
           (sscanf "%d" ($.^.args.at (plus. 2.as-number i))).at 0
@@ -27,4 +31,6 @@
           sprintf
             "%d %d %d\n"
             * ($.^.edges.at i).from ($.^.edges.at i).to ($.^.edges.at i).weight
-  $.readGraph 0 > @
+  # Reads a single weighted edge out of three argument tokens.
+  [] +> tests-reads-one-edge
+    ((prim.graph (* "0" "1" "5")).at 0).weight.eq 5 > @

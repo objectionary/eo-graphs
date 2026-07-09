@@ -55,7 +55,7 @@ eo:
 run: target/run/kruskal.txt target/run/prim.txt target/run/dijkstra.txt target/run/fordfulkerson.txt
 
 target/run/%.txt: ALGO_NAME = $(subst kruskal,Kruskal's,$(subst prim,Prim's,$(subst dijkstra,Dijkstra's,$(subst fordfulkerson,FordFulkerson's,$*))))
-target/run/%.txt: EOC_TARGET = src/eo/$*/.eoc
+target/run/%.txt: EOC_TARGET = target/eo/$*
 target/run/%.txt: TEST_DIR = $(if $(filter kruskal prim,$*),edges,list)
 
 target/run/%.txt: | compile
@@ -64,7 +64,7 @@ target/run/%.txt: | compile
 	@echo "Now we are going to run $(ALGO_NAME) algorithm\n"
 	@for FILE in tests/$(TEST_DIR)/*; do \
 		var=$$(cat $$FILE); \
-		eoc --parser 0.61.3 --home-tag 0.61.3 --target $(EOC_TARGET) --easy --alone dataize $*App $$var; \
+		eoc --no-color --batch --parser 0.61.3 --home-tag 0.61.3 --target $(EOC_TARGET) --alone dataize $*.$*App $$var; \
 		echo $$? > $@; \
 	done
 

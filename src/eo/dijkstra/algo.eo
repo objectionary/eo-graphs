@@ -1,66 +1,72 @@
-+spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
-+spdx SPDX-License-Identifier: MIT
 +alias ss.list
 +alias ss.withouti
++home https://github.com/objectionary/eo-graphs
++package dijkstra
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Main Dijkstra part, finds shortest paths from 'start' to every vertex.
 [g start] > algo
+  findPaths > @
+    dijkstra.createSequence 0 g.size 1
+    *
+      (withouti (dijkstra.createList g.size pinf) start).withi start 0
+      (withouti (dijkstra.createList g.size -1) start).withi start start
   # Finds the minimal-weight paths from start to all other vertices.
   [available stats] > findPaths
+    if. > @
+      next.as-number.eq -1
+      path
+      $.^.findPaths
+        withouti available next.as-number
+        updateDistance
+          available.at next.as-number
+          ($.^.g.found (available.at next.as-number)).get
+          distances
+          path
     # Relaxes the distances and paths through the chosen vertex.
-    [node adjacent-nodes distances path] > updateDistance
+    [node adjacent distances path] > updateDistance
+      updater 0 distances path > @
       # Recursively relaxes every adjacent edge of the node.
       [i dists paths] > updater
         if. > @
-          i.lt $.^.adjacent-nodes.length
+          i.lt $.^.adjacent.length
           if.
             lt.
-              (dists.at $.^.node).plus ($.^.adjacent-nodes.at i).weight
-              dists.at ($.^.adjacent-nodes.at i).to
+              (dists.at $.^.node).plus ($.^.adjacent.at i).weight
+              dists.at ($.^.adjacent.at i).to
             ^.updater
               i.plus 1
               withi.
-                withouti dists ($.^.adjacent-nodes.at i).to
-                ($.^.adjacent-nodes.at i).to
-                (dists.at $.^.node).plus ($.^.adjacent-nodes.at i).weight
+                withouti dists ($.^.adjacent.at i).to
+                ($.^.adjacent.at i).to
+                (dists.at $.^.node).plus ($.^.adjacent.at i).weight
               withi.
-                withouti paths ($.^.adjacent-nodes.at i).to
-                ($.^.adjacent-nodes.at i).to
+                withouti paths ($.^.adjacent.at i).to
+                ($.^.adjacent.at i).to
                 $.^.node
             $.^.updater
               i.plus 1
               dists
               paths
           list (* dists paths)
-      updater 0 distances path > @
     # Finds the next unvisited vertex with the minimal distance from start.
-    [minimum-index index] > findNextNode
+    [minimum index] > findNextNode
       if. > @
         index.gte $.^.available.length
-        minimum-index
+        minimum
         if.
           or.
-            minimum-index.eq -1
+            minimum.eq -1
             lt.
               $.^.distances.at ($.^.available.at index)
-              $.^.distances.at ($.^.available.at minimum-index)
+              $.^.distances.at ($.^.available.at minimum)
           $.^.findNextNode index (index.plus 1)
-          $.^.findNextNode minimum-index (index.plus 1)
+          $.^.findNextNode minimum (index.plus 1)
     stats.at 0 > distances
     stats.at 1 > path
-    findNextNode -1 0 > next-node!
-    if. > @
-      next-node.as-number.eq -1
-      path
-      $.^.findPaths
-        withouti available next-node.as-number
-        updateDistance
-          available.at next-node.as-number
-          ($.^.g.found (available.at next-node.as-number)).get
-          distances
-          path
-  findPaths > @
-    createSequence 0 g.size 1
-    *
-      (withouti (createList g.size pinf) start).withi start 0
-      (withouti (createList g.size -1) start).withi start start
+    findNextNode -1 0 > next!
+  # Leaves every vertex of a two-vertex path rooted at the start.
+  [] +> tests-roots-start-at-itself
+    ((dijkstra.algo (dijkstra.graph (* "2" "1" "0" "1:5" "0" "1")) 0).at 0).eq 0 > @

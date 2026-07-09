@@ -1,9 +1,15 @@
++alias ss.withouti
++home https://github.com/objectionary/eo-graphs
++package kruskal
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias ss.withouti
++version 0.0.0
 
-# Updates node-number's parent with new-parent-number in the given dsu-list.
-[node-number new-parent-number dsu-list] > dsuUpdate
-  dsuGetParent node-number dsu-list > parent1!
-  dsuGetParent new-parent-number dsu-list > parent2!
-  (withouti dsu-list parent1.as-number).withi parent1.as-number parent2.as-number > @
+# Updates node's parent with parent inside the given dsu list.
+[node parent dsu] > dsuUpdate
+  (withouti dsu root.as-number).withi root.as-number target.as-number > @
+  kruskal.dsuGetParent node dsu > root!
+  kruskal.dsuGetParent parent dsu > target!
+  # Points one singleton root at another and reads the new parent back.
+  [] +> tests-links-two-roots
+    ((kruskal.dsuUpdate 0 1 (* -1 -1)).at 0).as-number.eq 1 > @

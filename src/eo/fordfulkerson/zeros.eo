@@ -1,6 +1,12 @@
++home https://github.com/objectionary/eo-graphs
++package fordfulkerson
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Builds an n by n capacity matrix with every cell equal to zero.
 [n] > zeros
-  createList n (createList n 0) > @
+  fordfulkerson.createList n (fordfulkerson.createList n 0) > @
+  # Builds a square matrix holding one row per requested vertex.
+  [] +> tests-builds-square-matrix
+    (fordfulkerson.zeros 3).length.eq 3 > @

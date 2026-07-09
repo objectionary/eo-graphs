@@ -1,8 +1,12 @@
++home https://github.com/objectionary/eo-graphs
++package prim
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Prim algorithm application, reads a graph and prints its spanning tree.
 [args] > primApp
-  graph args > edges
-  algo edges > result
-  printResult result > @
+  prim.printResult (prim.algo (prim.graph args)) > @
+  # Reads a tiny graph, runs the algorithm and prints its spanning tree.
+  [] +> tests-builds-tree-for-tiny-graph
+    prim.primApp (* "0" "1" "5") > @

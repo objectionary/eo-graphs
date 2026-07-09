@@ -1,5 +1,11 @@
++home https://github.com/objectionary/eo-graphs
++package dijkstra
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Graph edge in adjacency list, leading to vertex 'to' with the given 'weight'.
 [to weight] > edge
+  # Confirms an edge keeps the destination vertex it was built with.
+  [] +> tests-keeps-destination
+    (dijkstra.edge 3 7).to.eq 3 > @

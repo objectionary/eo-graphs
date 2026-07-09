@@ -1,5 +1,8 @@
++home https://github.com/objectionary/eo-graphs
++package kruskal
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Graph edge implementation with a source, a target and a weight.
 [from to weight] > edge
@@ -10,3 +13,6 @@
         other.from.eq from
         other.to.eq to
       other.weight.eq weight
+  # Checks that an edge equals another edge with the same three fields.
+  [] +> tests-edge-equals-itself
+    (kruskal.edge 1 2 3).eq (kruskal.edge 1 2 3) > @

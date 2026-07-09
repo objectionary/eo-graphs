@@ -1,51 +1,56 @@
-+spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
-+spdx SPDX-License-Identifier: MIT
 +alias ss.list
 +alias ss.set
 +alias ss.withouti
++home https://github.com/objectionary/eo-graphs
++package prim
++spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
++spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Main Prim algorithm part, grows a minimum spanning tree from one vertex.
 [edges] > algo
+  $.findEdges (list (* (edges.at first.as-number))) (set (* (edges.at first.as-number).from (edges.at first.as-number).to)) edges > @
+  $.findFirstEdge 0 0 > first!
   # Finds the first edge of the tree, the one with the least weight.
-  [minimum-index index] > findFirstEdge
+  [minimum index] > findFirstEdge
     if. > @
       index.gte edges.length
-      minimum-index
+      minimum
       if.
-        ($.^.edges.at index).weight.lt ($.^.edges.at minimum-index).weight
+        ($.^.edges.at index).weight.lt ($.^.edges.at minimum).weight
         $.^.findFirstEdge index (index.plus 1)
-        $.^.findFirstEdge minimum-index (index.plus 1)
+        $.^.findFirstEdge minimum (index.plus 1)
   # Finds the edges that the minimum spanning tree consists of.
-  [used-edges used-nodes edges-rest] > findEdges
+  [tree nodes rest] > findEdges
+    if. > @
+      chosen.as-number.eq -1
+      tree
+      if.
+        (nodes.has (rest.at chosen.as-number).from).not
+        $.^.findEdges (tree.with (rest.at chosen.as-number)) (nodes.with (rest.at chosen.as-number).from) (withouti rest chosen.as-number)
+        $.^.findEdges (tree.with (rest.at chosen.as-number)) (nodes.with (rest.at chosen.as-number).to) (withouti rest chosen.as-number)
+    $.findNextEdge -1 0 > chosen!
     # Finds the next least-weight edge with exactly one endpoint used.
-    [minimum-index index] > findNextEdge
+    [minimum index] > findNextEdge
       if. > @
-        index.gte $.^.edges-rest.length
-        minimum-index
+        index.gte $.^.rest.length
+        minimum
         seq
           *
-            used-nodes.has ($.^.edges-rest.at index).from > isFromUsed!
-            used-nodes.has ($.^.edges-rest.at index).to > isToUsed!
+            nodes.has ($.^.rest.at index).from > is-from!
+            nodes.has ($.^.rest.at index).to > is-to!
             if.
               and.
                 or.
-                  isFromUsed.as-bool.and isToUsed.as-bool.not
-                  isFromUsed.as-bool.not.and isToUsed.as-bool
+                  is-from.as-bool.and is-to.as-bool.not
+                  is-from.as-bool.not.and is-to.as-bool
                 or.
-                  minimum-index.eq -1
+                  minimum.eq -1
                   lt.
-                    ($.^.edges-rest.at index).weight
-                    ($.^.edges-rest.at minimum-index).weight
+                    ($.^.rest.at index).weight
+                    ($.^.rest.at minimum).weight
               $.^.findNextEdge index (index.plus 1)
-              $.^.findNextEdge minimum-index (index.plus 1)
-    $.findNextEdge -1 0 > next-edge!
-    if. > @
-      next-edge.as-number.eq -1
-      used-edges
-      if.
-        (used-nodes.has (edges-rest.at next-edge.as-number).from).not
-        $.^.findEdges (used-edges.with (edges-rest.at next-edge.as-number)) (used-nodes.with (edges-rest.at next-edge.as-number).from) (withouti edges-rest next-edge.as-number)
-        $.^.findEdges (used-edges.with (edges-rest.at next-edge.as-number)) (used-nodes.with (edges-rest.at next-edge.as-number).to) (withouti edges-rest next-edge.as-number)
-  $.findFirstEdge 0 0 > first-edge!
-  set (* (edges.at first-edge.as-number).from (edges.at first-edge.as-number).to) > used-first-nodes
-  $.findEdges (list (* (edges.at first-edge.as-number))) used-first-nodes edges > @
+              $.^.findNextEdge minimum (index.plus 1)
+  # Grows a two-edge path over three nodes into its spanning tree.
+  [] +> tests-spans-two-edge-path
+    (prim.algo (* (prim.edge 0 1 5) (prim.edge 1 2 3))).length.eq 2 > @

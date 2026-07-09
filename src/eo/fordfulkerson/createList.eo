@@ -1,9 +1,13 @@
++alias ss.list
++home https://github.com/objectionary/eo-graphs
++package fordfulkerson
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias ss.list
++version 0.0.0
 
 # Creates a list of size sz with every element equal to val.
 [sz val] > createList
+  creator 0 > @
   # Recursively grows the list until it reaches the requested size.
   [i] > creator
     if. > @
@@ -12,4 +16,6 @@
         ^.creator (i.plus 1)
         ^.val
       list *
-  creator 0 > @
+  # Builds a list of the requested length filled with the given value.
+  [] +> tests-fills-list-to-size
+    (fordfulkerson.createList 3 7).length.eq 3 > @

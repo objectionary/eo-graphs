@@ -1,33 +1,38 @@
++alias ss.index-of
++alias ss.list
++home https://github.com/objectionary/eo-graphs
++package kruskal
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
-+alias ss.list
-+alias ss.index-of
++version 0.0.0
 
 # Main Kruskal's algorithm part, builds a minimum spanning tree over edges.
-[edges nodes-number] > algo
-  [dsu used-edges] > findEdges
+[edges nodes] > algo
+  findEdges (kruskal.createList nodes -1) (list *) > @
+  # Adds edges of least weight that form no cycle until none remain.
+  [dsu used] > findEdges
+    if. > @
+      chosen.eq -1
+      used
+      ^.findEdges (kruskal.dsuUpdate (^.edges.at chosen).from (^.edges.at chosen).to dsu) (used.with chosen)
+    findNextEdge -1 0 > chosen
     # Finds the next edge, least weight, that forms no cycle with used ones.
-    [minimum-index index] > findNextEdge
-      dsuGetParent (^.^.edges.at index).from ^.dsu > parentFrom
-      dsuGetParent (^.^.edges.at index).to ^.dsu > parentTo
+    [minimum index] > findNextEdge
       if. > @
         index.gte ^.^.edges.length
-        minimum-index
+        minimum
         if.
           and.
-            (parentFrom.eq parentTo).not
+            ((kruskal.dsuGetParent (^.^.edges.at index).from ^.dsu).eq (kruskal.dsuGetParent (^.^.edges.at index).to ^.dsu)).not
             and.
-              (index-of ^.used-edges index).eq -1
+              (index-of ^.used index).eq -1
               or.
-                minimum-index.eq -1
+                minimum.eq -1
                 lt.
                   (^.^.edges.at index).weight
-                  (^.^.edges.at minimum-index).weight
+                  (^.^.edges.at minimum).weight
           ^.findNextEdge index (index.plus 1)
-          ^.findNextEdge minimum-index (index.plus 1)
-    findNextEdge -1 0 > next-edge
-    if. > @
-      next-edge.eq -1
-      used-edges
-      ^.findEdges (dsuUpdate (^.edges.at next-edge).from (^.edges.at next-edge).to dsu) (used-edges.with next-edge)
-  findEdges (createList nodes-number -1) (list *) > @
+          ^.findNextEdge minimum (index.plus 1)
+  # Spans a two-edge path over three nodes with both of its edges.
+  [] +> tests-spans-two-edge-path
+    (kruskal.algo (* (kruskal.edge 0 1 5) (kruskal.edge 1 2 3)) 3).length.eq 2 > @

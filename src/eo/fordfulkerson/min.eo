@@ -1,5 +1,8 @@
++home https://github.com/objectionary/eo-graphs
++package fordfulkerson
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
++version 0.0.0
 
 # Returns the smaller of the two given numbers.
 [a b] > min
@@ -7,3 +10,6 @@
     a.lt b
     a
     b
+  # Returns the first argument when it is the smaller of the two.
+  [] +> tests-picks-the-smaller
+    (fordfulkerson.min 3 7).eq 3 > @
