@@ -22,3 +22,14 @@ jobs:
           java-version: '21'
       - run: npm install -g eolang
       - run: make
+  telegram:
+    needs: make
+    runs-on: ubuntu-24.04
+    if: ${{ always() && github.event_name == 'push' }}
+    permissions:
+      actions: read
+    steps:
+      - uses: yegor256/terald-action@a0ef862a24f962a4258fd9390d0a67b5529f0eef  # master
+        with:
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          chat: -1004371404002
