@@ -1,43 +1,38 @@
-+alias ss.list
-+alias ss.map
-+alias tt.sscanf
+# Graph implementation reading the adjacency list from the arguments.
+
++architect yegor256@gmail.com
 +home https://github.com/objectionary/eo-graphs
 +package dijkstra
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
 +version 0.0.0
 
-# Graph implementation reading the adjacency list from the arguments.
 [args] > graph
   readGraph > @
-  # Reads the whole graph in the adjacency list format into a map.
-  [] > readGraph
-    recReader 0 1 ((sscanf "%d" (^.args.at 0)).at 0) > @
-    # Parses a single adjacency line into a list of edges.
-    [i limit] > lineParser
+  [^] > readGraph
+    recReader 0 1 (("%d".scanf (^.args.at 0)).at 0) > @
+    [^ i limit] > lineParser
       recParser i > @
-      # Recursively reads edges until the line limit is reached.
-      [index] > recParser
+      [^ index] > recParser
         if. > @
           index.lt ^.limit
           with.
             ^.recParser (index.plus 1)
             dijkstra.edge
-              (sscanf "%d:%d" (^.^.^.args.at index)).at 0
-              (sscanf "%d:%d" (^.^.^.args.at index)).at 1
-          list *
-    # Recursively reads every vertex line into the adjacency map.
-    [i cursor count] > recReader
+              ("%d:%d".scanf (^.^.^.args.at index)).at 0
+              ("%d:%d".scanf (^.^.^.args.at index)).at 1
+          *
+    [^ i cursor count] > recReader
       if. > @
         i.lt count
         seq
           *
-            (sscanf "%d" (^.^.args.at cursor)).at 0 > degree
+            ("%d".scanf (^.^.args.at cursor)).at 0 > degree
             with.
               ^.recReader (i.plus 1) (cursor.plus (degree.plus 2)) count
-              (sscanf "%d" (^.^.args.at (cursor.plus 1))).at 0
-              lineParser (cursor.plus 2) ((degree.plus cursor).plus 2)
+              ("%d".scanf (^.^.args.at (cursor.plus 1))).at 0
+              ^.lineParser (cursor.plus 2) ((degree.plus cursor).plus 2)
         map *
-  # Reads a one-edge vertex line back as an edge to its neighbour.
+
   [] +> tests-reads-adjacency
     (((dijkstra.graph (* "2" "1" "0" "1:5" "0" "1")).found 0).get.at 0).to.eq 1 > @
