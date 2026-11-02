@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
+# SPDX-License-Identifier: MIT
+---
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04
