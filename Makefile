@@ -64,7 +64,7 @@ target/run/%.txt: | compile
 	@echo "Now we are going to run $(ALGO_NAME) algorithm\n"
 	@for FILE in tests/$(TEST_DIR)/*; do \
 		var=$$(cat $$FILE); \
-		eoc --no-color --batch --parser 0.61.3 --home-tag 0.61.3 --target $(EOC_TARGET) --alone dataize $*.$*App $$var; \
+		eoc --no-color --batch --blind --parser 0.63.2 --home-tag 0.63.2 --target $(EOC_TARGET) --alone dataize --heap=8G $*.$*App $$var; \
 		echo $$? > $@; \
 	done
 
