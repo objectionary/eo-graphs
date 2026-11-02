@@ -1,23 +1,21 @@
-+alias ss.index-of
-+alias ss.list
+# Main Kruskal's algorithm part, builds a minimum spanning tree over edges.
+
++architect yegor256@gmail.com
 +home https://github.com/objectionary/eo-graphs
 +package kruskal
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
 +version 0.0.0
 
-# Main Kruskal's algorithm part, builds a minimum spanning tree over edges.
 [edges nodes] > algo
-  findEdges (kruskal.createList nodes -1) (list *) > @
-  # Adds edges of least weight that form no cycle until none remain.
-  [dsu used] > findEdges
+  findEdges (kruskal.createList nodes -1) * > @
+  [^ dsu used] > findEdges
     if. > @
       chosen.eq -1
       used
       ^.findEdges (kruskal.dsuUpdate (^.edges.at chosen).from (^.edges.at chosen).to dsu) (used.with chosen)
     findNextEdge -1 0 > chosen
-    # Finds the next edge, least weight, that forms no cycle with used ones.
-    [minimum index] > findNextEdge
+    [^ minimum index] > findNextEdge
       if. > @
         index.gte ^.^.edges.length
         minimum
@@ -25,7 +23,7 @@
           and.
             ((kruskal.dsuGetParent (^.^.edges.at index).from ^.dsu).eq (kruskal.dsuGetParent (^.^.edges.at index).to ^.dsu)).not
             and.
-              (index-of ^.used index).eq -1
+              (^.used.index-of index).eq -1
               or.
                 minimum.eq -1
                 lt.
@@ -33,6 +31,6 @@
                   (^.^.edges.at minimum).weight
           ^.findNextEdge index (index.plus 1)
           ^.findNextEdge minimum (index.plus 1)
-  # Spans a two-edge path over three nodes with both of its edges.
+
   [] +> tests-spans-two-edge-path
     (kruskal.algo (* (kruskal.edge 0 1 5) (kruskal.edge 1 2 3)) 3).length.eq 2 > @
