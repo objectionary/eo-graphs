@@ -1,35 +1,32 @@
-+alias ss.list
-+alias ss.withouti
+# Main Dijkstra part, finds shortest paths from 'start' to every vertex.
+
++architect yegor256@gmail.com
 +home https://github.com/objectionary/eo-graphs
 +package dijkstra
 +spdx SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 +spdx SPDX-License-Identifier: MIT
 +version 0.0.0
 
-# Main Dijkstra part, finds shortest paths from 'start' to every vertex.
 [g start] > algo
   findPaths > @
     dijkstra.createSequence 0 g.size 1
     *
-      (withouti (dijkstra.createList g.size pinf) start).withi start 0
-      (withouti (dijkstra.createList g.size -1) start).withi start start
-  # Finds the minimal-weight paths from start to all other vertices.
-  [available stats] > findPaths
+      ((dijkstra.createList g.size pinf).withouti start).withi start 0
+      ((dijkstra.createList g.size -1).withouti start).withi start start
+  [^ available stats] > findPaths
     if. > @
       next.as-number.eq -1
       path
       $.^.findPaths
-        withouti available next.as-number
+        available.withouti next.as-number
         updateDistance
           available.at next.as-number
           ($.^.g.found (available.at next.as-number)).get
           distances
           path
-    # Relaxes the distances and paths through the chosen vertex.
-    [node adjacent distances path] > updateDistance
+    [^ node adjacent distances path] > updateDistance
       updater 0 distances path > @
-      # Recursively relaxes every adjacent edge of the node.
-      [i dists paths] > updater
+      [^ i dists paths] > updater
         if. > @
           i.lt $.^.adjacent.length
           if.
@@ -39,20 +36,19 @@
             ^.updater
               i.plus 1
               withi.
-                withouti dists ($.^.adjacent.at i).to
+                dists.withouti ($.^.adjacent.at i).to
                 ($.^.adjacent.at i).to
                 (dists.at $.^.node).plus ($.^.adjacent.at i).weight
               withi.
-                withouti paths ($.^.adjacent.at i).to
+                paths.withouti ($.^.adjacent.at i).to
                 ($.^.adjacent.at i).to
                 $.^.node
             $.^.updater
               i.plus 1
               dists
               paths
-          list (* dists paths)
-    # Finds the next unvisited vertex with the minimal distance from start.
-    [minimum index] > findNextNode
+          * dists paths
+    [^ minimum index] > findNextNode
       if. > @
         index.gte $.^.available.length
         minimum
@@ -67,6 +63,6 @@
     stats.at 0 > distances
     stats.at 1 > path
     findNextNode -1 0 > next!
-  # Leaves every vertex of a two-vertex path rooted at the start.
+
   [] +> tests-roots-start-at-itself
     ((dijkstra.algo (dijkstra.graph (* "2" "1" "0" "1:5" "0" "1")) 0).at 0).eq 0 > @
