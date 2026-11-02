@@ -8,7 +8,7 @@
 SHELL := bash
 
 ALGORITHMS = kruskal prim dijkstra fordfulkerson
-EExec = eoc --no-color --batch --parser 0.61.3 --home-tag 0.61.3
+EExec = eoc --no-color --batch --blind --parser 0.63.2 --home-tag 0.63.2
 
 compile:
 	for algo in $(ALGORITHMS); do \
