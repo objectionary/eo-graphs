@@ -66,27 +66,31 @@ int main (int argc, char *argv[]) {
   // if the vertex is already in the set S, discard it otherwise
   //choose another vertex nearest to selected vertex  at step 1.
 
-      int min = INF;
-      x = 0;
-      y = 0;
-
-      for (int i = 0; i < nodes.size(); i++) {
+    int min = INF;
+    x = -1;
+    y = -1;
+    
+    for (int i = 0; i < nodes.size(); i++) {
         if (selected[i]) {
             for (int j = 0; j < nodes.size(); j++) {
-              if (!selected[j] && G[i][j]) { // not in selected and there is an edge
-                  if (min > G[i][j]) {
-                      min = G[i][j];
-                      x = i;
-                      y = j;
-                  }
-
-              }
-          }
+                if (!selected[j] && G[i][j]) {
+                    if (x == -1 || min > G[i][j]) {
+                        min = G[i][j];
+                        x = i;
+                        y = j;
+                    }
+                }
+            }
         }
-      }
-      cout << "(" << x << " " << y << " - " << G[x][y] << ") ";
-      selected[y] = true;
-      no_edge++;
+    }
+    if (x == -1) {
+        cerr << "Graph is disconnected" << endl;
+        return 1;
+    }
+    
+    cout << "(" << x << " " << y << " - " << G[x][y] << ") ";
+    selected[y] = true;
+    no_edge++;
     }
 
   return 0;
