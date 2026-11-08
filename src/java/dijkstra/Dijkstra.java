@@ -28,7 +28,7 @@ public class Dijkstra {
       u = index;
       visited[u] = true;
       for (i = 0; i < vNum; i++)
-        if (!visited[i] && (GR[u * vNum + i] != 0) &&
+        if (!visited[i] && (GR[u * vNum + i] != Integer.MAX_VALUE) &&
             (distance[u] != Integer.MAX_VALUE) &&
             (distance[u] + GR[u * vNum + i] < distance[i])) {
           distance[i] = distance[u] + GR[u * vNum + i];
@@ -45,7 +45,7 @@ public class Dijkstra {
       int i;
       int vNum = args.length;
       int[] GR = new int[vNum * vNum];
-      Arrays.fill(GR, 0);
+      Arrays.fill(GR, Integer.MAX_VALUE);
 
       for (i = 0; i < args.length; i++) {
         String[] vArray = args[i].split(":");
@@ -55,7 +55,9 @@ public class Dijkstra {
           for (int j = 1; j < vArray.length; j++) {
             if (j % 2 == 0) {
               w = Integer.parseInt(vArray[j]);
-              GR[u * vNum + v] = w;
+             if(GR[u * vNum + v] == Integer.MAX_VALUE || w < GR[u * vNum + v]){
+               GR[u * vNum + v] = w;
+             }
             } else {
               v = Integer.parseInt(vArray[j]);
             }
