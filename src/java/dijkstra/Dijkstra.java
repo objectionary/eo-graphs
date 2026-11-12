@@ -7,6 +7,11 @@ import java.util.Arrays;
 
 public class Dijkstra {
   public static void dijkstra(int vNum, int[] GR, int st) {
+    for (int index = 0; index < vNum * vNum; ++index) {
+      if (GR[index] < 0) {
+        throw new IllegalArgumentException("Dijkstra requires non-negative edge weights");
+      }
+    }
     int[] distance = new int[vNum];
     int count, index = 0, i, u;
     int[] path = new int[vNum];
@@ -55,6 +60,9 @@ public class Dijkstra {
           for (int j = 1; j < vArray.length; j++) {
             if (j % 2 == 0) {
               w = Integer.parseInt(vArray[j]);
+              if (w < 0) {
+                throw new IllegalArgumentException("Dijkstra requires non-negative edge weights");
+              }
               GR[u * vNum + v] = w;
             } else {
               v = Integer.parseInt(vArray[j]);
