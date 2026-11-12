@@ -31,13 +31,18 @@ int main (int argc, char *argv[]) {
   }
 
   int G[nodes.size()][nodes.size()];
+  bool present[nodes.size()][nodes.size()];
+  memset(present, false, sizeof(present));
   memset(G, 0, sizeof(int) * nodes.size() * nodes.size());
 
   for(int t = 0; t < edgesCount; t++){
     int i = EDGES[t*3];
     int j = EDGES[t*3+1];
     int w = EDGES[t*3+2];
-    G[i][j] = G[j][i] = w;
+    if (!present[i][j] || w < G[i][j]) {
+      G[i][j] = G[j][i] = w;
+      present[i][j] = present[j][i] = true;
+    }
   }
 
   int no_edge;            // number of edge
@@ -73,7 +78,7 @@ int main (int argc, char *argv[]) {
       for (int i = 0; i < nodes.size(); i++) {
         if (selected[i]) {
             for (int j = 0; j < nodes.size(); j++) {
-              if (!selected[j] && G[i][j]) { // not in selected and there is an edge
+              if (!selected[j] && present[i][j]) { // not in selected and there is an edge
                   if (min > G[i][j]) {
                       min = G[i][j];
                       x = i;
