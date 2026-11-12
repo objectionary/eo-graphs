@@ -44,21 +44,27 @@ public class GraphGenerator {
     }
 
     public static void main(String[] args) {
-        if(args.length == 2)
-            try{
-                int outType = Integer.parseInt(args[0]);
-                int vNum = Integer.parseInt(args[1]);
-                switch (outType){
-                    case OUTPUT_TYPE_ADJACENCY_LISTS:
-                        System.out.print(generateAdjacencyLists(vNum));
-                        break;
-                    case OUTPUT_TYPE_EDGES:
-                    default:
-                        System.out.print(generateEdges(vNum));
-                }
-
-            }catch (Exception e){
-                System.exit(1);
+        if (args.length != 2) {
+            System.err.println("Usage: GraphGenerator <format: 0|1> <vertices>");
+            System.exit(1);
+        }
+        try {
+            int outType = Integer.parseInt(args[0]);
+            int vNum = Integer.parseInt(args[1]);
+            switch (outType){
+                case OUTPUT_TYPE_ADJACENCY_LISTS:
+                    System.out.print(generateAdjacencyLists(vNum));
+                    break;
+                case OUTPUT_TYPE_EDGES:
+                    System.out.print(generateEdges(vNum));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown output format: " + outType);
             }
+
+        }catch (IllegalArgumentException e){
+            System.err.println(e.getMessage());
+            System.exit(1);
+        }
     }
 }
