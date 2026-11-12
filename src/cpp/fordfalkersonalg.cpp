@@ -49,6 +49,10 @@ int main(int argc, char *argv[]) {
 
     int i = 1;
     int vNum = stoi(argv[i]);
+    if (vNum < 2 || vNum > MAX_V) {
+      cerr << "Vertex count must be between 2 and " << MAX_V << "\n";
+      return EXIT_FAILURE;
+    }
     ++i;
     numOfVertex = vNum;
     sourceVertex = 0;
