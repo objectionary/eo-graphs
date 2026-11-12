@@ -51,6 +51,10 @@ public class Dijkstra {
         String[] vArray = args[i].split(":");
         int u, v = 0, w;
         u = Integer.parseInt(vArray[0]);
+        if (u < 0 || u >= vNum) {
+          throw new IllegalArgumentException(
+              "Vertex " + u + " is outside the declared range 0.." + (vNum - 1));
+        }
         if (vArray.length > 1) {
           for (int j = 1; j < vArray.length; j++) {
             if (j % 2 == 0) {
@@ -58,6 +62,10 @@ public class Dijkstra {
               GR[u * vNum + v] = w;
             } else {
               v = Integer.parseInt(vArray[j]);
+              if (v < 0 || v >= vNum) {
+                throw new IllegalArgumentException(
+                    "Vertex " + v + " is outside the declared range 0.." + (vNum - 1));
+              }
             }
           }
         }
