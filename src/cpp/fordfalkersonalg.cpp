@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
       }
       i += eNum;
     }
-    int maxFlow = 0;
+    long long maxFlow = 0;
     int iterationResult = 0;
     while ((iterationResult = findFlow(sourceVertex, INF)) > 0) {
       fill(visited, visited + MAX_V, false);
