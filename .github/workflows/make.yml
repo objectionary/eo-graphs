@@ -23,6 +23,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
+      - run: python3 tests/check_85.py
       - run: npm install -g eolang
       - run: make
   telegram:
