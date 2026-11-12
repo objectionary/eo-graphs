@@ -6,20 +6,20 @@
 import java.util.Arrays;
 
 public class Dijkstra {
-  public static void dijkstra(int vNum, int[] GR, int st) {
-    int[] distance = new int[vNum];
+  public static void dijkstra(int vNum, long[] GR, int st) {
+    long[] distance = new long[vNum];
     int count, index = 0, i, u;
     int[] path = new int[vNum];
     boolean[] visited = new boolean[vNum];
     for (i = 0; i < vNum; i++) {
-      distance[i] = Integer.MAX_VALUE;
+      distance[i] = Long.MAX_VALUE;
       visited[i] = false;
       path[i] = -1;
     }
     path[st] = st;
     distance[st] = 0;
     for (count = 0; count < vNum - 1; count++) {
-      int min = Integer.MAX_VALUE;
+      long min = Long.MAX_VALUE;
       for (i = 0; i < vNum; i++)
         if (!visited[i] && distance[i] <= min) {
           min = distance[i];
@@ -28,8 +28,8 @@ public class Dijkstra {
       u = index;
       visited[u] = true;
       for (i = 0; i < vNum; i++)
-        if (!visited[i] && (GR[u * vNum + i] != Integer.MAX_VALUE) &&
-            (distance[u] != Integer.MAX_VALUE) &&
+        if (!visited[i] && (GR[u * vNum + i] != Long.MAX_VALUE) &&
+            (distance[u] != Long.MAX_VALUE) &&
             (distance[u] + GR[u * vNum + i] < distance[i])) {
           distance[i] = distance[u] + GR[u * vNum + i];
           path[i] = u;
@@ -44,8 +44,8 @@ public class Dijkstra {
     if (args.length > 0) {
       int i;
       int vNum = args.length;
-      int[] GR = new int[vNum * vNum];
-      Arrays.fill(GR, Integer.MAX_VALUE);
+      long[] GR = new long[vNum * vNum];
+      Arrays.fill(GR, Long.MAX_VALUE);
 
       for (i = 0; i < args.length; i++) {
         String[] vArray = args[i].split(":");
@@ -55,7 +55,7 @@ public class Dijkstra {
           for (int j = 1; j < vArray.length; j++) {
             if (j % 2 == 0) {
               w = Integer.parseInt(vArray[j]);
-              if (GR[u * vNum + v] == Integer.MAX_VALUE || w < GR[u * vNum + v]) {
+              if (GR[u * vNum + v] == Long.MAX_VALUE || w < GR[u * vNum + v]) {
                 GR[u * vNum + v] = w;
               }
             } else {
