@@ -23,6 +23,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
+      - run: python3 tests/check_74.py
       - run: python3 tests/check_85.py
       - run: python3 tests/check_62.py
       - run: python3 tests/check_72.py
