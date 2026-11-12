@@ -27,6 +27,7 @@ jobs:
       - run: python3 tests/check_62.py
       - run: python3 tests/check_72.py
       - run: python3 tests/check_83.py
+      - run: python3 tests/check_82.py
       - run: npm install -g eolang
       - run: make
       - run: python3 tests/check_57.py
