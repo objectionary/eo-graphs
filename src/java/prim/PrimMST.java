@@ -39,11 +39,11 @@ public class PrimMST {
     }
 
     public int getWeight() {
-        int total = 0;
+        long total = 0;
         for (WeightGraph.Edge edge : mst) {
             total += edge.getWeight();
         }
-        return total;
+        return Math.toIntExact(total);
     }
 
     private void visit(int v) {
