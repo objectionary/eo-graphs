@@ -2,7 +2,6 @@
  * SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
  * SPDX-License-Identifier: MIT
  */
-import prim.WeightGraph;
 
 import java.util.*;
 import java.lang.*;
