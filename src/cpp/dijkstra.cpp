@@ -5,10 +5,16 @@
 #include <climits>
 #include <cstring>
 #include <stdlib.h>
+#include <stdexcept>
 using namespace std;
 
 void dijkstra(int vNum, int* GR, int st)
 {
+    for (int index = 0; index < vNum * vNum; ++index) {
+        if (GR[index] < 0) {
+            throw invalid_argument("Dijkstra requires non-negative edge weights");
+        }
+    }
     int distance[vNum], count, index, i, u, m=st, path[vNum];
     bool visited[vNum];
     for (i=0; i<vNum; i++){
@@ -51,6 +57,11 @@ int main(int argc, char* argv[]) {
       for (int j = 0; j < number_of_edges; ++j) {
         int v, w;
         sscanf(argv[i + j], "%d:%d", &v, &w);
+        if (w < 0) {
+            cerr << "Dijkstra requires non-negative edge weights\n";
+            delete[] GR;
+            return EXIT_FAILURE;
+        }
         GR[u * vNum + v] = w;
       }
       i += number_of_edges;
