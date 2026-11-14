@@ -11,7 +11,7 @@ class FordFalkerson {
     /* Returns true if there is a path from source 's' to
       sink 't' in residual graph. Also fills parent[] to
       store the path */
-    boolean bfs(int rGraph[][], int s, int t, int parent[])
+    boolean bfs(long rGraph[][], int s, int t, int parent[])
     {
         final int V = rGraph.length;
         // Create a visited array and mark all vertices as
@@ -57,7 +57,7 @@ class FordFalkerson {
 
     // Returns the maximum flow from s to t in the given
     // graph
-    int fordFulkerson(int graph[][], int s, int t)
+    long fordFulkerson(int graph[][], int s, int t)
     {
         int u, v;
 
@@ -71,7 +71,7 @@ class FordFalkerson {
         // residual capacity of edge from i to j (if there
         // is an edge. If rGraph[i][j] is 0, then there is
         // not)
-        int rGraph[][] = new int[V][V];
+        long rGraph[][] = new long[V][V];
 
         for (u = 0; u < V; u++)
             for (v = 0; v < V; v++)
@@ -80,7 +80,7 @@ class FordFalkerson {
         // This array is filled by BFS and to store path
         int parent[] = new int[V];
 
-        int max_flow = 0; // There is no flow initially
+        long max_flow = 0; // There is no flow initially
 
         // Augment the flow while there is path from source
         // to sink
@@ -88,7 +88,7 @@ class FordFalkerson {
             // Find minimum residual capacity of the edhes
             // along the path filled by BFS. Or we can say
             // find the maximum flow through the path found.
-            int path_flow = Integer.MAX_VALUE;
+            long path_flow = Long.MAX_VALUE;
             for (v = t; v != s; v = parent[v]) {
                 u = parent[v];
                 path_flow
@@ -130,7 +130,7 @@ class FordFalkerson {
                     for (int j = 1;j<vArray.length;j++){
                         if(j % 2 == 0){
                             w = Integer.parseInt(vArray[j]);
-                            GR[u][v]=w;
+                            GR[u][v] = Math.addExact(GR[u][v], w);
                         }else{
                             v = Integer.parseInt(vArray[j]);
                         }
