@@ -51,7 +51,10 @@ int main(int argc, char* argv[]) {
       for (int j = 0; j < number_of_edges; ++j) {
         int v, w;
         sscanf(argv[i + j], "%d:%d", &v, &w);
-        GR[u * vNum + v] = w;
+        int &weight = GR[u * vNum + v];
+        if (weight == 0 || w < weight) {
+            weight = w;
+        }
       }
       i += number_of_edges;
     }
