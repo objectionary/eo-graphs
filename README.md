@@ -64,7 +64,7 @@ and can vary from implementation to implementation. An algorithm typically
 refers to a specific protocol for solving a problem, whereas a method is
 a more general approach to a problem.
 
-[GraphGenerator]: https://github.com/potatmen/eo-graphs/blob/master/src/java/generator/GraphGenerator.java
+[GraphGenerator]: https://github.com/objectionary/eo-graphs/blob/master/src/java/generator/GraphGenerator.java
 [Dijkstra's algorithm]: https://www.freecodecamp.org/news/dijkstras-shortest-path-algorithm-visual-introduction/
 [Ford-Fulkerson algorithm]: https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
 [Kruskal's algorithm]: https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
