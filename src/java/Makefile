@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Copyright (c) 2020-2026 Objectionary
 # SPDX-License-Identifier: MIT
 
-.PHONY: all clean ltex vale spell
+.PHONY: all clean ltex vale spell test
 .ONESHELL:
 .SHELLFLAGS := -e -o pipefail -c
 .SECONDARY:
@@ -25,3 +25,10 @@ $(CLASS_FILES):
 
 clean:
 	rm -rf targets/
+
+test: compile
+	@expected="Paths: 0 0 0 "; \
+	first=$$(java -cp targets Dijkstra 0:1:1:1:9:2:1 1: 2:1:3); \
+	second=$$(java -cp targets Dijkstra 0:1:9:1:1:2:1 1: 2:1:3); \
+	test "$$first" = "$$expected" && test "$$second" = "$$expected" \
+	&& echo "Both Dijkstra regression tests passed"
