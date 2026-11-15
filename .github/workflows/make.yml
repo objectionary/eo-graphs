@@ -26,6 +26,7 @@ jobs:
       - run: python3 tests/check_85.py
       - run: npm install -g eolang
       - run: make
+      - run: python3 tests/check_57.py
   telegram:
     needs: make
     runs-on: ubuntu-26.04
