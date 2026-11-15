@@ -1,4 +1,4 @@
-# Ford-Fulkerson max flow from source to sink over a capacity matrix.
+# Ford-Fulkerson max flow, with zero flow when source and sink coincide.
 
 +architect yegor256@gmail.com
 +home https://github.com/objectionary/eo-graphs
@@ -8,7 +8,10 @@
 +version 0.0.0
 
 [cap source sink] > algo
-  loop 0 cap > @
+  if. > @
+    source.eq sink
+    0
+    loop 0 cap
   [^ u pushed visited matrix] > dfs
     if. > @
       u.eq ^.sink
@@ -41,3 +44,9 @@
 
   [] +> tests-flows-across-one-edge
     (fordfulkerson.algo (fordfulkerson.setCell (fordfulkerson.zeros 2) 0 1 5) 0 1).eq 5 > @
+
+  [] +> tests-zero-flow-for-single-vertex
+    (fordfulkerson.algo (fordfulkerson.zeros 1) 0 0).eq 0 > @
+
+  [] +> tests-zero-flow-for-same-nonzero-endpoints
+    (fordfulkerson.algo (fordfulkerson.setCell (fordfulkerson.zeros 2) 1 1 5) 1 1).eq 0 > @
