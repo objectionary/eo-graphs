@@ -25,6 +25,7 @@ jobs:
           java-version: '25'
       - run: python3 tests/check_85.py
       - run: python3 tests/check_62.py
+      - run: python3 tests/check_72.py
       - run: npm install -g eolang
       - run: make
       - run: python3 tests/check_57.py
