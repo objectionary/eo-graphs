@@ -32,6 +32,9 @@ public class PrimMST {
                 visit(minEdge.getW());
             }
         }
+        if (mst.size() != graph.getVertexNum() - 1) {
+            throw new IllegalArgumentException("A spanning tree requires a connected graph");
+        }
     }
 
     public List<WeightGraph.Edge> getMst() {
