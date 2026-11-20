@@ -52,6 +52,11 @@ class Kruskal {
     void KruskalMST()
     {
         Edge result[] = new Edge[V];
+        Map<Integer, Integer> indices = new HashMap<>();
+        for (Edge item : edge) {
+            indices.putIfAbsent(item.src, indices.size());
+            indices.putIfAbsent(item.dest, indices.size());
+        }
         int e = 0;
         int i = 0;
         for (i = 0; i < V; ++i)
@@ -73,8 +78,8 @@ class Kruskal {
         while (e < V - 1) {
             Edge next_edge = edge[i++];
 
-            int x = find(subsets, next_edge.src);
-            int y = find(subsets, next_edge.dest);
+            int x = find(subsets, indices.get(next_edge.src));
+            int y = find(subsets, indices.get(next_edge.dest));
 
             if (x != y) {
                 result[e++] = next_edge;
