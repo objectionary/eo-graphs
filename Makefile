@@ -62,11 +62,12 @@ target/run/%.txt: | compile
 	@mkdir -p target/run
 	@echo "========================================\n"
 	@echo "Now we are going to run $(ALGO_NAME) algorithm\n"
+	@: > "$@.tmp"
 	@for FILE in tests/$(TEST_DIR)/*; do \
-		var=$$(cat $$FILE); \
-		eoc --no-color --batch --blind --parser 0.63.2 --home-tag 0.63.2 --target $(EOC_TARGET) --alone dataize --heap=8G $*.$*App $$var; \
-		echo $$? > $@; \
+		var=$$(cat "$$FILE"); \
+		eoc --no-color --batch --blind --parser 0.63.2 --home-tag 0.63.2 --target $(EOC_TARGET) --alone dataize --heap=8G $*.$*App $$var >> "$@.tmp"; \
 	done
+	@mv "$@.tmp" "$@"
 
 clean:
 	@for dir in src/eo src/java src/cpp; do \
