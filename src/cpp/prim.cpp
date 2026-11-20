@@ -5,6 +5,8 @@
 #include <cstring>
 #include <sstream>
 #include <set>
+#include <map>
+#include <vector>
 using namespace std;
 
 #define INF 9999999
@@ -30,14 +32,20 @@ int main (int argc, char *argv[]) {
     }
   }
 
+  vector<int> labels(nodes.begin(), nodes.end());
+  map<int, int> indices;
+  for (int index = 0; index < labels.size(); ++index) {
+    indices.emplace(labels[index], index);
+  }
+
   int G[nodes.size()][nodes.size()];
   bool present[nodes.size()][nodes.size()];
   memset(present, false, sizeof(present));
   memset(G, 0, sizeof(int) * nodes.size() * nodes.size());
 
   for(int t = 0; t < edgesCount; t++){
-    int i = EDGES[t*3];
-    int j = EDGES[t*3+1];
+    int i = indices.at(EDGES[t*3]);
+    int j = indices.at(EDGES[t*3+1]);
     int w = EDGES[t*3+2];
     if (!present[i][j] || w < G[i][j]) {
       G[i][j] = G[j][i] = w;
@@ -89,7 +97,7 @@ int main (int argc, char *argv[]) {
           }
         }
       }
-      cout << "(" << x << " " << y << " - " << G[x][y] << ") ";
+      cout << "(" << labels[x] << " " << labels[y] << " - " << G[x][y] << ") ";
       selected[y] = true;
       no_edge++;
     }

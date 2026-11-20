@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <set>
+#include <map>
 #include <vector>
 #include <algorithm>
 #include <string>
@@ -67,12 +68,17 @@ int myComp(const void* a, const void* b)
 {
 	Edge* a1 = (Edge*)a;
 	Edge* b1 = (Edge*)b;
-	return a1->weight > b1->weight;
+	return (a1->weight > b1->weight) - (a1->weight < b1->weight);
 }
 
 void KruskalMST(Graph* graph){
 	int V = graph->V;
 	Edge result[V];
+	map<int, int> indices;
+	for (int index = 0; index < graph->E; ++index) {
+		indices.emplace(graph->edge[index].src, indices.size());
+		indices.emplace(graph->edge[index].dest, indices.size());
+	}
 	int e = 0;
 	int i = 0;
 
@@ -89,8 +95,8 @@ void KruskalMST(Graph* graph){
 	while (e < V - 1 && i < graph->E){
 		Edge next_edge = graph->edge[i++];
 
-		int x = find(subsets, next_edge.src);
-		int y = find(subsets, next_edge.dest);
+		int x = find(subsets, indices.at(next_edge.src));
+		int y = find(subsets, indices.at(next_edge.dest));
 
 
 		if (x != y) {
