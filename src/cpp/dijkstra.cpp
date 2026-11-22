@@ -9,16 +9,17 @@ using namespace std;
 
 void dijkstra(int vNum, int* GR, int st)
 {
-    int distance[vNum], count, index, i, u, m=st, path[vNum];
+    long long distance[vNum];
+    int count, index, i, u, m=st, path[vNum];
     bool visited[vNum];
     for (i=0; i<vNum; i++){
-        distance[i]=INT_MAX; visited[i]=false;
+        distance[i]=LLONG_MAX; visited[i]=false;
         path[i]=-1;
     }
     path[st]=st;
     distance[st]=0;
     for (count=0; count<vNum-1; count++){
-        int min=INT_MAX;
+        long long min=LLONG_MAX;
         for (i=0; i<vNum; i++)
             if (!visited[i] && distance[i]<=min){
                 min=distance[i]; index=i;
@@ -26,7 +27,7 @@ void dijkstra(int vNum, int* GR, int st)
         u=index;
         visited[u]=true;
         for (i=0; i<vNum; i++)
-            if (!visited[i] && GR[u*vNum+i] && distance[u]!=INT_MAX &&
+            if (!visited[i] && GR[u*vNum+i] && distance[u]!=LLONG_MAX &&
             distance[u]+GR[u*vNum+i]<distance[i]){
                 distance[i]=distance[u]+GR[u*vNum+i];
                 path[i]=u;
