@@ -11,7 +11,7 @@ root = Path(__file__).resolve().parents[1]
 with tempfile.TemporaryDirectory() as temporary:
     target = Path(temporary)
     executable = target / 'flow'
-    subprocess.run(['g++', str(root / 'src/cpp/fordfalkersonalg.cpp'), '-o', str(executable)], check=True)
+    subprocess.run(['g++', str(root / 'src/cpp/fordfulkerson.cpp'), '-o', str(executable)], check=True)
     for count in ['1001', '1', '0', '-1']:
         result = subprocess.run([str(executable), count], capture_output=True, text=True, timeout=5)
         assert result.returncode != 0, result
