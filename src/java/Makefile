@@ -7,13 +7,13 @@
 .SECONDARY:
 SHELL := bash
 
-CLASS_FILES := targets/Dijkstra.class targets/FordFalkerson.class targets/Kruskal.class \
+CLASS_FILES := targets/Dijkstra.class targets/FordFulkerson.class targets/Kruskal.class \
     targets/GraphGenerator.class targets/prim/WeightGraph.class targets/prim/PrimMST.class
 
 compile: $(CLASS_FILES)
 
 targets/Dijkstra.class: dijkstra/Dijkstra.java
-targets/FordFalkerson.class: fordfalkersonalg/FordFalkerson.java
+targets/FordFulkerson.class: fordfulkersonalg/FordFulkerson.java
 targets/Kruskal.class: kruskal/kruskal.java
 targets/GraphGenerator.class: generator/GraphGenerator.java
 targets/prim/WeightGraph.class: prim/WeightGraph.java

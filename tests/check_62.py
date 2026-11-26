@@ -16,7 +16,7 @@ with tempfile.TemporaryDirectory() as temporary:
     subprocess.run(['make', 'clean'], cwd=source, check=True)
     subprocess.run(['make', '-j4'], cwd=source, check=True)
     target = source / 'targets'
-    expected = ['Dijkstra.class', 'FordFalkerson.class', 'Kruskal.class',
+    expected = ['Dijkstra.class', 'FordFulkerson.class', 'Kruskal.class',
                 'GraphGenerator.class', 'prim/WeightGraph.class', 'prim/PrimMST.class']
     assert all((target / name).is_file() for name in expected)
     subprocess.run(['make', '-q'], cwd=source, check=True)

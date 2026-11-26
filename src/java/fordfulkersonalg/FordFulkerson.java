@@ -6,7 +6,7 @@ import java.lang.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-class FordFalkerson {
+class FordFulkerson {
 
     /* Returns true if there is a path from source 's' to
       sink 't' in residual graph. Also fills parent[] to
@@ -137,7 +137,7 @@ class FordFalkerson {
                     }
                 }
             }
-            FordFalkerson m = new FordFalkerson();
+            FordFulkerson m = new FordFulkerson();
 
             System.out.print(m.fordFulkerson(GR, 0, vNum-1));
         }
