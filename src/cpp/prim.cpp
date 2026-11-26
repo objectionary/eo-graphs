@@ -7,8 +7,6 @@
 #include <set>
 using namespace std;
 
-#define INF 9999999
-
 int main (int argc, char *argv[]) {
 
   int edgesCount = (argc-1) / 3;
@@ -71,16 +69,14 @@ int main (int argc, char *argv[]) {
   // if the vertex is already in the set S, discard it otherwise
   //choose another vertex nearest to selected vertex  at step 1.
 
-      int min = INF;
       x = 0;
-      y = 0;
+      y = -1;
 
       for (int i = 0; i < nodes.size(); i++) {
         if (selected[i]) {
             for (int j = 0; j < nodes.size(); j++) {
               if (!selected[j] && present[i][j]) { // not in selected and there is an edge
-                  if (min > G[i][j]) {
-                      min = G[i][j];
+                  if (y == -1 || G[i][j] < G[x][y]) {
                       x = i;
                       y = j;
                   }
@@ -88,6 +84,10 @@ int main (int argc, char *argv[]) {
               }
           }
         }
+      }
+      if (y == -1) {
+          cerr << "No spanning tree: graph is disconnected" << endl;
+          return 1;
       }
       cout << "(" << x << " " << y << " - " << G[x][y] << ") ";
       selected[y] = true;
