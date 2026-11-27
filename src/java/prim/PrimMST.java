@@ -19,6 +19,9 @@ public class PrimMST {
         marked = new boolean[graph.getVertexNum()];
         mst = new ArrayList<>();
 
+        if (graph.getVertexNum() == 0) {
+            return;
+        }
         visit(0);
         while (!minHeap.isEmpty()) {
             WeightGraph.Edge minEdge = minHeap.poll();
